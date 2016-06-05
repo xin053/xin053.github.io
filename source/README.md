@@ -1,10 +1,9 @@
 # xin053.github.io
 Personal Blogs
-
 ## 仓库说明
-master分支为整个`blog`的静态网页集合,通过`travis`自动部署
+`master`分支为整个`blog`的静态网页集合,通过`travis`自动部署
 
-dev分支为整个项目源代码
+`dev`分支为整个项目源代码
 
 ## 搭建环境
 `github` + `hexo` + `next`主题
