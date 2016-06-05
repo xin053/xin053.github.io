@@ -26,10 +26,14 @@ tags:
 
 <!-- more -->
 
-**但是：** 由于上传到`github`上的只是静态网页文件，所以只能在具有整个网站项目源代码的电脑上进行写作，与文章同步与更新，别人就算`fork`也只是些静态网页文件，基本上不能在其上进行修改变为自己的`blog`，相当于并没有开源。
+**但是：** 由于上传到`github`上的只是静态网页文件，所以只能在具有整个网站项目源代码的电脑上进行写作，与文章同步与更新，而且每次都要执行`hexo`三部曲，不符合使用`git`的习惯。
 
 ### 解决方法
-通过`Travis CI`自动部署，发布到`github`上的是整个网站项目的源代码，配置一下，便可实现在每次`git push`之后自动执行一个脚本，执行生成并发布等命令。
+通过`Travis CI`自动部署，自动发布到`github`上，配置一下，便可实现在每次`git push`之后自动执行一个脚本，执行生成并发布等命令。相当于不在手动执行`hexo`三部曲，只用修改后，按照以往的`git`操作：
+
+	add->commit->push
+
+便可自动将源代码`push`到`github`,然后由`travis`自动`clone`项目，并由`travis`的虚拟机自动执行`hexo`三部曲,从而`deploy`更新后的网站到`github`
 
 ### 具体配置
 参考以下文章：
@@ -88,8 +92,23 @@ tags:
     after_success:
     - git config --global user.name "xin053"
     - git config --global user.email "13207130066.cool@163.com"
-    - sed -i'' "/^ *repo/s~github\.com~${GH_TOKEN}@github.com~" _config.yml
+    - sed -i'' "s~git@github.com:xin053/xin053.github.io.git~https://${GH_TOKEN}:x-oauth-basic@github.com/xin053/xin053.github.io.git~" _config.yml
     - hexo deploy
+
+`_config.yml`的`deploy`配置如下：
+
+    deploy:
+      type: git
+      repository: git@github.com:xin053/xin053.github.io.git
+      branch: master
+
+其中还要注意`TOKEN`的权限，`github`默认生成的`TOKEN`权限很低，如果使用默认的，`build`过程中虽然`travis`显示构建成功，但是`log`中显示`hexo deploy`失败，原因是权限问题，所以建议设置权限如下，即全部勾选。
+
+![](http://i.imgur.com/HaFgkwf.png)
+
+`travis`的`log`中最后显示如下图所示时，说明已经部署成功了：
+
+![](http://i.imgur.com/47CPLk0.png)
 
 而最后一篇文章则是通过`travis`网站来设置环境变量，更方便，也更快捷
 
@@ -126,7 +145,7 @@ tags:
     git commit -am "update"
     git push
 
-就可以提交最新源代码到`github`,同时`travis`会自动`build`
+就可以提交最新源代码到`github`,同时`travis`会自动`build`，生成最新的静态网页重新`deploy`到`github`
 
 `build`记录可以参见`https://travis-ci.org/`
 
