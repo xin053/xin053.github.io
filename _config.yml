@@ -86,5 +86,5 @@ search:
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repository: https://<0efdabf1c44122b90db5a69943693c28e8444ae4>@github.com/xin053/xin053.github.io.git
+  repository: https://github.com/xin053/xin053.github.io.git
   branch: master
