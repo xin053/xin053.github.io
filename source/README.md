@@ -2,15 +2,17 @@
 Personal Blogs
 
 ## 仓库说明
-`master`分支为整个`blog`的静态网页集合,通过`travis`自动部署
 
-`dev`分支为整个项目源代码
+- `master`分支为整个`blog`的静态网页集合,通过`travis`自动部署
+
+- `dev`分支为整个项目源代码
 
 ## 搭建环境
 `github` + `hexo` + `next`主题
 
 ## 搭建过程
 参考以下网址：
+
 - [Next使用官方文档](http://theme-next.iissnan.com/getting-started.html "Next使用官方文档")
 - [Doublemine的blog](http://notes.wanghao.work/categories/Hexo/ "Doublemine的blog")
 - [Hexo Seo优化](http://www.jianshu.com/p/86557c34b671 "Hexo Seo优化")
@@ -23,6 +25,7 @@ Personal Blogs
 **注：** 以上排名不分先后
 
 ## 博客涉及到的其他网址
+
 - 百度统计
 - 多说
 - AddThis
@@ -31,6 +34,7 @@ Personal Blogs
 - Travis CI
 
 ## 其他推荐主题
+
 - [idhyt/hexo-theme-next](https://github.com/idhyt/hexo-theme-next/tree/master "idhyt/hexo-theme-next")
 - [pengloo53/Hexo-theme-light_cn](https://github.com/pengloo53/Hexo-theme-light_cn "pengloo53/Hexo-theme-light_cn")
 - [luuman/hexo-theme-spfk](https://github.com/luuman/hexo-theme-spfk "luuman/hexo-theme-spfk")

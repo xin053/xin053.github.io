@@ -35,6 +35,11 @@ tags:
 
 便可自动将源代码`push`到`github`,然后由`travis`自动`clone`项目，并由`travis`的虚拟机自动执行`hexo`三部曲,从而`deploy`更新后的网站到`github`
 
+### 技巧
+在本地新建`dev`分支，并在远程新建`dev`分支，每次本地修改提交到远程`dev`分支(本地新建`dev`分支只是为了好操作，不新建`dev`分支也可以,也就是本地`master`提交到远程`dev`)，`travis`配置文件`.vravis.yml`中监视远程dev分支的改变，`build`成功后添加动作：`hexo deploy`，其中`_config.yml`中`deploy`的分支为远程`master`，这样实现的效果是：
+
+**当`git push dev`时，远程仓库的`dev`是整个项目源代码，而`travis`检测到`dev`分支改变，便会`clone dev`分支，并`build`，然后`deploy`到远程`master`分支，所以远程仓库`master`是整个`blog`的静态网页集合，于是实现了仓库中既有`blog`项目源代码，又有构建成功的整个项目，并且处在不同分支上。**
+
 ### 具体配置
 参考以下文章：
 
@@ -70,7 +75,7 @@ tags:
 
     branches:
       only:
-      - master
+      - dev      # 监视github仓库中的dev分支，分支出现变化就执行build
 
     before_install:
     - export TZ='Asia/Shanghai'
@@ -100,7 +105,7 @@ tags:
     deploy:
       type: git
       repository: git@github.com:xin053/xin053.github.io.git
-      branch: master
+      branch: master      # 将build后的静态网页发布到github仓库master分支
 
 其中还要注意`TOKEN`的权限，`github`默认生成的`TOKEN`权限很低，如果使用默认的，`build`过程中虽然`travis`显示构建成功，但是`log`中显示`hexo deploy`失败，原因是权限问题，所以建议设置权限如下，即全部勾选。
 
@@ -125,27 +130,27 @@ tags:
     git add .
     git commit -am "update"
 
-第一次提交到远程仓库要先建立连接：
+第一次提交到远程仓库要先添加远程仓库：
 
     git remote add master git@github.com:xin053/xin053.github.io.git
 
-将本地`master`与远程默认分支进行关联
+将本地`dev`与远程默认分支进行关联
 
-    git push -f --set-upstream master master
+    git push -f --set-upstream dev dev
 
 如果原理`github`下是原来的静态网站，者这里用`-f`强推，覆盖掉原来的项目就行。
 
-之后没吃就只用
+之后每次就只用
 
-    git push
+    git push dev
 
 也就是每次写完博客之后，在网站项目源代码根目录执行三部曲：
 
     git add .
     git commit -am "update"
-    git push
+    git push dev
 
-就可以提交最新源代码到`github`,同时`travis`会自动`build`，生成最新的静态网页重新`deploy`到`github`
+就可以提交最新源代码到`github`的`dev`分支,同时`travis`会自动`build`，生成最新的静态网页`deploy`到`github`的`master`分支。
 
 `build`记录可以参见`https://travis-ci.org/`
 
