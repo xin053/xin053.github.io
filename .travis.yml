@@ -1,0 +1,29 @@
+language: node_js
+
+node_js:
+- '6'
+
+branches:
+  only:
+  - master
+
+before_install:
+- export TZ='Asia/Shanghai'
+- npm install -g hexo
+- npm install -g hexo-cli
+
+install:
+- npm install
+
+script:
+- hexo clean && hexo g
+
+env:
+  global:
+    secure: HcNd3E02rGSZ3mzYHmNwsTKBIXa8cdOHIqmnuV8P9xAFRaDRUEdE8gqFmNCeKd5hriM64sO5BGU/szI7Q2uJNhUgDg0Rw/UZMbZCei5Pf112qzDpbb/ok1PUU9Q282sI1YVf8poBUvMHmoHLOMayR25IjIysb5aE+8kpipDbReU=
+
+after_success:
+- git config --global user.name "xin053"
+- git config --global user.email "13207130066.cool@163.com"
+- sed -i'' "/^ *repo/s~github\.com~${GH_TOKEN}@github.com~" _config.yml
+- hexo deploy
