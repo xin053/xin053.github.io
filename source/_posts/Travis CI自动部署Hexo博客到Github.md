@@ -86,7 +86,7 @@ tags:
     - npm install
 
     script:
-    - git submodule init      # 用于更新主题
+    - git submodule init      # 用于更新主题,更新源为自己的主题项目，否则会clone最新NexT主题，而官方主题配置文件没有设置
     - git submodule update
     - hexo clean && hexo g
 
@@ -99,6 +99,14 @@ tags:
     - git config --global user.email "13207130066.cool@163.com"
     - sed -i'' "s~git@github.com:xin053/xin053.github.io.git~https://${GH_TOKEN}:x-oauth-basic@github.com/xin053/xin053.github.io.git~" _config.yml
     - hexo deploy
+
+项目根目录下新建`.gitmodules`文件，并写入：
+
+    [submodule "themes/next"]
+        path = themes/next
+        url = git://github.com/xin053/MyHexo_NexT_Theme
+
+则`build`时更新主题的源是自己修改后的主题,不能用官网`NexT`主题，如果设置成官网主题会发现最终网站发布样式主题是默认的设置，而覆盖掉了原先自己的主题配置。
 
 `_config.yml`的`deploy`配置如下：
 
