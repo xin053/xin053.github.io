@@ -15,7 +15,8 @@ install:
 - npm install
 
 script:
-- hexo clean && hexo g   # - git submodule init  - git submodule update用于更新主题
+- hexo clean   # - git submodule init  - git submodule update用于更新主题
+- hexo g
 
 after_success:
 - git config --global user.name "xin053"
