@@ -11,40 +11,41 @@ tags:
 ## fork的PyQt5项目
 
 ### 简述
-近来想找个PyQt项目好好学习学习，毕竟正在学PyQt5，刚去官网下了PyQt5.6,刚好PyQt5.6支持python3.5,电脑上又有python3.5.1，然而关于PyQt5，网上的资料实在是太少了，就连官网的文档大多都是转向Qt的c++文档，我也是醉了。
+近来想找个`PyQt`项目好好学习学习，毕竟正在学`PyQt5`，刚去官网下了`PyQt5.6`,刚好`PyQt5.6`支持`python3.5`,电脑上又有`python3.5.1`，然而关于`PyQt5`，网上的资料实在是太少了，就连官网的文档大多都是转向`Qt`的`c++`文档，我也是醉了。
 
-找到一个用python2.7+PyQt5(低于5.6)的版本写的一个针对[Drrr chat room ](http://drrr.com/)网站写的客户端，界面如下：
+找到一个用`python2.7+PyQt5`(低于5.6)的版本写的一个针对[Drrr chat room ](http://drrr.com/)网站写的客户端，界面如下：
 
 ![](http://i.imgur.com/ji5KPOJ.png)
 
 <!-- more -->
 
-想好好研读下人家的代码，并向python3.5.1+PyQt5.6移植，对于Python2到3的移植，由于源代码比较简单，就1000+行代码，而且就一个py文件，界面和功能都在这个文件中，基本上对于python的移植就是将：
+想好好研读下人家的代码，并向`python3.5.1+PyQt5.6`移植，对于`Python`2到3的移植，由于源代码比较简单，就1000+行代码，而且就一个`py`文件，界面和功能都在这个文件中，基本上对于`python`的移植就是将：
 
+<!--lang: python-->
     print "something"
 
 改为：
-
+<!--lang: python-->
     print("something")
 
-令人头疼的是PyQt的移植，只想说版本之间兼容性无话可说，有些内容差距真是太大了，尤其是QtWebKit 到 QtWebEngine的移植，表示官网文档都快被翻烂了，也就是根据函数名猜其功能，实在是受不了了。附上官网的这篇文章，供PyQt移植用：
+令人头疼的是`PyQt`的移植，只想说版本之间兼容性无话可说，有些内容差距真是太大了，尤其是`QtWebKit` 到 `QtWebEngine`的移植，表示官网文档都快被翻烂了，也就是根据函数名猜其功能，实在是受不了了。附上官网的这篇文章，供`PyQt`移植用：
 
 [Porting from QtWebKit to QtWebEngine](https://wiki.qt.io/Porting_from_QtWebKit_to_QtWebEngine)
 
 原作者[github](https://github.com/harry159821/DrrrClient)
 
-看的出来，是作者的练手作品，作者还做了PyQt4到PyQt5的移植，主要也就是信号与槽函数建立连接的方式。大体来说整个程序先自绘窗口，然后中间窗口是个QWebView，确实像作者所言大体是个浏览器，但是依然还是有很多值得学习的地方。下面开始源码解读
+看的出来，是作者的练手作品，作者还做了`PyQt4`到`PyQt5`的移植，主要也就是信号与槽函数建立连接的方式。大体来说整个程序先自绘窗口，然后中间窗口是个`QWebView`，确实像作者所言大体是个浏览器，但是依然还是有很多值得学习的地方。下面开始源码解读
 
 ### 大体描述
 目录结构比较简单：
 
 ![](http://i.imgur.com/e6d0XHJ.png)
 
-Shot目录是几个截图，不重要，img目录是项目需要的图片和几个音频文件，ini配置文件存放用户名和语言等配置信息，不重要，Makefile.py是py2exe用于打包整个项目所写的配置文件(目前python3.5的项目不能用py2exe打包，可以用pyInstaller)，不重要，bat是执行打包，不重要。唯一重要的也就是DrrrChatRoom.py这个文件，代码总共1000+行，也不是特别麻烦，程序有不少注释，结构比较清晰，如果把界面和功能代码分离那就更好了。
+`Shot`目录是几个截图，不重要，`img`目录是项目需要的图片和几个音频文件，`ini`配置文件存放用户名和语言等配置信息，不重要，`Makefile.py`是`py2exe`用于打包整个项目所写的配置文件(目前`python3.5`的项目不能用`py2exe`打包，可以用`pyInstaller`)，不重要，`bat`是执行打包，不重要。唯一重要的也就是`DrrrChatRoom.py`这个文件，代码总共1000+行，也不是特别麻烦，程序有不少注释，结构比较清晰，如果把界面和功能代码分离那就更好了。
 
 ### 源码阅读
-labelBtn类：
-
+`labelBtn`类：
+<!--lang: python-->
     class labelBtn(QtWidgets.QLabel):
         clicked = QtCore.pyqtSignal(str)
         Entered = QtCore.pyqtSignal(str)
@@ -68,10 +69,10 @@ labelBtn类：
         def leaveEvent(self,event):
             self.Leaved.emit(self.name)
 
-这个类是作者用来自定义窗口右上角最大化，最小化，关闭三个按钮，类中定义了四个信号，并重写四个事件，分别emit这四个信号。
+这个类是作者用来自定义窗口右上角最大化，最小化，关闭三个按钮，类中定义了四个信号，并重写四个事件，分别`emit`这四个信号。
 
-FrameLessTransparentWindow类：
-
+`FrameLessTransparentWindow`类：
+<!--lang: python-->
     class FrameLessTransparentWindow(QtWidgets.QMainWindow):
 
         def __init__(self):...
@@ -98,8 +99,8 @@ FrameLessTransparentWindow类：
 
 这个类是主要窗口的基类，里面都是些通用函数，顾名思义就知道他们是干什么用的。
 
-ShadowsWindow类
-
+`ShadowsWindow`类
+<!--lang: python-->
     class ShadowsWindow(FrameLessTransparentWindow):
         def __init__(self):
             super(ShadowsWindow, self).__init__()
@@ -145,10 +146,10 @@ ShadowsWindow类
             painter.setPen(Qt.NoPen)
             painter.setBrush(Qt.white)
 
-ShadowsWindow窗口类继承自FrameLessTransparentWindow，没有标题栏，客户区背景透明，重写了绘图事件，手动绘制了窗口的四个角，和上下左右的阴影，所以这个类取名为shadow
+`ShadowsWindow`窗口类继承自`FrameLessTransparentWindow`，没有标题栏，客户区背景透明，重写了绘图事件，手动绘制了窗口的四个角，和上下左右的阴影，所以这个类取名为`shadow`
 
-titleBar类
-
+`titleBar`类
+<!--lang: python-->
     class titleBar(QWidget):
 
         def __init__(self,parent=None):...
@@ -162,11 +163,11 @@ titleBar类
 这个类画的是窗口标题栏，重写绘图事件，并在标题栏窗口边上画阴影就不说了，具体来看下构造函数：
 
 首先设置好长宽等属性后，通过：
-
+<!--lang: python-->
     self.setStyleSheet(...)
 
 设置一些样式。
-
+<!--lang: python-->
     self.title_label = QLabel()
     self.title_label.setText(u"    DRRR Chat Room")
     self.font = QtGui.QFont()
@@ -178,7 +179,7 @@ titleBar类
     self.title_label.setFont(self.font)
 
 设置标题栏文字，并设置字体。
-
+<!--lang: python-->
     self.close_button = labelBtn('x')
     self.min_button = labelBtn('-')
     self.max_button = labelBtn('口')
@@ -188,7 +189,7 @@ titleBar类
     self.max_button.setPixmap(QPixmap("./img/blue.png"))
 
 新建最大化，最小化，关闭三个按钮，并设置按钮图片，之后设置样式和一些其他属性
-
+<!--lang: python-->
     self.title_layout = QHBoxLayout()
     self.title_layout.setContentsMargins(0, 0, 20, 0)
     self.title_layout.addWidget(self.title_label,1,Qt.AlignCenter)
@@ -199,28 +200,28 @@ titleBar类
 
     self.setLayout(self.title_layout)
 
-将文字和三个按钮分别放在布局中，并设置titleBar窗口内的布局
+将文字和三个按钮分别放在布局中，并设置`titleBar`窗口内的布局
 
-StatusWindow窗口类：
+`StatusWindow`窗口类：
 
-用来画窗口的状态栏，基本和titleBar类一样。
+用来画窗口的状态栏，基本和`titleBar`类一样。
 
-DrrrWindow类：
+`DrrrWindow`类：
 
-继承自ShadowsWindow类，是程序的主要窗口。来看下其构造方法：
-
+继承自`ShadowsWindow`类，是程序的主要窗口。来看下其构造方法：
+<!--lang: python-->
     self.getSetting()
     ...
     def getSetting(self):
         '''获取应用设置'''
         self.settings = QtCore.QSettings("DrrrChatRoom.ini", QtCore.QSettings.IniFormat)
 
-首先获取ini中的配置
-
+首先获取`ini`中的配置
+<!--lang: python-->
     self.WebView = QWebEngineView()
 
-new 一个QWebEngineView，然后
-
+new 一个`QWebEngineView`，然后
+<!--lang: python-->
     # 设置加载网页，和网页加载完成以及加载过程信号与槽函数关联
     self.WebView.loadStarted.connect(self.loadStarted)
     self.WebView.loadFinished.connect(self.loadFinished)
@@ -233,7 +234,7 @@ new 一个QWebEngineView，然后
     self.WebView.page().javaScriptPrompt = self._javascript_prompt
 
 然后：
-
+<!--lang: python-->
     # new一个标题栏和状态栏
     self.titlebar = titleBar()
     self.statusBar = StatusWindow()
@@ -278,7 +279,7 @@ new 一个QWebEngineView，然后
     self.WebView.loadProgress.connect(self.loading)
 
 最后：
-
+<!--lang: python-->
     # 设置加载时的网页，显示主窗口，并加载drrr.com
     self.WebView.setHtml(WaitingHTML)
     self.show()
@@ -292,11 +293,11 @@ new 一个QWebEngineView，然后
         """)
     self.WebView.load(QUrl("http://drrr.com/"))
 
-该类中重写了loadStarted()，loadFinished()和方法，在其中获取网页中用户名等信息，并存储在ini配置文件中，或根据ini配置文件填写网页表单中的内容，由于PyQt5.6去除了mainFrame()方法，所以删除了这部分的操作。至此，整个程序基本结束。
+该类中重写了`loadStarted()`，`loadFinished()`和方法，在其中获取网页中用户名等信息，并存储在`ini`配置文件中，或根据ini配置文件填写网页表单中的内容，由于`PyQt5.6`去除了`mainFrame()`方法，所以删除了这部分的操作。至此，整个程序基本结束。
 
 ### 移植过后存在的问题
-- 程序能运行，但是进入room播放不了音乐，可能是QtWebEngine不支持吧
-- 右上角三个按钮的功能没有实现，因为源程序用了animation动画，这个某些设置与PyQt5.6不兼容，也不想再弄了，麻烦。
+- 程序能运行，但是进入`room`播放不了音乐，可能是`QtWebEngine`不支持吧
+- 右上角三个按钮的功能没有实现，因为源程序用了`animation`动画，这个某些设置与`PyQt5.6`不兼容，也不想再弄了，麻烦。
 
 ### 结语
-整个项目用来学习PyQt5还算不错。移植后的项目托管与[我的github](https://github.com/xin053/DrrrClient)
+整个项目用来学习`PyQt5`还算不错。移植后的项目托管与[我的github](https://github.com/xin053/DrrrClient)
