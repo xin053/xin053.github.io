@@ -21,11 +21,10 @@ tags:
 
 想好好研读下人家的代码，并向`python3.5.1+PyQt5.6`移植，对于`Python`2到3的移植，由于源代码比较简单，就1000+行代码，而且就一个`py`文件，界面和功能都在这个文件中，基本上对于`python`的移植就是将：
 
-<!--lang: python-->
     print "something"
 
 改为：
-<!--lang: python-->
+
     print("something")
 
 令人头疼的是`PyQt`的移植，只想说版本之间兼容性无话可说，有些内容差距真是太大了，尤其是`QtWebKit` 到 `QtWebEngine`的移植，表示官网文档都快被翻烂了，也就是根据函数名猜其功能，实在是受不了了。附上官网的这篇文章，供`PyQt`移植用：
@@ -43,9 +42,9 @@ tags:
 
 `Shot`目录是几个截图，不重要，`img`目录是项目需要的图片和几个音频文件，`ini`配置文件存放用户名和语言等配置信息，不重要，`Makefile.py`是`py2exe`用于打包整个项目所写的配置文件(目前`python3.5`的项目不能用`py2exe`打包，可以用`pyInstaller`)，不重要，`bat`是执行打包，不重要。唯一重要的也就是`DrrrChatRoom.py`这个文件，代码总共1000+行，也不是特别麻烦，程序有不少注释，结构比较清晰，如果把界面和功能代码分离那就更好了。
 
-### 源码阅读
+### 源码解读
 `labelBtn`类：
-<!--lang: python-->
+
     class labelBtn(QtWidgets.QLabel):
         clicked = QtCore.pyqtSignal(str)
         Entered = QtCore.pyqtSignal(str)
@@ -72,7 +71,7 @@ tags:
 这个类是作者用来自定义窗口右上角最大化，最小化，关闭三个按钮，类中定义了四个信号，并重写四个事件，分别`emit`这四个信号。
 
 `FrameLessTransparentWindow`类：
-<!--lang: python-->
+
     class FrameLessTransparentWindow(QtWidgets.QMainWindow):
 
         def __init__(self):...
@@ -100,7 +99,7 @@ tags:
 这个类是主要窗口的基类，里面都是些通用函数，顾名思义就知道他们是干什么用的。
 
 `ShadowsWindow`类
-<!--lang: python-->
+
     class ShadowsWindow(FrameLessTransparentWindow):
         def __init__(self):
             super(ShadowsWindow, self).__init__()
@@ -149,7 +148,7 @@ tags:
 `ShadowsWindow`窗口类继承自`FrameLessTransparentWindow`，没有标题栏，客户区背景透明，重写了绘图事件，手动绘制了窗口的四个角，和上下左右的阴影，所以这个类取名为`shadow`
 
 `titleBar`类
-<!--lang: python-->
+
     class titleBar(QWidget):
 
         def __init__(self,parent=None):...
@@ -163,11 +162,11 @@ tags:
 这个类画的是窗口标题栏，重写绘图事件，并在标题栏窗口边上画阴影就不说了，具体来看下构造函数：
 
 首先设置好长宽等属性后，通过：
-<!--lang: python-->
+
     self.setStyleSheet(...)
 
 设置一些样式。
-<!--lang: python-->
+
     self.title_label = QLabel()
     self.title_label.setText(u"    DRRR Chat Room")
     self.font = QtGui.QFont()
@@ -179,7 +178,7 @@ tags:
     self.title_label.setFont(self.font)
 
 设置标题栏文字，并设置字体。
-<!--lang: python-->
+
     self.close_button = labelBtn('x')
     self.min_button = labelBtn('-')
     self.max_button = labelBtn('口')
@@ -189,7 +188,7 @@ tags:
     self.max_button.setPixmap(QPixmap("./img/blue.png"))
 
 新建最大化，最小化，关闭三个按钮，并设置按钮图片，之后设置样式和一些其他属性
-<!--lang: python-->
+
     self.title_layout = QHBoxLayout()
     self.title_layout.setContentsMargins(0, 0, 20, 0)
     self.title_layout.addWidget(self.title_label,1,Qt.AlignCenter)
@@ -209,7 +208,7 @@ tags:
 `DrrrWindow`类：
 
 继承自`ShadowsWindow`类，是程序的主要窗口。来看下其构造方法：
-<!--lang: python-->
+
     self.getSetting()
     ...
     def getSetting(self):
@@ -217,11 +216,11 @@ tags:
         self.settings = QtCore.QSettings("DrrrChatRoom.ini", QtCore.QSettings.IniFormat)
 
 首先获取`ini`中的配置
-<!--lang: python-->
+
     self.WebView = QWebEngineView()
 
 new 一个`QWebEngineView`，然后
-<!--lang: python-->
+
     # 设置加载网页，和网页加载完成以及加载过程信号与槽函数关联
     self.WebView.loadStarted.connect(self.loadStarted)
     self.WebView.loadFinished.connect(self.loadFinished)
@@ -234,7 +233,7 @@ new 一个`QWebEngineView`，然后
     self.WebView.page().javaScriptPrompt = self._javascript_prompt
 
 然后：
-<!--lang: python-->
+
     # new一个标题栏和状态栏
     self.titlebar = titleBar()
     self.statusBar = StatusWindow()
@@ -279,7 +278,7 @@ new 一个`QWebEngineView`，然后
     self.WebView.loadProgress.connect(self.loading)
 
 最后：
-<!--lang: python-->
+
     # 设置加载时的网页，显示主窗口，并加载drrr.com
     self.WebView.setHtml(WaitingHTML)
     self.show()
