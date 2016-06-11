@@ -70,6 +70,10 @@ tags:
 
 该插件提供`python`调试，`Lint`，以及代码补全等功能，具体看上面的链接
 
+话说插件的更新不会删除老版本，希望VS Code后期能够改进吧：
+
+![](http://i.imgur.com/4lpO5Wj.png)
+
 ### 配置Python运行环境
 
 `VS Code`有`task`的概念，具体看官网，在`.vscode`文件夹下有三个文件：
@@ -112,7 +116,7 @@ tags:
             "request": "launch",
             "stopOnEntry": true,
             "program": "${file}",
-            "pythonPath": "python",
+            "pythonPath": "D:\Python 3.5\python.exe", //如果python配置到了path中就可以省略这个参数的配置
             "debugOptions": [
                 "WaitOnAbnormalExit",
                 "WaitOnNormalExit",
