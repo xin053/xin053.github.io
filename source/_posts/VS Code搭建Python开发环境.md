@@ -70,7 +70,7 @@ tags:
 
 该插件提供`python`调试，`Lint`，以及代码补全等功能，具体看上面的链接
 
-话说插件的更新不会删除老版本，希望VS Code后期能够改进吧：
+话说插件的更新不会删除老版本，希望`VS Code`后期能够改进吧：
 
 ![](http://i.imgur.com/4lpO5Wj.png)
 
@@ -86,8 +86,6 @@ tags:
 
 ``` json
 {
-    // See https://go.microsoft.com/fwlink/?LinkId=733558
-    // for the documentation about the tasks.json format
     "version": "0.1.0",
     "command": "python",
     "isShellCommand": true,
@@ -116,7 +114,6 @@ tags:
             "request": "launch",
             "stopOnEntry": true,
             "program": "${file}",
-            "pythonPath": "D:\Python 3.5\python.exe", //如果python配置到了path中就可以省略这个参数的配置
             "debugOptions": [
                 "WaitOnAbnormalExit",
                 "WaitOnNormalExit",
@@ -172,6 +169,10 @@ tags:
     ]
 }
 ```
+
+如果`python`可执行文件不在`path`中，就需要添加`pythonPath`属性配置，如：
+
+	"pythonPath": "D:\\Python 3.5\\python.exe"
 
 点左边蜘蛛(调试)按钮，设置好断点，就可以开开心心调试了，附上截图：
 
