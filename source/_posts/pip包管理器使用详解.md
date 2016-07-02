@@ -126,3 +126,7 @@ General Options:
                               whether a new version of pip is available for
                               download. Implied with --no-index.
 ```
+
+## 其他相关文章
+
+- [Python 包管理工具解惑](http://zengrong.net/post/2169.htm)
