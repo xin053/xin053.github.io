@@ -242,7 +242,7 @@ Or just iterate over a range of time:
 |Day of Year|	DDDD|	001, 002, 003 ... 364, 365|
 |&nbsp; 	|DDD|	1, 2, 3 ... 4, 5|
 |Day of Month|	DD|	01, 02, 03 ... 30, 31|
-|&nbsp;| 	|D|	1, 2, 3 ... 30, 31|
+|&nbsp;| 	D|	1, 2, 3 ... 30, 31|
 |Day of Week|	dddd|	Monday, Tuesday, Wednesday ...|
 |&nbsp; 	|ddd	|Mon, Tue, Wed ...|
 |&nbsp; 	|d	|1, 2, 3 ... 6, 7|
