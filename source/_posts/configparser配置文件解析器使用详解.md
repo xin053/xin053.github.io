@@ -25,7 +25,7 @@ ini文件结构需要注意一下几点：
 - 值可以为多行
 - 配置文件可以包含注释，注释以`#`或者`;`为前缀
 
-***注意：configparser有default_section的概念,默认为`[DEFAULT]`节,也就是之后的所有的section都有该默认section中的键值对,详情参见[configparser源码的__init__()方法](https://hg.python.org/cpython/file/3.5/Lib/configparser.py)***
+***注意：configparser有default_section的概念,默认为`[DEFAULT]`节,也就是之后的所有的section都有该默认section中的键值对,详情参见[configparser源码的`__init__()`方法](https://hg.python.org/cpython/file/3.5/Lib/configparser.py)***
 
 <!-- more -->
 
