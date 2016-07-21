@@ -14,4 +14,6 @@ ID:	xin053
 
 作品：	逐步公开(目前没有)
 
-<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=450 src="http://music.163.com/outchain/player?type=0&id=395441446&auto=1&height=430"></iframe>
+<video width="480" height="320" controls>
+<source src="http://music.163.com/outchain/player?type=0&id=395441446&auto=1&height=430">
+</video>
