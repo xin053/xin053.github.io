@@ -9,10 +9,10 @@ branches:
 before_install:
 - export TZ='Asia/Shanghai'
 - npm install -g hexo
-- npm install -g hexo-cli
+- npm install -g hexo-cli  # 安装 hexo
 
 install:
-- npm install
+- npm install  # 安装额外的插件
 - mkdir /home/travis/build/xin053/xin053.github.io/node_modules/aplayer/dist/font  # aplayer与dplayer插件所需要的文件和文件夹,否则加载这些插件会报错
 - touch /home/travis/build/xin053/xin053.github.io/node_modules/aplayer/dist/APlayer.min.css 
 - touch /home/travis/build/xin053/xin053.github.io/node_modules/dplayer/dist/DPlayer.min.css
