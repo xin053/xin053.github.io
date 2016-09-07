@@ -12,9 +12,9 @@ tags:
 UTF8编码使用1到4个字节来表示每个Unicode码点， ASCII部分字符只使用1个字节， 常用字符部分使用2或3个字节表示。 每个符号编码后第一个字节的高端bit位用于表示总共有多少编码个字节。 如果第一个字节的高端bit为0， 则表示对应7bit的ASCII字符， ASCII字符每个字符依然是一个字节， 和传统的ASCII编码兼容。 如果第一个字节的高端bit是110， 则说明需要2个字节；后续的每个高端bit都以10开头。 
 
 ```
-0xxxxxxx 								runes 0-127 (ASCII)
-110xxxxx 10xxxxxx 						128-2047 (values <128 unused)
-1110xxxx 10xxxxxx 10xxxxxx 				2048-65535 (values <2048 unused)
+0xxxxxxx 				runes 0-127 (ASCII)
+110xxxxx 10xxxxxx 			128-2047 (values <128 unused)
+1110xxxx 10xxxxxx 10xxxxxx 		2048-65535 (values <2048 unused)
 11110xxx 10xxxxxx 10xxxxxx 10xxxxxx 	65536-0x10ffff (other values unused)
 ```
 
