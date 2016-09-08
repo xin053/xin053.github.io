@@ -39,3 +39,4 @@ Docker是一个C/S架构的程序
 Docker用Registry来保存用户构建的镜像。Registry分为公共和私有两种。Docker公司运营的公共Registry叫做Docker Hub。
 
 ### Docker容器
+Docker可以帮你构建和部署容器，你只需把自己的应用程序或者服务打包放进容器即可。容器是基于镜像启动的，容器中可以运行一个或多个进程。镜像是Docker生命周期中的构建或打包阶段，而容器则是启动或执行阶段。
