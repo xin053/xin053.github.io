@@ -26,3 +26,7 @@ The Python Language Reference：
 The Python Standard Library：
 
 - [Built-in Functions 必须熟练掌握](https://docs.python.org/3/library/functions.html)
+- [Built-in Types 基础内容 要熟悉](https://docs.python.org/3/library/stdtypes.html)
+- [Text Processing Services 文本处理服务](https://docs.python.org/3.5/library/text.html)
+  - [format 字符串格式化](https://docs.python.org/3.5/library/string.html)
+  - [re 正则表达式操作](https://docs.python.org/3.5/library/re.html)
