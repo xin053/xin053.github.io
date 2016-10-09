@@ -239,3 +239,7 @@ docker push username/imagename
 ```
 
 将会将镜像推送到到docker hub
+
+## 参考文章
+
+- [Docker 中 latest 标签引发的困惑](http://www.linuxidc.com/Linux/2015-01/112548.htm)
