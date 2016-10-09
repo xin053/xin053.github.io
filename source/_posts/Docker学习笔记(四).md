@@ -33,6 +33,8 @@ docker run --name nginx-test -v /some/content:/usr/share/nginx/html:ro -d nginx:
 
 那么到目前为止一个简单的web应用就搭建好了，现在来说明一下windows环境下的各种问题
 
+<!-- more -->
+
 ## windows环境说明
 
 - 物理机win10 x64企业版
