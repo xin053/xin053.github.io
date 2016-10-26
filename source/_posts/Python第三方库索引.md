@@ -27,3 +27,5 @@ tags:
 - [asciimatics库简介](https://xin053.github.io/2016/07/19/asciimatics%E5%BA%93%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3/)
 - [click命令行工具使用详解](https://xin053.github.io/2016/07/31/click%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3/)
 - [httpie人性化curl工具使用详解](https://xin053.github.io/2016/08/15/httpie%E4%BA%BA%E6%80%A7%E5%8C%96curl%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3/)
+- [Pillow图片处理库使用详解](https://xin053.github.io/2016/10/26/Pillow%E5%9B%BE%E7%89%87%E5%A4%84%E7%90%86%E5%BA%93%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3/#more)
+
