@@ -36,8 +36,24 @@ The Python Standard Library：
 - [Data Types](https://docs.python.org/3/library/datatypes.html)
 
   - [`datetime` — 基础时间和日期模块](https://docs.python.org/3/library/datetime.html)
-
   - [`calendar` — General calendar-related functions](https://docs.python.org/3/library/calendar.html)
+  - [`collections` — 提供代替内置列表元组字典的多种数据结构](https://docs.python.org/3/library/collections.html#module-collections)
+    - [`ChainMap` — 通过链表将多个map链在一起 查找时优先查找前面的](https://docs.python.org/3/library/collections.html#collections.ChainMap)
+    - [`Counter` — Dict subclass for counting hashable items](https://docs.python.org/3/library/collections.html#collections.Counter)
+    - [`deque` — 双端队列](https://docs.python.org/3/library/collections.html#collections.deque)
+    - [`defaultdict` — 给字典的value添加默认数据类型](https://docs.python.org/3/library/collections.html#collections.defaultdict)
+    - [`namedtuple` — 命名元组](https://docs.python.org/3/library/collections.html#collections.namedtuple)
+    - [`OrderedDict` — 有序字典 Dictionary that remembers insertion order](https://docs.python.org/3/library/collections.html#collections.OrderedDict)
+    - [`UserDict` — dict 的一个封装类 主要用来拷贝一个字典的数据](https://docs.python.org/3/library/collections.html#collections.UserDict)
+    - [`UserList`](https://docs.python.org/3/library/collections.html#collections.UserList)
+    - [`UserString`](https://docs.python.org/3/library/collections.html#collections.UserString)
+  - [`heapq` — 利用堆排序算法排序模块](https://docs.python.org/3/library/heapq.html)
+  - [`bisect` — 利用二分法将元素插入到已排序列表后依然保持已排序](https://docs.python.org/3/library/bisect.html)
+  - [`weakref` — 弱引用 用来避免循环引用导致对象没有被GC回收](https://docs.python.org/3/library/weakref.html)
+  - [`types` — Define names for built-in types that aren't directly accessible as a builtin](https://docs.python.org/3/library/types.html)
+  - [`copy` — 分浅拷贝(不拷贝子对象)与深拷贝(拷贝子对象)](https://docs.python.org/3/library/copy.html)
+  - [`pprint` — Data pretty printer](https://docs.python.org/3/library/pprint.html)
+  - [`reprlib` — 可以限制字符串长度的repr](https://docs.python.org/3/library/reprlib.html)
+  - [`enum` — 3.4出现的](https://docs.python.org/3/library/enum.html)
 
-    ​
 
