@@ -1,7 +1,6 @@
 ---
 title: Python学习重点摘记
 date: 2016-10-30 20:01:37
-sticky: 8
 categories: 
 - Python
 tags:
