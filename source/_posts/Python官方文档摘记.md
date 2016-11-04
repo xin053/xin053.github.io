@@ -1,7 +1,6 @@
 ---
 title: Python官方文档摘记
 date: 2016-10-06 17:40:00
-sticky: 10
 categories: 
 - Python
 tags:
