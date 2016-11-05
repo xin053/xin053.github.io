@@ -30,5 +30,4 @@ tags:
 - [Pillow图片处理库使用详解](https://xin053.github.io/2016/10/26/Pillow%E5%9B%BE%E7%89%87%E5%A4%84%E7%90%86%E5%BA%93%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3/#more)
 - [qrcode二维码生成库使用详解](https://xin053.github.io/2016/10/28/qrcode%E4%BA%8C%E7%BB%B4%E7%A0%81%E7%94%9F%E6%88%90%E5%BA%93%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3/#more)
 - [Tesseract光学识别](https://xin053.github.io/2016/10/28/Tesseract%E5%85%89%E5%AD%A6%E8%AF%86%E5%88%AB/)
-
-
+- [pydub音频处理库使用详解](https://xin053.github.io/2016/11/05/pydub%E9%9F%B3%E9%A2%91%E5%A4%84%E7%90%86%E5%BA%93%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3/#more)
