@@ -9,7 +9,8 @@ tags:
 ---
 
 ## tablib简介
-tablib为requests作者`kennethreitz`维护，支持python2到python3.简单的说就是一个通用的数据集，操作类似数据库，但是可以通过tablib将数据集轻松转为为xls、csv、yaml等格式。
+tablib为requests作者`kennethreitz`维护，支持python2到python3.简单的说就是一个通用的数据集，操作类似数据库，但又不是一个数据库的代替，因为缺少查操作，但是可以通过tablib将数据集轻松转为xls、csv、yaml等格式。简单的来说就是用来处理`tabular dataset`，为这些不同格式的数据集提供一个统一的格式。
+
 目前支持下面这些输出格式：
 
 - Excel (Sets + Books)
@@ -40,10 +41,10 @@ data = tablib.Dataset(*data, headers=headers)
 
 这样相当于构造了一张表：
 
-|first_name|last_name|
-|:-----:|:-----:|
-|John|Adams|
-|George|Washington|
+| first_name | last_name  |
+| :--------: | :--------: |
+|    John    |   Adams    |
+|   George   | Washington |
 
 其中最重要的就是`Dataset`对象，当然该对象的创建也可以不输入参数，直接`data = tablib.Dataset()`创建出一个`Dataset`对象，然后通过`data.headers = ['first_name', 'last_name']`设置表头，当然也可以使用`data.headers = ('first_name', 'last_name')`,因为不管是用列表还是元组，tablib都会自动帮我们处理好，我们可以通过`data.append(['Henry', 'Ford'])`或者`data.append(('Henry', 'Ford'))`来向表中添加一条记录。
 
@@ -103,11 +104,11 @@ Henry     |Ford     |83
 
 这样表就变成了：
 
-|first_name|last_name|age|
-|:-----:|:-----:|:-----:|
-|John|Adams|90|
-|George|Washington|67|
-|Henry|Ford|83|
+| first_name | last_name  | age  |
+| :--------: | :--------: | :--: |
+|    John    |   Adams    |  90  |
+|   George   | Washington |  67  |
+|   Henry    |    Ford    |  83  |
 
 ```python
 >>> print(data)
@@ -280,3 +281,6 @@ book = tablib.Databook((data1, data2, data3))
 with open('students.xls', 'wb') as f:
 	f.write(book.xls)
 ```
+## 参考文档
+
+- [tablib官方文档](http://docs.python-tablib.org/en/latest/)
