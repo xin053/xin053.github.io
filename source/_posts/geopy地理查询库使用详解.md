@@ -70,109 +70,109 @@ Potsdamer Platz, Mitte, Berlin, 10117, Deutschland, European Union
 
 ###  ArcGIS
 
-> *class*`geopy.geocoders.``ArcGIS`(*username=None*, *password=None*, *referer=None*, *token_lifetime=60*,*scheme='https'*, *timeout=1*, *proxies=None*, *user_agent=None*)
+> *class*`geopy.geocoders.ArcGIS`(*username=None*, *password=None*, *referer=None*, *token_lifetime=60*,*scheme='https'*, *timeout=1*, *proxies=None*, *user_agent=None*)
 
 [参数详解](https://geopy.readthedocs.io/en/latest/#geopy.geocoders.ArcGIS)
 
 ### Baidu
 
-> *class*`geopy.geocoders.``Baidu`(*api_key*, *scheme='http'*, *timeout=1*, *proxies=None*, *user_agent=None*)
+> *class*`geopy.geocoders.Baidu`(*api_key*, *scheme='http'*, *timeout=1*, *proxies=None*, *user_agent=None*)
 
 [参数详解](https://geopy.readthedocs.io/en/latest/#geopy.geocoders.Baidu)
 
 ### Bing
 
-> *class*`geopy.geocoders.``Bing`(*api_key*, *format_string='%s'*, *scheme='https'*, *timeout=1*, *proxies=None*,*user_agent=None*)
+> *class*`geopy.geocoders.Bing`(*api_key*, *format_string='%s'*, *scheme='https'*, *timeout=1*, *proxies=None*,*user_agent=None*)
 
 [参数详解](https://geopy.readthedocs.io/en/latest/#geopy.geocoders.Bing)
 
 ### DataBC
 
-> *class*`geopy.geocoders.``DataBC`(*scheme='https'*, *timeout=1*, *proxies=None*, *user_agent=None*)
+> *class*`geopy.geocoders.DataBC`(*scheme='https'*, *timeout=1*, *proxies=None*, *user_agent=None*)
 
 [参数详解](https://geopy.readthedocs.io/en/latest/#geopy.geocoders.DataBC)
 
 ### GeocodeFarm
 
-> *class*`geopy.geocoders.``GeocodeFarm`(*api_key=None*, *format_string='%s'*, *timeout=1*, *proxies=None*,*user_agent=None*)
+> *class*`geopy.geocoders.GeocodeFarm`(*api_key=None*, *format_string='%s'*, *timeout=1*, *proxies=None*,*user_agent=None*)
 
 [参数详解](https://geopy.readthedocs.io/en/latest/#geopy.geocoders.GeocodeFarm)
 
 ### GeocoderDotUS
 
-> *class*`geopy.geocoders.``GeocoderDotUS`(*username=None*, *password=None*, *format_string='%s'*,*timeout=1*, *proxies=None*, *user_agent=None*)
+> *class*`geopy.geocoders.GeocoderDotUS`(*username=None*, *password=None*, *format_string='%s'*,*timeout=1*, *proxies=None*, *user_agent=None*)
 
 [参数详解](https://geopy.readthedocs.io/en/latest/#geopy.geocoders.GeocoderDotUS)
 
 ### GeoNames
 
-> *class*`geopy.geocoders.``GeoNames`(*country_bias=None*, *username=None*, *timeout=1*, *proxies=None*,*user_agent=None*)
+> *class*`geopy.geocoders.GeoNames`(*country_bias=None*, *username=None*, *timeout=1*, *proxies=None*,*user_agent=None*)
 
 [参数详解](https://geopy.readthedocs.io/en/latest/#geopy.geocoders.GeoNames)
 
 ### GoogleV3
 
-> *class*`geopy.geocoders.``GoogleV3`(*api_key=None*, *domain='maps.googleapis.com'*, *scheme='https'*,*client_id=None*, *secret_key=None*, *timeout=1*, *proxies=None*, *user_agent=None*)
+> *class*`geopy.geocoders.GoogleV3`(*api_key=None*, *domain='maps.googleapis.com'*, *scheme='https'*,*client_id=None*, *secret_key=None*, *timeout=1*, *proxies=None*, *user_agent=None*)
 
 [参数详解](https://geopy.readthedocs.io/en/latest/#geopy.geocoders.GoogleV3)
 
 ### IGNFrance
 
-> *class*`geopy.geocoders.``IGNFrance`(*api_key*, *username=None*, *password=None*, *referer=None*,*domain='wxs.ign.fr'*, *scheme='https'*, *timeout=1*, *proxies=None*, *user_agent=None*)
+> *class*`geopy.geocoders.IGNFrance`(*api_key*, *username=None*, *password=None*, *referer=None*,*domain='wxs.ign.fr'*, *scheme='https'*, *timeout=1*, *proxies=None*, *user_agent=None*)
 
 [参数详解](https://geopy.readthedocs.io/en/latest/#geopy.geocoders.IGNFrance)
 
 ### LiveAddress
 
-> *class*`geopy.geocoders.``LiveAddress`(*auth_id*, *auth_token*, *candidates=1*, *scheme='https'*, *timeout=1*,*proxies=None*, *user_agent=None*)
+> *class*`geopy.geocoders.LiveAddress`(*auth_id*, *auth_token*, *candidates=1*, *scheme='https'*, *timeout=1*,*proxies=None*, *user_agent=None*)
 
 [参数详解](https://geopy.readthedocs.io/en/latest/#geopy.geocoders.LiveAddress)
 
 ### NaviData
 
-> *class*`geopy.geocoders.``NaviData`(*api_key=None*, *domain='api.navidata.pl'*, *timeout=1*, *proxies=None*,*user_agent=None*)
+> *class*`geopy.geocoders.NaviData`(*api_key=None*, *domain='api.navidata.pl'*, *timeout=1*, *proxies=None*,*user_agent=None*)
 
 [参数详解](https://geopy.readthedocs.io/en/latest/#geopy.geocoders.NaviData)
 
 ### Nominatim
 
-> *class*`geopy.geocoders.``Nominatim`(*format_string='%s'*, *view_box=None*, *country_bias=None*, *timeout=1*,*proxies=None*, *domain='nominatim.openstreetmap.org'*, *scheme='https'*, *user_agent=None*)
+> *class*`geopy.geocoders.Nominatim`(*format_string='%s'*, *view_box=None*, *country_bias=None*, *timeout=1*,*proxies=None*, *domain='nominatim.openstreetmap.org'*, *scheme='https'*, *user_agent=None*)
 
 [参数详解](https://geopy.readthedocs.io/en/latest/#geopy.geocoders.Nominatim)
 
 ### OpenCage
 
-> *class*`geopy.geocoders.``OpenCage`(*api_key*, *domain='api.opencagedata.com'*, *scheme='https'*, *timeout=1*,*proxies=None*, *user_agent=None*)
+> *class*`geopy.geocoders.OpenCage`(*api_key*, *domain='api.opencagedata.com'*, *scheme='https'*, *timeout=1*,*proxies=None*, *user_agent=None*)
 
 [参数详解](https://geopy.readthedocs.io/en/latest/#geopy.geocoders.OpenCage)
 
 ### OpenMapQuest
 
-> *class*`geopy.geocoders.``OpenMapQuest`(*api_key=None*, *format_string='%s'*, *scheme='https'*, *timeout=1*,*proxies=None*, *user_agent=None*)
+> *class*`geopy.geocoders.OpenMapQuest`(*api_key=None*, *format_string='%s'*, *scheme='https'*, *timeout=1*,*proxies=None*, *user_agent=None*)
 
 [参数详解](https://geopy.readthedocs.io/en/latest/#geopy.geocoders.OpenMapQuest)
 
 ### Photon
 
-> *class*`geopy.geocoders.``Photon`(*format_string='%s'*, *scheme='https'*, *timeout=1*, *proxies=None*,*domain='photon.komoot.de'*)
+> *class*`geopy.geocoders.Photon`(*format_string='%s'*, *scheme='https'*, *timeout=1*, *proxies=None*,*domain='photon.komoot.de'*)
 
 [参数详解](https://geopy.readthedocs.io/en/latest/#geopy.geocoders.Photon)
 
 ### YahooPlaceFinder
 
-> *class*`geopy.geocoders.``YahooPlaceFinder`(*consumer_key*, *consumer_secret*, *timeout=1*, *proxies=None*,*user_agent=None*)
+> *class*`geopy.geocoders.YahooPlaceFinder`(*consumer_key*, *consumer_secret*, *timeout=1*, *proxies=None*,*user_agent=None*)
 
 [参数详解](https://geopy.readthedocs.io/en/latest/#geopy.geocoders.YahooPlaceFinder)
 
 ### What3Words
 
-> *class*`geopy.geocoders.``What3Words`(*api_key*, *format_string='%s'*, *scheme='https'*, *timeout=1*,*proxies=None*, *user_agent=None*)
+> *class*`geopy.geocoders.What3Words`(*api_key*, *format_string='%s'*, *scheme='https'*, *timeout=1*,*proxies=None*, *user_agent=None*)
 
 [参数详解](https://geopy.readthedocs.io/en/latest/#geopy.geocoders.What3Words)
 
 ### Yandex
 
-> *class*`geopy.geocoders.``Yandex`(*api_key=None*, *lang=None*, *timeout=1*, *proxies=None*, *user_agent=None*)
+> *class*`geopy.geocoders.Yandex`(*api_key=None*, *lang=None*, *timeout=1*, *proxies=None*, *user_agent=None*)
 
 [参数详解](https://geopy.readthedocs.io/en/latest/#geopy.geocoders.Yandex)
 
