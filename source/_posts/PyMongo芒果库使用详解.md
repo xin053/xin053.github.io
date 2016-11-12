@@ -30,8 +30,6 @@ storage:
 
 <!-- more -->
 
-<!-- more -->
-
 ## PyMongo使用
 
 针对PyMongo3.3.1
