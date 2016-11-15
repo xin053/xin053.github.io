@@ -37,4 +37,4 @@ tags:
 - [dataset简易数据库包使用详解](https://xin053.github.io/2016/11/08/dataset%E7%AE%80%E6%98%93%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8C%85%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3/#more)
 - [PyMongo芒果库使用详解](https://xin053.github.io/2016/11/09/PyMongo%E8%8A%92%E6%9E%9C%E5%BA%93%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3/)
 - [furl链接解析库使用详解](https://xin053.github.io/2016/11/13/furl%E9%93%BE%E6%8E%A5%E8%A7%A3%E6%9E%90%E5%BA%93%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3/)
-- BeautifulSoup html与xml解析库使用详解
+- [BeautifulSoup html与xml解析库使用详解](https://xin053.github.io/2016/11/14/BeautifulSoup%20html%E4%B8%8Exml%E8%A7%A3%E6%9E%90%E5%BA%93%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3/)
