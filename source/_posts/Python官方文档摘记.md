@@ -26,13 +26,10 @@ The Python Language Reference：
 The Python Standard Library：
 
 - [Built-in Functions 必须熟练掌握](https://docs.python.org/3/library/functions.html)
-
 - [Built-in Types 基础内容 要熟悉](https://docs.python.org/3/library/stdtypes.html)
-
 - [Text Processing Services 文本处理服务](https://docs.python.org/3.5/library/text.html)
   - [`format` — 字符串格式化](https://docs.python.org/3.5/library/string.html)
   - [`re` — 正则表达式操作](https://docs.python.org/3.5/library/re.html)
-
 - [Data Types](https://docs.python.org/3/library/datatypes.html)
 
   - [`datetime` — 基础时间和日期模块](https://docs.python.org/3/library/datetime.html)
@@ -55,5 +52,24 @@ The Python Standard Library：
   - [`pprint` — Data pretty printer](https://docs.python.org/3/library/pprint.html)
   - [`reprlib` — 可以限制字符串长度的repr](https://docs.python.org/3/library/reprlib.html)
   - [`enum` — 3.4出现的](https://docs.python.org/3/library/enum.html)
+- [Numeric and Mathematical Modules](https://docs.python.org/3/library/numeric.html)
+  - [`math` — 常用数学操作 例如绝对值 阶乘 sin(x) cos(x)等](https://docs.python.org/3/library/math.html)
+  - [`decimal` — 更精确的数据类型 注意对于float数据要先转成字符串](https://docs.python.org/3/library/decimal.html)
+  - [`fractions` — 分数  如果需要准确精度也需要导入decimal包](https://docs.python.org/3/library/fractions.html)
+  - [`random` — 产生随机数 可指定产生哪个范围的随机数也能指定返回整数 但是不能用在安全方面](https://docs.python.org/3/library/random.html)
+  - [`statistics` — 统计学函数 例如求均值 中值 众数 标准差和方差](https://docs.python.org/3/library/statistics.html)
+- [Functional Programming Modules](https://docs.python.org/3/library/functional.html)
+  - [`itertools` — 提供多种常用便利操作 组合等等 返回值为生成器或者迭代器](https://docs.python.org/3/library/itertools.html)
+  - [`functools` — 提供一些方法对函数进行封装](https://docs.python.org/3/library/functools.html)
+  - [`operator` — 各种常用的操作符都封装到了该模块中 例如加减乘除 大小比较等等](https://docs.python.org/3/library/operator.html)
+- [File and Directory Access](https://docs.python.org/3/library/filesys.html)
+  - [`pathlib` — 路径库](https://docs.python.org/3/library/pathlib.html)  [pathlib路径库使用详解](https://xin053.github.io/2016/07/03/pathlib%E8%B7%AF%E5%BE%84%E5%BA%93%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3/)
+  - [`os.path` — 同样是路径库 与pathlib不同的是后者上升到了对象级别](https://docs.python.org/3/library/os.path.html)
+  - [`stat` — 显示文件mode等信息 也就是linux中 `ls -al` 显示的那些内容](https://docs.python.org/3/library/stat.html)
+  - [`tempfile` — 创建临时文件或临时目录 使用特定的函数可以使得创建的临时文件在关闭的时候自动删除](https://docs.python.org/3/library/tempfile.html)
+  - [`glob` — 匹配文件后缀名  可以包含路径](https://docs.python.org/3/library/glob.html)
+  - [`fnmatch` — 匹配文件名  不能包含路径](https://docs.python.org/3/library/fnmatch.html)
+  - [`linecache` — 获取文件指定行内容并缓存](https://docs.python.org/3/library/linecache.html)
+  - [`shutil` — 提供高层次的文件操作 包括文件复制删除修改权限等 也有linux下`which`命令的功能 也提供简单的文件打包和解包](https://docs.python.org/3/library/shutil.html)
 
 
