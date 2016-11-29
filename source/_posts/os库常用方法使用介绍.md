@@ -25,6 +25,8 @@ os.getenv('PYTHON_HOME')
 # 'F:\\pythonVE'
 ```
 
+<!-- more -->
+
 ### 用户与用户组
 
 获取当前进程或者指定pid进程的用户和用户组，仅支持unix，详情见[`os`](https://docs.python.org/3/library/os.html#os.getegid)
@@ -47,7 +49,7 @@ os.getcwd()
 # 'F:\\pythonVE\\Scripts'
 os.chdir('..')
 os.getcwd()
-'F:\\pythonVE'
+# 'F:\\pythonVE'
 ```
 
 ### listdir与scandir

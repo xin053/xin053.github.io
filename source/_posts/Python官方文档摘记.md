@@ -87,6 +87,6 @@ The Python Standard Library：
 - [Cryptographic Services](https://docs.python.org/3/library/crypto.html)
   - [`hashlib` — 各种加密算法](https://docs.python.org/3/library/hashlib.html)
 - [Generic Operating System Services](https://docs.python.org/3/library/allos.html)
-  - [`os` — 与系统相关的](https://docs.python.org/3/library/os.html) os库常用方法使用介绍
+  - [`os` — 与系统相关的](https://docs.python.org/3/library/os.html) [os库常用方法使用介绍](https://xin053.github.io/2016/11/29/os%E5%BA%93%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95%E4%BD%BF%E7%94%A8%E4%BB%8B%E7%BB%8D/)
 
 
