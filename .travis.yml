@@ -13,12 +13,12 @@ before_install:
 
 install:
   #- npm install  # 安装额外的插件
+
+script:
   - mkdir /home/travis/build/xin053/xin053.github.io/node_modules/aplayer/dist/font  # aplayer与dplayer插件所需要的文件和文件夹,否则加载这些插件会报错
   - touch /home/travis/build/xin053/xin053.github.io/node_modules/aplayer/dist/APlayer.min.css
   - touch /home/travis/build/xin053/xin053.github.io/node_modules/dplayer/dist/DPlayer.min.css
   - touch /home/travis/build/xin053/xin053.github.io/node_modules/aplayer/dist/default.jpg 
-
-script:
   - git submodule init
   - git submodule update    #   用于更新主题,更新源为自己的主题项目，否则会clone最新NexT主题，而官方主题配置文件没有设置
   - hexo clean
