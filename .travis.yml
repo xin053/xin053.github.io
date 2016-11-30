@@ -12,7 +12,7 @@ before_install:
   #- npm install -g hexo-cli  # 安装 hexo
 
 install:
-  #- npm install  # 安装额外的插件
+  #- npm install  # 安装额外的插件   travis会自动安装hexo 以及插件
 
 script:
   - mkdir /home/travis/build/xin053/xin053.github.io/node_modules/aplayer/dist/font  # aplayer与dplayer插件所需要的文件和文件夹,否则加载这些插件会报错
@@ -37,7 +37,7 @@ after_script:
   - git config user.email "13207130066.cool@163.com"  #修改email
   - git add .
   - git commit -m "update"
-  - git push --force --quiet "https://${git_token}@${GH_REF}" master:master  #GH_TOKEN是在Travis中配置token的名称
+  - git push --force --quiet "https://${GH_TOKEN}@${GH_REF}" master:master  #GH_TOKEN是在Travis中配置token的名称
 
 
 env:
