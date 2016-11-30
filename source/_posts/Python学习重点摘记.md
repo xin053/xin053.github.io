@@ -83,26 +83,27 @@ tags:
 19. 两者都比list节省内存，也就是运行的时候才生成数据，而不是像list一次性存储全部数据
 
 20. 生成器的编写比自定义一个迭代器简单很多,使用`yield`关键字或者`()`表达式就可以返回一个生成器,而不用自己写`__iter__()`与`__next__()`方法，并且生成器可以做更多的事情
-   3. 生成器在进行迭代的时候只是暂停,并不是结束，而`finally`语句中的内容是在介绍的时候才执行的
 
-21. 列表与元组
+21. 生成器在进行迭代的时候只是暂停,并不是结束，而`finally`语句中的内容是在介绍的时候才执行的
 
-22. 列表与远足最大的区别就是前者可变，后者不可变，所以元组较安全
+22. 列表与元组
 
-23. 绑定与非绑定方法
+23. 列表与远足最大的区别就是前者可变，后者不可变，所以元组较安全
+
+24. 绑定与非绑定方法
 
    ```python
-   >>> class D(object):
-   ...     def f(self, x):
-   ...         return x
-   ...
-   >>> d = D()
-   >>> D.__dict__['f']  # Stored internally as a function
-   <function f at 0x00C45070>
-   >>> D.f              # Get from a class becomes an unbound method
-   <unbound method D.f>
-   >>> d.f              # Get from an instance becomes a bound method
-   <bound method D.f of <__main__.D object at 0x00B18C90>>
+      >>> class D(object):
+      ...     def f(self, x):
+      ...         return x
+      ...
+      >>> d = D()
+      >>> D.__dict__['f']  # Stored internally as a function
+      <function f at 0x00C45070>
+      >>> D.f              # Get from a class becomes an unbound method
+      <unbound method D.f>
+      >>> d.f              # Get from an instance becomes a bound method
+      <bound method D.f of <__main__.D object at 0x00B18C90>>
    ```
 
-24. ​
+25. 待定
