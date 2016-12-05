@@ -352,7 +352,7 @@ a.group()
 # 'abc'
 ```
 
-## 参考文件
+## 参考文档
 
 - [re官方文档](https://docs.python.org/3/library/re.html)
 - [Regular Expression HOWTO](https://docs.python.org/3/howto/regex.html)

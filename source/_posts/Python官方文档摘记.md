@@ -29,7 +29,7 @@ The Python Standard Library：
 - [Built-in Types 基础内容 要熟悉](https://docs.python.org/3/library/stdtypes.html)
 - [Text Processing Services 文本处理服务](https://docs.python.org/3.5/library/text.html)
   - [`format` — 字符串格式化](https://docs.python.org/3.5/library/string.html)
-  - [`re` — 正则表达式操作](https://docs.python.org/3.5/library/re.html)
+  - [`re` — 正则表达式操作](https://docs.python.org/3.5/library/re.html) [re正则库使用详解](https://xin053.github.io/2016/12/01/re%E6%AD%A3%E5%88%99%E5%BA%93%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3/#more)
 - [Data Types](https://docs.python.org/3/library/datatypes.html)
 
   - [`datetime` — 基础时间和日期模块](https://docs.python.org/3/library/datetime.html)
