@@ -60,7 +60,7 @@ The Python Standard Library：
   - [`statistics` — 统计学函数 例如求均值 中值 众数 标准差和方差](https://docs.python.org/3/library/statistics.html)
 - [Functional Programming Modules](https://docs.python.org/3/library/functional.html)
   - [`itertools` — 提供多种常用便利操作 组合等等 返回值为生成器或者迭代器](https://docs.python.org/3/library/itertools.html)
-  - [`functools` — 提供一些方法对函数进行封装](https://docs.python.org/3/library/functools.html)
+  - [`functools` — 提供一些方法对函数进行封装 以及reduce()](https://docs.python.org/3/library/functools.html)
   - [`operator` — 各种常用的操作符都封装到了该模块中 例如加减乘除 大小比较等等](https://docs.python.org/3/library/operator.html)
 - [File and Directory Access](https://docs.python.org/3/library/filesys.html)
   - [`pathlib` — 路径库](https://docs.python.org/3/library/pathlib.html)  [pathlib路径库使用详解](https://xin053.github.io/2016/07/03/pathlib%E8%B7%AF%E5%BE%84%E5%BA%93%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3/)
@@ -90,7 +90,7 @@ The Python Standard Library：
   - [`os` — 与系统相关的](https://docs.python.org/3/library/os.html) [os库常用方法使用介绍](https://xin053.github.io/2016/11/29/os%E5%BA%93%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95%E4%BD%BF%E7%94%A8%E4%BB%8B%E7%BB%8D/)
   - [`io` — 输入输出流](https://docs.python.org/3/library/io.html)
   - [`argparse` — 命令行工具](https://docs.python.org/3/library/argparse.html) [click命令行工具使用详解](https://xin053.github.io/2016/07/31/click%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3/)
-  - [`logging` — 日志](https://docs.python.org/3/library/logging.html) logging日志库使用详解
+  - [`logging` — 日志](https://docs.python.org/3/library/logging.html) [python logging模块使用教程](http://www.jianshu.com/p/feb86c06c4f4) [Python logging模块详解](http://blog.csdn.net/zyz511919766/article/details/25136485)
   - [`getpass` — 像linux中输入密码一样不显示输入的密码](https://docs.python.org/3/library/getpass.html)
 - [Concurrent Execution](https://docs.python.org/3/library/concurrency.html)
 - [Interprocess Communication and Networking](https://docs.python.org/3/library/ipc.html)
