@@ -13,7 +13,7 @@ tags:
 
 ![](https://scrapy.org/img/scrapylogo.png)
 
-scrapy发出的请求是异步的。能做html/xml解析，数据能导出多种格式，还有强大的插件系统
+scrapy发出的请求是异步的，默认过滤掉相同的url。能做html/xml解析，数据能导出多种格式，还有强大的插件系统
 
 scrapy(1.2.2)目前支持python 3，但是官方文档是也有说明，并不支持windows平台上的python3，因为scrapy的核心依赖`Twisted`目前并不支持windows平台上的python 3，所以知乎上有人推荐使用python 2.7，并需要安装[Visual C++ Compiler for Python 2.7](https://www.microsoft.com/en-us/download/details.aspx?id=44266)，并且window10 也支持这个软件，但是按照python开发者手册上的说明，[python2.7只会维护到2020年](https://docs.python.org/devguide/#status-of-python-branches)，并且python的未来也是指向python 3，基本上主流库都支持了python 3，并且很多库已经开始不支持python 2了，所以这里我还是想使用python 3.
 
@@ -81,7 +81,25 @@ class QuotesSpider(scrapy.Spider):
 
 `name`是spider名称，同一项目中不能同名
 
-`start_requests()`必须返回可迭代的`Requests`(一个`Requests`列表或者是生成器对象)，这些请求是爬虫初始的爬取对象
+`start_requests()`必须返回可迭代的`Requests`(一个`Requests`列表或者是生成器对象)，这些请求是爬虫初始的爬取对象.scrapy提供一种简单实现`start_requests()`的方式，就是使用`start_urls`列表，该列表在后台会被自动封装成`Requests`生成器并使用默认的回掉函数`parse()`
+
+```python
+import scrapy
+
+
+class QuotesSpider(scrapy.Spider):
+    name = "quotes"
+    start_urls = [
+        'http://quotes.toscrape.com/page/1/',
+        'http://quotes.toscrape.com/page/2/',
+    ]
+
+    def parse(self, response):
+        page = response.url.split("/")[-2]
+        filename = 'quotes-%s.html' % page
+        with open(filename, 'wb') as f:
+            f.write(response.body)
+```
 
 `parse()`是默认的回调函数。`Request`可以设置得到响应后的回调函数。
 
@@ -129,7 +147,109 @@ scrapy crawl quotes
 2016-12-11 14:39:29 [scrapy] INFO: Spider closed (finished)
 ```
 
+并在根目录生成`quotes-1.html`和`quotes-2.html`
 
+### 解析网页
+
+使用类选择器对html/xml进行解析,同时scrapy也支持[XPath表达式](http://www.w3school.com.cn/xpath/)
+
+```python
+>>> response.css('title')
+[<Selector xpath='descendant-or-self::title' data='<title>Quotes to Scrape</title>'>]
+
+>>> response.css('title::text').extract()
+['Quotes to Scrape']
+
+>>> response.css('title').extract()
+['<title>Quotes to Scrape</title>']
+
+>>> response.css('li.next a').extract_first()
+'<a href="/page/2/">Next <span aria-hidden="true">→</span></a>'
+
+>>> response.css('li.next a::attr(href)').extract_first()
+'/page/2/'
+```
+
+`response.css()`返回列表，如果想提取第一个，可以这样:
+
+```python
+>>> response.css('title::text').extract_first()
+'Quotes to Scrape'
+
+>>> response.css('title::text')[0].extract()
+'Quotes to Scrape'
+```
+
+推荐使用第一种方式，这样，如果`response.css()`返回空列表，前者会返回`None`，后者会触发异常
+
+除了使用 `extract()` 和 `extract_first()`提取数据，也可以使用`re()`进行正则提取
+
+```python
+>>> response.css('title::text').re(r'Quotes.*')
+['Quotes to Scrape']
+>>> response.css('title::text').re(r'Q\w+')
+['Quotes']
+>>> response.css('title::text').re(r'(\w+) to (\w+)')
+['Quotes', 'Scrape']
+```
+
+### Following links
+
+```python
+import scrapy
+
+
+class QuotesSpider(scrapy.Spider):
+    name = "quotes"
+    start_urls = [
+        'http://quotes.toscrape.com/page/1/',
+    ]
+
+    def parse(self, response):
+        for quote in response.css('div.quote'):
+            yield {
+                'text': quote.css('span.text::text').extract_first(),
+                'author': quote.css('span small::text').extract_first(),
+                'tags': quote.css('div.tags a.tag::text').extract(),
+            }
+
+        next_page = response.css('li.next a::attr(href)').extract_first()
+        if next_page is not None:
+            next_page = response.urljoin(next_page) # urljoin()获取完整url地址
+            yield scrapy.Request(next_page, callback=self.parse)
+```
+
+```python
+import scrapy
+
+
+class AuthorSpider(scrapy.Spider):
+    name = 'author'
+
+    start_urls = ['http://quotes.toscrape.com/']
+
+    def parse(self, response):
+        # follow links to author pages
+        for href in response.css('.author+a::attr(href)').extract():
+            yield scrapy.Request(response.urljoin(href),
+                                 callback=self.parse_author)
+
+        # follow pagination links
+        next_page = response.css('li.next a::attr(href)').extract_first()
+        if next_page is not None:
+            next_page = response.urljoin(next_page)
+            yield scrapy.Request(next_page, callback=self.parse)
+
+    def parse_author(self, response):
+        def extract_with_css(query):
+            return response.css(query).extract_first().strip()
+
+        yield {
+            'name': extract_with_css('h3.author-title::text'),
+            'birthdate': extract_with_css('.author-born-date::text'),
+            'bio': extract_with_css('.author-description::text'),
+        }
+```
 
 ## 参考文档
 
