@@ -1,7 +1,7 @@
 ---
 title: Git使用详解
 date: 2016-06-18 19:58:51
-categories: 
+categories:
 - Git
 tags:
 - Git
@@ -34,7 +34,7 @@ Git 管理项目时，文件流转的三个工作区域：Git 的工作目录，
 ## 检查当前文件状态
 我新建learnGit文件夹，文件夹下就一个空白test1.txt文件，然后git bash切到这个目录，执行`git init`，初始化仓库，然后执行`git add .`后执行`git status`，可以看到以下输出：
 
-```bash
+```powershell
 $ git status
 On branch master
 
@@ -52,7 +52,7 @@ Changes to be committed:
 
 再执行`git status`可以看到：
 
-```bash
+```powershell
 $ git status
 On branch master
 nothing to commit, working directory clean
@@ -60,7 +60,7 @@ nothing to commit, working directory clean
 
 然后我们修改test1.txt的内容，在里面添加一些东西，然后再执行`git status`可以看到：
 
-```bash
+```powershell
 $ git status
 On branch master
 Changes not staged for commit:
@@ -75,7 +75,7 @@ no changes added to commit (use "git add" and/or "git commit -a")
 
 这表示已跟踪的文件被修改了但是没有add，然后我们按照提示执行`git add test1.txt`,再执行`git status`，可以看到以下输出：
 
-```bash
+```powershell
 $ git status
 On branch master
 Changes to be committed:
@@ -87,7 +87,7 @@ Changes to be committed:
 
 也就是已跟踪的文件add到了暂存区，但是还没commit。我们执行`git commit -m 'second commit'`再次提交后，在仓库下新建test2.txt空文件，然后执行`git status`，可以看到以下输出：
 
-```bash
+```powershell
 $ git status
 On branch master
 Untracked files:
@@ -133,7 +133,7 @@ index 3b18e51..b4a78f9 100644
 ### 修改最后一次提交
 有时候我们提交完了才发现漏掉了几个文件没有加，或者提交信息写错了。想要撤消刚才的提交操作，可以使用 `--amend` 选项重新提交：
 
-```bash
+```powershell
 $ git commit --amend
 ```
 
@@ -141,7 +141,7 @@ $ git commit --amend
 
 如果刚才提交时忘了暂存某些修改，可以先补上暂存操作，然后再运行 --amend 提交：
 
-```bash
+```powershell
 $ git commit -m 'initial commit'
 $ git add forgotten_file
 $ git commit --amend
@@ -152,7 +152,7 @@ $ git commit --amend
 ### 取消已经暂存的文件
 用`git reset HEAD ...` 的方式取消暂存，例如：
 
-```bash
+```powershell
 $ git reset HEAD test.txt
 ```
 
@@ -166,7 +166,7 @@ $ git reset HEAD test.txt
 
 也可以加上` -v `选项（译注：此为` --verbose `的简写，取首字母），显示对应的克隆地址：
 
-```bash
+```powershell
 $ git remote -v
 origin	git://github.com/xin053/xin053.github.io.git
 ```
@@ -174,7 +174,7 @@ origin	git://github.com/xin053/xin053.github.io.git
 ### 添加远程仓库
 要添加一个新的远程仓库，可以指定一个简单的名字，以便将来引用，运行`git remote add [shortname] [url]`：
 
-```bash
+```powershell
 $ git remote add test git://github.com/xin053/xin053.github.io.git
 $ git remote -v
 test	git://github.com/xin053/xin053.github.io.git
@@ -183,7 +183,7 @@ test	git://github.com/xin053/xin053.github.io.git
 ### 从远程仓库抓取数据
 正如之前所看到的，可以用下面的命令从远程仓库抓取数据到本地：
 
-```bash
+```powershell
 $ git fetch [remote-name]
 ```
 
@@ -196,7 +196,7 @@ $ git fetch [remote-name]
 ### 推送数据到远程仓库
 项目进行到一个阶段，要同别人分享目前的成果，可以将本地仓库中的数据推送到远程仓库。实现这个任务的命令很简单：` git push [remote-name] [branch-name]`。如果要把本地的 master 分支推送到origin 服务器上（再次说明下，克隆操作会自动使用默认的 master 和 origin 名字），可以运行下面的命令：
 
-```bash
+```powershell
 $ git push origin master
 ```
 
@@ -205,7 +205,7 @@ $ git push origin master
 ### 远程仓库的删除和重命名
 在新版 Git 中可以用` git remote rename `命令修改某个远程仓库在本地的简短名称，比如想把 pb 改成paul，可以这么运行：
 
-```bash
+```powershell
 $ git remote rename pb paul
 $ git remote
 origin
@@ -214,7 +214,7 @@ paul
 
 移除对应的远端仓库，可以运行 `git remote rm` 命令：
 
-```bash
+```powershell
 $ git remote rm paul
 $ git remote
 origin
@@ -226,7 +226,7 @@ origin
 ### 列显已有的标签
 列出现有标签的命令非常简单，直接运行` git tag `即可：
 
-```bash
+```powershell
 $ git tag
 v0.1
 v1.3
@@ -236,7 +236,7 @@ v1.3
 
 我们可以用特定的搜索模式列出符合条件的标签。在 Git 自身项目仓库中，有着超过 240 个标签，如果你只对 1.4.2 系列的版本感兴趣，可以运行下面的命令：
 
-```bash
+```powershell
 $ git tag -l 'v1.4.2.*'
 v1.4.2.1
 v1.4.2.2
@@ -250,7 +250,7 @@ Git 使用的标签有两种类型：轻量级的（lightweight）和含附注�
 #### 含附注的标签
 创建一个含附注类型的标签非常简单，用` -a `（译注：取 annotated 的首字母）指定标签名字即可：
 
-```bash
+```powershell
 $ git tag -a v1.4 -m 'my version 1.4'
 $ git tag
 v0.1
@@ -261,7 +261,7 @@ v1.4
 #### 轻量级标签
 轻量级标签实际上就是一个保存着对应提交对象的校验和信息的文件。要创建这样的标签，一个`-a`，`-s` 或 `-m` 选项都不用，直接给出标签名字即可：
 
-```bash
+```powershell
 $ git tag v1.4-lw
 $ git tag
 v0.1
@@ -274,7 +274,7 @@ v1.5
 ### 显示标签内容
 可以使用` git show `命令查看相应标签的版本信息，并连同显示打标签时的提交对象。
 
-```bash
+```powershell
 $ git show v1.4
 tag v1.4
 Tagger: Scott Chacon 
@@ -294,7 +294,7 @@ Date:   Sun Feb 8 19:02:46 2009 -0800
 ### 签署标签
 如果你有自己的私钥，还可以用 GPG 来签署标签，只需要把之前的` -a `改为` -s `（译注： 取 signed 的首字母）即可：
 
-```bash
+```powershell
 $ git tag -s v1.5 -m 'my signed 1.5 tag'
 You need a passphrase to unlock the secret key for
 user: "Scott Chacon "
@@ -308,14 +308,14 @@ user: "Scott Chacon "
 ### 后期加注标签
 有时候我们可能需要在以往的提交记录上打标签，这时候只要在打标签的时候跟上对应提交对象的校验和（或前几位字符）即可：
 
-```bash
+```powershell
 $ git tag -a v1.2 9fceb02
 ```
 
 ### 分享标签
 默认情况下，`git push` 并不会把标签传送到远端服务器上，只有通过显式命令才能分享标签到远端仓库。其命令格式如同推送分支，运行`git push origin [tagname]` 即可：
 
-```bash
+```powershell
 $ git push origin v1.5
 Counting objects: 50, done.
 Compressing objects: 100% (38/38), done.
@@ -327,7 +327,7 @@ To git@github.com:schacon/simplegit.git
 
 如果要一次推送所有本地新增的标签上去，可以使用` --tags `选项：
 
-```bash
+```powershell
 $ git push origin --tags
 Counting objects: 50, done.
 Compressing objects: 100% (38/38), done.
@@ -355,7 +355,7 @@ To git@github.com:schacon/simplegit.git
 
 为直观起见，我们假设在工作目录中有三个文件，准备将它们暂存后提交。暂存操作会对每一个文件计算校验和（即第一章中提到的 SHA-1 哈希字串），然后把当前版本的文件快照保存到 Git 仓库中（Git 使用 blob 类型的对象存储这些快照），并将校验和加入暂存区域：
 
-```bash
+```powershell
 $ git add README test.rb LICENSE
 $ git commit -m 'initial commit of my project'
 ```
@@ -376,7 +376,7 @@ $ git commit -m 'initial commit of my project'
 
 那么，Git 又是如何创建一个新的分支的呢？答案很简单，创建一个新的分支指针。比如新建一个 testing 分支，可以使用 `git branch `命令：
 
-```bash
+```powershell
 $ git branch testing
 ```
 
@@ -390,7 +390,7 @@ $ git branch testing
 
 要切换到其他分支，可以执行` git checkout `命令。我们现在转换到新建的 testing 分支：
 
-```bash
+```powershell
 $ git checkout testing
 ```
 
@@ -400,7 +400,7 @@ $ git checkout testing
 
 这样的实现方式会给我们带来什么好处呢？好吧，现在不妨再提交一次：
 
-```bash
+```powershell
 $ vim test.rb
 $ git commit -a -m 'made a change'
 ```
@@ -409,7 +409,7 @@ $ git commit -a -m 'made a change'
 
 非常有趣，现在 testing 分支向前移动了一格，而 master 分支仍然指向原先 `git checkout` 时所在的 commit 对象。现在我们回到 master 分支看看：
 
-```bash
+```powershell
 $ git checkout master
 ```
 
@@ -419,7 +419,7 @@ $ git checkout master
 
 我们作些修改后再次提交：
 
-```bash
+```powershell
 $ vim test.rb
 $ git commit -a -m 'made other changes'
 ```
@@ -453,14 +453,14 @@ $ git commit -a -m 'made other changes'
 
 现在，你决定要修补问题追踪系统上的 #53 问题。顺带说明下，Git 并不同任何特定的问题追踪系统打交道。这里为了说明要解决的问题，才把新建的分支取名为 iss53。要新建并切换到该分支，运行`git checkout` 并加上 `-b` 参数：
 
-```bash
+```powershell
 $ git checkout -b iss53
 Switched to a new branch "iss53"
 ```
 
 这相当于执行下面这两条命令：
 
-```bash
+```powershell
 $ git branch iss53
 $ git checkout iss53
 ```
@@ -475,7 +475,7 @@ $ git checkout iss53
 
 不过在此之前，留心你的暂存区或者工作目录里，那些还没有提交的修改，它会和你即将检出的分支产生冲突从而阻止 Git 为你切换分支。切换分支的时候最好保持一个清洁的工作区域。稍后会介绍几个绕过这种问题的办法（分别叫做 stashing 和 commit amending）。目前已经提交了所有的修改，所以接下来可以正常转换到master 分支：
 
-```bash
+```powershell
 $ git checkout master
 Switched to branch "master"
 ```
@@ -484,7 +484,7 @@ Switched to branch "master"
 
 接下来，你得进行紧急修补。我们创建一个紧急修补分支 hotfix 来开展工作，直到搞定
 
-```bash
+```powershell
 $ git checkout -b 'hotfix'
 Switched to a new branch "hotfix"
 $ vim index.html
@@ -497,7 +497,7 @@ $ git commit -a -m 'fixed the broken email address'
 
 有必要作些测试，确保修补是成功的，然后回到 master 分支并把它合并进来，然后发布到生产服务器。用 `git merge` 命令来进行合并：
 
-```bash
+```powershell
 $ git checkout master
 $ git merge hotfix
 Updating f42c576..3a0874c
@@ -516,14 +516,14 @@ Fast forward
 
 在那个超级重要的修补发布以后，你想要回到被打扰之前的工作。由于当前 hotfix 分支和 master 都指向相同的提交对象，所以hotfix 已经完成了历史使命，可以删掉了。使用` git branch `的` -d `选项执行删除操作：
 
-```bash
+```powershell
 $ git branch -d hotfix
 Deleted branch hotfix (3a0874c).
 ```
 
 现在回到之前未完成的 #53 问题修复分支上继续工作
 
-```bash
+```powershell
 $ git checkout iss53
 Switched to branch "iss53"
 $ vim index.html
@@ -539,7 +539,7 @@ $ git commit -a -m 'finished the new footer [issue 53]'
 ### 分支的合并
 在问题 #53 相关的工作完成之后，可以合并回 master 分支。实际操作同前面合并 hotfix 分支差不多，只需回到master 分支，运行 `git merge` 命令指定要合并进来的分支：
 
-```bash
+```powershell
 $ git checkout master
 $ git merge iss53
 Merge made by recursive.
@@ -557,14 +557,14 @@ Merge made by recursive.
 
 既然之前的工作成果已经合并到 master 了，那么 iss53 也就没用了。你可以就此删除它，并在问题追踪系统里关闭该问题。
 
-```bash
+```powershell
 $ git branch -d iss53
 ```
 
 ### 遇到冲突时的分支合并
 有时候合并操作并不会如此顺利。如果在不同的分支中都修改了同一个文件的同一部分，Git 就无法干净地把两者合到一起（译注：逻辑上说，这种问题只能由人来裁决。）。如果你在解决问题 #53 的过程中修改了hotfix 中修改的部分，将得到类似下面的结果：
 
-```bash
+```powershell
 $ git merge iss53
 Auto-merging index.html
 CONFLICT (content): Merge conflict in index.html
@@ -573,7 +573,7 @@ Automatic merge failed; fix conflicts and then commit the result.
 
 Git 作了合并，但**没有提交**，它会停下来等你解决冲突。要看看哪些文件在合并时发生冲突，可以用 `git status` 查阅：
 
-```bash
+```powershell
 [master*]$ git status
 index.html: needs merge
 # On branch master
@@ -627,7 +627,7 @@ index.html: needs merge
 
 如果你有个叫 serverfix 的分支需要和他人一起开发，可以运行 `git push (远程仓库名) (分支名)`：
 
-```bash
+```powershell
 $ git push origin serverfix
 Counting objects: 20, done.
 Compressing objects: 100% (14/14), done.
@@ -643,7 +643,7 @@ To git@github.com:schacon/simplegit.git
 
 接下来，当你的协作者再次从服务器上获取数据时，他们将得到一个新的远程分支 origin/serverfix：
 
-```bash
+```powershell
 $ git fetch origin
 remote: Counting objects: 20, done.
 remote: Compressing objects: 100% (14/14), done.
@@ -660,7 +660,7 @@ From git@github.com:schacon/simplegit
 
 在克隆仓库时，Git 通常会自动创建一个名为 master 的分支来跟踪 origin/master。这正是`git push` 和 `git pull` 一开始就能正常工作的原因。当然，你可以随心所欲地设定为其它跟踪分支，比如origin 上除了 master 之外的其它分支。刚才我们已经看到了这样的一个例子：`git checkout -b [分支名] [远程名]/[分支名]`。如果你有 1.6.2 以上版本的 Git，还可以用`--track` 选项简化：
 
-```bash
+```powershell
 $ git checkout --track origin/serverfix
 Branch serverfix set up to track remote branch refs/remotes/origin/serverfix.
 Switched to a new branch "serverfix"
@@ -668,7 +668,7 @@ Switched to a new branch "serverfix"
 
 要为本地分支设定不同于远程分支的名字，只需在前个版本的命令里换个名字：
 
-```bash
+```powershell
 $ git checkout -b sf origin/serverfix
 Branch sf set up to track remote branch refs/remotes/origin/serverfix.
 Switched to a new branch "sf"
@@ -679,7 +679,7 @@ Switched to a new branch "sf"
 ### 删除远程分支
 如果不再需要某个远程分支了，比如搞定了某个特性并把它合并进了远程的 master 分支（或任何其他存放稳定代码的地方），可以用这个非常**无厘头**的语法来删除它：`git push [远程名] :[分支名]`。如果想在服务器上删除serverfix 分支，运行下面的命令：
 
-```bash
+```powershell
 $ git push origin :serverfix
 To git@github.com:schacon/simplegit.git
  - [deleted]         serverfix
@@ -701,7 +701,7 @@ To git@github.com:schacon/simplegit.git
 
 其实，还有另外一个选择：你可以把在 C3 里产生的变化补丁在 C4 的基础上重新打一遍。在 Git 里，这种操作叫做_衍合（rebase）_。有了 rebase 命令，就可以把在一个分支里提交的改变移到另一个分支里重放一遍。
 
-```bash
+```powershell
 $ git checkout experiment
 $ git rebase master
 First, rewinding head to replay your work on top of it...
@@ -731,7 +731,7 @@ Applying: added staged command
 
 假设在接下来的一次软件发布中，我们决定先把客户端的修改并到主线中，而暂缓并入服务端软件的修改（因为还需要进一步测试）。这个时候，我们就可以把基于 server 分支而非 master 分支的改变（即 C8 和 C9），跳过 server 直接放到master 分支中重演一遍，但这需要用 git rebase 的 --onto 选项指定新的基底分支master：
 
-```bash
+```powershell
 $ git rebase --onto master server client
 ```
 
@@ -741,7 +741,7 @@ $ git rebase --onto master server client
 
 现在可以快进 master 分支了
 
-```bash
+```powershell
 $ git checkout master
 $ git merge client
 ```
@@ -750,7 +750,7 @@ $ git merge client
 
 现在我们决定把 server 分支的变化也包含进来。我们可以直接把 server 分支衍合到 master，而不用手工切换到 server 分支后再执行衍合操作 — git rebase [主分支] [特性分支] 命令会先取出特性分支server，然后在主分支 master 上重演：
 
-```bash
+```powershell
 $ git rebase master server
 ```
 
@@ -760,14 +760,14 @@ $ git rebase master server
 
 然后就可以快进主干分支 master 了：
 
-```bash
+```powershell
 $ git checkout master
 $ git merge server
 ```
 
 现在 client 和 server 分支的变化都已经集成到主干分支来了，可以删掉它们了。最终我们的提交历史会变成图
 
-```bash
+```powershell
 $ git branch -d client
 $ git branch -d server
 ```
@@ -814,13 +814,13 @@ Git 使用的传输协议中最常见的可能就是 SSH 了。这是因为大�
 
 通过 SSH 克隆一个 Git 仓库，你可以像下面这样给出 ssh:// 的 URL：
 
-```bash
+```powershell
 $ git clone ssh://user@server:project.git
 ```
 
 或者不指明某个协议 — 这时 Git 会默认使用 SSH ：
 
-```bash
+```powershell
 $ git clone user@server:project.git
 ```
 
@@ -872,7 +872,7 @@ HTTP 协议的消极面在于，相对来说客户端效率更低。克隆或者
 
 首先，请不要在更新中提交多余的白字符（whitespace）。Git 有种检查此类问题的方法，在提交之前，先运行 `git diff --check`，会把可能的多余白字符修正列出来。下面的示例，我已经把终端中显示为红色的白字符用`X` 替换掉：
 
-```bash
+```powershell
 $ git diff --check
 lib/simplegit.rb:5: trailing whitespace.
 +    @git_dir = File.expand_path(git_dir)XX
@@ -903,7 +903,7 @@ lib/simplegit.rb:26: trailing whitespace.
 ### 私有的小型团队
 让我们来看看，两个开发者一 起使用同一个共享仓库，会发生些什么。第一个人，John，克隆了仓库，作了些更新，在本地提交。（下面的例子中省略了常规提示，用... 代替以节约版面。）
 
-```bash
+```powershell
 # John's Machine
 $ git clone john@githost:simplegit.git
 Initialized empty Git repository in /home/john/simplegit/.git/
@@ -917,7 +917,7 @@ $ git commit -am 'removed invalid default value'
 
 第二个开发者，Jessica，一样这么做：克隆仓库，提交更新：
 
-```bash
+```powershell
 # Jessica's Machine
 $ git clone jessica@githost:simplegit.git
 Initialized empty Git repository in /home/jessica/simplegit/.git/
@@ -931,7 +931,7 @@ $ git commit -am 'add reset task'
 
 现在，Jessica 将她的工作推送到服务器上：
 
-```bash
+```powershell
 # Jessica's Machine
 $ git push origin master
 ...
@@ -941,7 +941,7 @@ To jessica@githost:simplegit.git
 
 John 也尝试推送自己的工作上去：
 
-```bash
+```powershell
 # John's Machine
 $ git push origin master
 To john@githost:simplegit.git
@@ -951,7 +951,7 @@ error: failed to push some refs to 'john@githost:simplegit.git'
 
 John 的推送操作被驳回，因为 Jessica 已经推送了新的数据上去。请注意，特别是你用惯了 Subversion 的话，这里其实修改的是两个文件，而不是同一个文件的同一个地方。Subversion 会在服务器端自动合并提交上来的更新，而 Git 则必须先在本地合并后才能推送。于是，John 不得不先把 Jessica 的更新拉下来：
 
-```bash
+```powershell
 $ git fetch origin
 ...
 From john@githost:simplegit
@@ -964,7 +964,7 @@ From john@githost:simplegit
 
 虽然 John 下载了 Jessica 推送到服务器的最近更新（fbff5），但目前只是 origin/master 指针指向它，而当前的本地分支master 仍然指向自己的更新（738ee），所以需要先把她的提交合并过来，才能继续推送数据：
 
-```bash
+```powershell
 $ git merge origin/master
 Merge made by recursive.
  TODO |    1 +
@@ -977,7 +977,7 @@ Merge made by recursive.
 
 现在，John 应该再测试一下代码是否仍然正常工作，然后将合并结果（72bbc）推送到服务器上：
 
-```bash
+```powershell
 $ git push origin master
 ...
 To john@githost:simplegit.git
@@ -994,7 +994,7 @@ To john@githost:simplegit.git
 
 Jessica 想要先和服务器上的数据同步，所以先下载数据：
 
-```bash
+```powershell
 # Jessica's Machine
 $ git fetch origin
 ...
@@ -1008,7 +1008,7 @@ From jessica@githost:simplegit
 
 现在，Jessica 可以将特性分支上的工作并到 master 分支，然后再并入 John 的工作（origin/master）到自己的master 分支，最后再推送回服务器。当然，得先切回主分支才能集成所有数据：
 
-```bash
+```powershell
 $ git checkout master
 Switched to branch "master"
 Your branch is behind 'origin/master' by 2 commits, and can be fast-forwarded.
@@ -1016,7 +1016,7 @@ Your branch is behind 'origin/master' by 2 commits, and can be fast-forwarded.
 
 要合并 origin/master 或 issue54 分支，谁先谁后都没有关系，因为它们都在上游（upstream）（**译注：想像分叉的更新像是汇流成河的源头，所以上游 upstream 是指最新的提交**），所以无所谓先后顺序，最终合并后的内容快照都是一样的，而仅是提交历史看起来会有些先后差别。Jessica 选择先合并issue54：
 
-```bash
+```powershell
 $ git merge issue54
 Updating fbff5bc..4af4298
 Fast forward
@@ -1027,7 +1027,7 @@ Fast forward
 
 正如所见，没有冲突发生，仅是一次简单快进。现在 Jessica 开始合并 John 的工作（origin/master）：
 
-```bash
+```powershell
 $ git merge origin/master
 Auto-merging lib/simplegit.rb
 Merge made by recursive.
@@ -1041,7 +1041,7 @@ Merge made by recursive.
 
 现在 Jessica 已经可以在自己的 master 分支中访问 origin/master 的最新改动了，所以她应该可以成功推送最后的合并结果到服务器上（假设 John 此时没再推送新数据上来）：
 
-```bash
+```powershell
 $ git push origin master
 ...
 To jessica@githost:simplegit.git
@@ -1063,7 +1063,7 @@ To jessica@githost:simplegit.git
 
 让我们跟随 Jessica 的视角看看她的工作流程。她参与开发两项特性，同时和不同小组的开发者一起协作。克隆生成本地仓库后，她打算先着手开发特性 A。于是创建了新的featureA 分支，继而编写代码：
 
-```bash
+```powershell
 # Jessica's Machine
 $ git checkout -b featureA
 Switched to a new branch "featureA"
@@ -1075,7 +1075,7 @@ $ git commit -am 'add limit to log function'
 
 此刻，她需要分享目前的进展给 John，于是她将自己的 featureA 分支提交到服务器。由于 Jessica 没有权限推送数据到主仓库的master 分支（只有集成管理员有此权限），所以只能将此分支推上去同 John 共享协作：
 
-```bash
+```powershell
 $ git push origin featureA
 ...
 To jessica@githost:simplegit.git
@@ -1084,7 +1084,7 @@ To jessica@githost:simplegit.git
 
 Jessica 发邮件给 John 让他上来看看 featureA 分支上的进展。在等待他的反馈之前，Jessica 决定继续工作，和 Josie 一起开发featureB 上的特性 B。当然，先创建此分支，分叉点以服务器上的 master 为起点：
 
-```bash
+```powershell
 # Jessica's Machine
 $ git fetch origin
 $ git checkout -b featureB origin/master
@@ -1093,7 +1093,7 @@ Switched to a new branch "featureB"
 
 随后，Jessica 在 featureB 上提交了若干更新：
 
-```bash
+```powershell
 $ vim lib/simplegit.rb
 $ git commit -am 'made the ls-tree function recursive'
 [featureB e5b0fdc] made the ls-tree function recursive
@@ -1110,7 +1110,7 @@ $ git commit -am 'add ls-files'
 
 Jessica 正准备推送自己的进展上去，却收到 Josie 的来信，说是她已经将自己的工作推到服务器上的 featureBee 分支了。这样，Jessica 就必须先将 Josie 的代码合并到自己本地分支中，才能再一起推送回服务器。她用git fetch 下载 Josie 的最新代码：
 
-```bash
+```powershell
 $ git fetch origin
 ...
 From jessica@githost:simplegit
@@ -1119,7 +1119,7 @@ From jessica@githost:simplegit
 
 然后 Jessica 使用 git merge 将此分支合并到自己分支中：
 
-```bash
+```powershell
 $ git merge origin/featureBee
 Auto-merging lib/simplegit.rb
 Merge made by recursive.
@@ -1129,7 +1129,7 @@ Merge made by recursive.
 
 合并很顺利，但另外有个小问题：她要推送自己的 featureB 分支到服务器上的 featureBee 分支上去。当然，她可以使用冒号（:）格式指定目标分支：
 
-```bash
+```powershell
 $ git push origin featureB:featureBee
 ...
 To jessica@githost:simplegit.git
@@ -1138,7 +1138,7 @@ To jessica@githost:simplegit.git
 
 接下来，John 发邮件给 Jessica 告诉她，他看了之后作了些修改，已经推回服务器 featureA 分支，请她过目下。于是 Jessica 运行git fetch 下载最新数据：
 
-```bash
+```powershell
 $ git fetch origin
 ...
 From jessica@githost:simplegit
@@ -1147,7 +1147,7 @@ From jessica@githost:simplegit
 
 最后，她将 John 的工作合并到自己的 featureA 分支中：
 
-```bash
+```powershell
 $ git checkout featureA
 Switched to branch "featureA"
 $ git merge origin/featureA
@@ -1159,7 +1159,7 @@ Fast forward
 
 Jessica 稍做一番修整后同步到服务器：
 
-```bash
+```powershell
 $ git commit -am 'small tweak'
 [featureA ed774b3] small tweak
  1 files changed, 1 insertions(+), 1 deletions(-)
@@ -1186,7 +1186,7 @@ To jessica@githost:simplegit.git
 
 但不管哪种方式，起先我们总需要克隆原始仓库，而后创建特性分支开展工作。基本工作流程如下：
 
-```bash
+```powershell
 $ git clone (url)
 $ cd project
 $ git checkout -b featureA
@@ -1198,13 +1198,13 @@ $ git commit
 
 在完成了特性分支开发，提交给项目维护者之前，先到原始项目的页面上点击“Fork”按钮，创建一个自己可写的公共仓库（译注：即下面的 url 部分，参照后续的例子，应该是git://githost/simplegit.git）。然后将此仓库添加为本地的第二个远端仓库，姑且称为 myfork：
 
-```bash
+```powershell
 $ git remote add myfork (url)
 ```
 
 你需要将本地更新推送到这个仓库。要是将远端 master 合并到本地再推回去，还不如把整个特性分支推上去来得干脆直接。而且，假若项目维护者未采纳你的贡献的话（不管是直接合并还是 cherry pick），都不用回退（rewind）自己的 master 分支。但若维护者合并或 cherry-pick 了你的工作，最后总还可以从他们的更新中同步这些代码。好吧，现在先把 featureA 分支整个推上去：
 
-```bash
+```powershell
 $ git push myfork featureA
 ```
 
@@ -1212,7 +1212,7 @@ $ git push myfork featureA
 
 `request-pull` 命令接受两个参数，第一个是本地特性分支开始前的原始分支，第二个是请求对方来抓取的 Git 仓库 URL（译注：即下面myfork 所指的，自己可写的公共仓库）。比如现在Jessica 准备要给 John 发一个 pull requst，她之前在自己的特性分支上提交了两次更新，并把分支整个推到了服务器上，所以运行该命令会看到：
 
-```bash
+```powershell
 $ git request-pull origin/master myfork
 The following changes since commit 1edee6b1d61823a2de3b09c160d7080b8d1b3a40:
   John Smith (1):
@@ -1234,7 +1234,7 @@ Jessica Smith (2):
 
 **像这样随时保持自己的 master 分支和官方 origin/master 同步，并将自己的工作限制在特性分支上的做法，既方便又灵活，采纳和丢弃都轻而易举。就算原始主干发生变化，我们也能重新衍合提供新的补丁**。比如现在要开始第二项特性的开发，不要在原来已推送的特性分支上继续，还是按原始master 开始：
 
-```bash
+```powershell
 $ git checkout -b featureB origin/master
 $ (work)
 $ git commit
@@ -1249,7 +1249,7 @@ $ git fetch origin
 
 假设项目管理员接纳了许多别人提交的补丁后，准备要采纳你提交的第一个分支，却发现因为代码基准不一致，合并工作无法正确干净地完成。这就需要你再次衍合到最新的 origin/master，解决相关冲突，然后重新提交你的修改：
 
-```bash
+```powershell
 $ git checkout featureA
 $ git rebase origin/master
 $ git push -f myfork featureA
@@ -1263,7 +1263,7 @@ $ git push -f myfork featureA
 
 再考虑另一种情形：管理员看过第二个分支后觉得思路新颖，但想请你改下具体实现。我们只需以当前 origin/master 分支为基准，开始一个新的特性分支featureBv2，然后把原来的 featureB 的更新拿过来，解决冲突，按要求重新实现部分代码，然后将此特性分支推送上去：
 
-```bash
+```powershell
 $ git checkout -b featureBv2 origin/master
 $ git merge --no-commit --squash featureB
 $ (change implementation)
@@ -1281,7 +1281,7 @@ $ git push myfork featureBv2
 ### 祖先引用
 另一种指明某次提交的常用方法是通过它的祖先。如果你在引用最后加上一个 `^`，Git 将其理解为此次提交的父提交。 假设你的工程历史是这样的：
 
-```bash
+```powershell
 $ git log --pretty=format:'%h %s' --graph
 * 734713b fixed refs handling, added gc auto, updated tests
 *   d921970 Merge commit 'phedders/rdocs'
@@ -1295,7 +1295,7 @@ $ git log --pretty=format:'%h %s' --graph
 
 那么，想看上一次提交，你可以使用 `HEAD^`，意思是“HEAD 的父提交”：
 
-```bash
+```powershell
 $ git show HEAD^
 commit d921970aadf03b3cf0e71becdaab3147ba71cdef
 Merge: 1c002dd... 35cfb2b...
@@ -1307,7 +1307,7 @@ Date:   Thu Dec 11 15:08:43 2008 -0800
 
 你也可以在 `^` 后添加一个数字——例如，`d921970^2` 意思是“d921970 的第二父提交”。这种语法只在合并提交时有用，因为合并提交可能有多个父提交。第一父提交是你合并时所在分支，而第二父提交是你所合并的分支：
 
-```bash
+```powershell
 $ git show d921970^
 commit 1c002dd4b536e7479fe34593e72e6c6c1819e53b
 Author: Scott Chacon <schacon@gmail.com>
@@ -1325,7 +1325,7 @@ Date:   Wed Dec 10 22:22:03 2008 +0000
 
 另外一个指明祖先提交的方法是 `~`。这也是指向第一父提交，所以 `HEAD~` 和 `HEAD^` 是等价的。当你指定数字的时候就明显不一样了。`HEAD~2` 是指“第一父提交的第一父提交”，也就是“祖父提交”——它会根据你指定的次数检索第一父提交。例如，在上面列出的历史记录里面，`HEAD~3` 会是
 
-```bash
+```powershell
 $ git show HEAD~3
 commit 1c3618887afb5fbcbea25b7c013f4e2114448b8d
 Author: Tom Preston-Werner <tom@mojombo.com>
@@ -1342,7 +1342,7 @@ Date:   Fri Nov 7 13:47:59 2008 -0500
 #### 储藏你的工作
 为了演示这一功能，你可以进入你的项目，在一些文件上进行工作，有可能还暂存其中一个变更。如果你运行 `git status`，你可以看到你的中间状态：
 
-```bash
+```powershell
 $ git status
 # On branch master
 # Changes to be committed:
@@ -1359,7 +1359,7 @@ $ git status
 
 现在你想切换分支，但是你还不想提交你正在进行中的工作；所以你储藏这些变更。为了往堆栈推送一个新的储藏，只要运行 `git stash`：
 
-```bash
+```powershell
 $ git stash
 Saved working directory and index state \
   "WIP on master: 049d078 added the index file"
@@ -1369,7 +1369,7 @@ HEAD is now at 049d078 added the index file
 
 你的工作目录就干净了：
 
-```bash
+```powershell
 $ git status
 # On branch master
 nothing to commit (working directory clean)
@@ -1377,7 +1377,7 @@ nothing to commit (working directory clean)
 
 这时，你可以方便地切换到其他分支工作；你的变更都保存在栈上。要查看现有的储藏，你可以使用 `git stash list`：
 
-```bash
+```powershell
 $ git stash list
 stash@{0}: WIP on master: 049d078 added the index file
 stash@{1}: WIP on master: c264051... Revert "added file_size"
@@ -1386,7 +1386,7 @@ stash@{2}: WIP on master: 21d80a5... added number to log
 
 在这个案例中，之前已经进行了两次储藏，所以你可以访问到三个不同的储藏。你可以重新应用你刚刚实施的储藏，所采用的命令就是之前在原始的 stash 命令的帮助输出里提示的：`git stash apply`。如果你想应用更早的储藏，你可以通过名字指定它，像这样：git `stash apply stash@{2}`。如果你不指明，Git 默认使用最近的储藏并尝试应用它：
 
-```bash
+```powershell
 $ git stash apply
 # On branch master
 # Changed but not updated:
@@ -1401,7 +1401,7 @@ $ git stash apply
 
 对文件的变更被重新应用，但是被暂存的文件没有重新被暂存。想那样的话，你必须在运行 git stash apply 命令时带上一个 --index 的选项来告诉命令重新应用被暂存的变更。如果你是这么做的，你应该已经回到你原来的位置：
 
-```bash
+```powershell
 $ git stash apply --index
 # On branch master
 # Changes to be committed:
@@ -1418,7 +1418,7 @@ $ git stash apply --index
 
 apply 选项只尝试应用储藏的工作——储藏的内容仍然在栈上。要移除它，你可以运行 `git stash drop`，加上你希望移除的储藏的名字：
 
-```bash
+```powershell
 $ git stash list
 stash@{0}: WIP on master: 049d078 added the index file
 stash@{1}: WIP on master: c264051... Revert "added file_size"
@@ -1439,7 +1439,7 @@ Git 通过子模块处理这个问题。子模块允许你将一个 Git 仓库�
 #### 子模块初步
 假设你想把 Rack 库（一个 Ruby 的 web 服务器网关接口）加入到你的项目中，可能既要保持你自己的变更，又要延续上游的变更。首先你要把外部的仓库克隆到你的子目录中。你通过`git submodule add`将外部项目加为子模块：
 
-```bash
+```powershell
 $ git submodule add git://github.com/chneukirchen/rack.git rack
 Initialized empty Git repository in /opt/subtest/rack/.git/
 remote: Counting objects: 3181, done.
@@ -1451,7 +1451,7 @@ Resolving deltas: 100% (1951/1951), done.
 
 现在你就在项目里的rack子目录下有了一个 Rack 项目。你可以进入那个子目录，进行变更，加入你自己的远程可写仓库来推送你的变更，从原始仓库拉取和归并等等。如果你在加入子模块后立刻运行`git status`，你会看到下面两项：
 
-```bash
+```powershell
 $ git status
 # On branch master
 # Changes to be committed:
@@ -1464,7 +1464,7 @@ $ git status
 
 首先你注意到有一个`.gitmodules`文件。这是一个配置文件，保存了项目 URL 和你拉取到的本地子目录
 
-```bash
+```powershell
 $ cat .gitmodules 
 [submodule "rack"]
       path = rack
@@ -1475,7 +1475,7 @@ $ cat .gitmodules
 
 `git status`的输出里所列的另一项目是 rack 。如果你运行在那上面运行`git diff`，会发现一些有趣的东西：
 
-```bash
+```powershell
 $ git diff --cached rack
 diff --git a/rack b/rack
 new file mode 160000
@@ -1492,7 +1492,7 @@ index 0000000..08d709f
 
 当你提交时，会看到类似下面的：
 
-```bash
+```powershell
 $ git commit -m 'first commit with submodule rack'
 [master 0550271] first commit with submodule rack
  2 files changed, 4 insertions(+), 0 deletions(-)
@@ -1504,7 +1504,7 @@ $ git commit -m 'first commit with submodule rack'
 
 你可以将rack目录当作一个独立的项目，保持一个指向子目录的最新提交的指针然后反复地更新上层项目。所有的Git命令都在两个子目录里独立工作：
 
-```bash
+```powershell
 $ git log -1
 commit 0550271328a0038865aad6331e620cd7238601bb
 Author: Scott Chacon <schacon@gmail.com>
@@ -1523,7 +1523,7 @@ Date:   Wed Mar 25 14:49:04 2009 +0100
 #### 克隆一个带子模块的项目
 这里你将克隆一个带子模块的项目。当你接收到这样一个项目，你将得到了包含子项目的目录，但里面没有文件：
 
-```bash
+```powershell
 $ git clone git://github.com/schacon/myproject.git
 Initialized empty Git repository in /opt/myproject/.git/
 remote: Counting objects: 6, done.
@@ -1541,7 +1541,7 @@ $
 
 rack目录存在了，但是是空的。你必须运行两个命令：`git submodule init`来初始化你的本地配置文件，`git submodule update`来从那个项目拉取所有数据并检出你上层项目里所列的合适的提交：
 
-```bash
+```powershell
 $ git submodule init
 Submodule 'rack' (git://github.com/chneukirchen/rack.git) registered for path 'rack'
 $ git submodule update
@@ -1556,7 +1556,7 @@ Submodule path 'rack': checked out '08d709f78b8c5b0fbeb7821e37fa53e69afcf433'
 
 现在你的rack子目录就处于你先前提交的确切状态了。如果另外一个开发者变更了 rack 的代码并提交，你拉取那个引用然后归并之，将得到稍有点怪异的东西：
 
-```bash
+```powershell
 $ git merge origin/master
 Updating 0550271..85a3eee
 Fast forward
@@ -1574,7 +1574,7 @@ Fast forward
 
 你归并来的仅仅上是一个指向你的子模块的指针；但是它并不更新你子模块目录里的代码，所以看起来你的工作目录处于一个临时状态：
 
-```bash
+```powershell
 $ git diff
 diff --git a/rack b/rack
 index 6c5e70b..08d709f 160000
@@ -1587,7 +1587,7 @@ index 6c5e70b..08d709f 160000
 
 事情就是这样，因为你所拥有的子模块的指针并对应于子模块目录的真实状态。为了修复这一点，你必须再次运行`git submodule update`：
 
-```bash
+```powershell
 $ git submodule update
 remote: Counting objects: 5, done.
 remote: Compressing objects: 100% (3/3), done.
@@ -1602,7 +1602,7 @@ Submodule path 'rack': checked out '6c5e70b984a60b3cecd395edd5b48a7575bf58e0'
 
 一个常见问题是当开发者对子模块做了一个本地的变更但是并没有推送到公共服务器。然后他们提交了一个指向那个非公开状态的指针然后推送上层项目。当其他开发者试图运行`git submodule update`，那个子模块系统会找不到所引用的提交，因为它只存在于第一个开发者的系统中。如果发生那种情况，你会看到类似这样的错误：
 
-```bash
+```powershell
 $ git submodule update
 fatal: reference isn’t a tree: 6c5e70b984a60b3cecd395edd5b48a7575bf58e0
 Unable to checkout '6c5e70b984a60b3cecd395edd5ba7575bf58e0' in submodule path 'rack'
@@ -1610,7 +1610,7 @@ Unable to checkout '6c5e70b984a60b3cecd395edd5ba7575bf58e0' in submodule path 'r
 
 你不得不去查看谁最后变更了子模块
 
-```bash
+```powershell
 $ git log -1 rack
 commit 85a3eee996800fcfa91e2119372dd4172bf76678
 Author: Scott Chacon <schacon@gmail.com>
@@ -1630,13 +1630,13 @@ Date:   Thu Apr 9 09:19:14 2009 -0700
 
 Git可以在你提交时自动地把行结束符CRLF转换成LF，而在签出代码时把LF转换成CRLF。用`core.autocrlf`来打开此项功能，如果是在Windows系统上，把它设置成true，这样当签出代码时，LF会被转换成CRLF：
 
-```bash
+```powershell
 $ git config --global core.autocrlf true
 ```
 
 Linux或Mac系统使用LF作为行结束符，因此你不想 Git 在签出文件时进行自动的转换；当一个以CRLF为行结束符的文件不小心被引入时你肯定想进行修正，把`core.autocrlf`设置成input来告诉 Git 在提交时把CRLF转换成LF，签出时不转换：
 
-```bash
+```powershell
 $ git config --global core.autocrlf input
 ```
 
@@ -1644,7 +1644,7 @@ $ git config --global core.autocrlf input
 
 如果你是Windows程序员，且正在开发仅运行在Windows上的项目，可以设置false取消此功能，把回车符记录在库中：
 
-```bash
+```powershell
 $ git config --global core.autocrlf false
 ```
 

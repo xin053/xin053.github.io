@@ -1,7 +1,7 @@
 ---
 title: qrcode二维码生成库使用详解
 date: 2016-10-28 15:28:06
-categories: 
+categories:
 - Python模块学习
 tags:
 - Python
@@ -21,13 +21,13 @@ qrcode是二维码的一种，可以包含几千个字符。
 
 ## qrcode使用
 
-```bash
+```powershell
 pip install qrcode
 ```
 
 安装完之后，可以使用命令行工具:
 
-```bash
+```powershell
 qr "Some text" > test.png
 ```
 

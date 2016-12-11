@@ -2,7 +2,7 @@
 title: Python官方文档摘记
 date: 2016-10-06 17:40:00
 sticky: 10
-categories: 
+categories:
 - Python
 tags:
 - Python
@@ -93,6 +93,7 @@ The Python Standard Library：
   - [`logging` — 日志](https://docs.python.org/3/library/logging.html) [python logging模块使用教程](http://www.jianshu.com/p/feb86c06c4f4) [Python logging模块详解](http://blog.csdn.net/zyz511919766/article/details/25136485)
   - [`getpass` — 像linux中输入密码一样不显示输入的密码](https://docs.python.org/3/library/getpass.html)
 - [Concurrent Execution](https://docs.python.org/3/library/concurrency.html)
+  - 线程
 - [Interprocess Communication and Networking](https://docs.python.org/3/library/ipc.html)
   - [`socket` — 底层socket](https://docs.python.org/3/library/socket.html)
   - [`ssl`](https://docs.python.org/3/library/ssl.html)

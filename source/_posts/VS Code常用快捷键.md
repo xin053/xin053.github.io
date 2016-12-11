@@ -1,7 +1,7 @@
 ---
 title: VS Code常用快捷键
 date: 2016-11-15 10:17:52
-categories: 
+categories:
 - WeNeedToKnow
 tags:
 - VS Code

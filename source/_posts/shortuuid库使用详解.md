@@ -1,7 +1,7 @@
 ---
 title: shortuuid库使用详解
 date: 2016-07-07 01:01:31
-categories: 
+categories:
 - Python模块学习
 tags:
 - Python

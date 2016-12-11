@@ -1,7 +1,7 @@
 ---
 title: pyfiglet库使用详解
 date: 2016-07-06 16:29:12
-categories: 
+categories:
 - Python模块学习
 tags:
 - Python
@@ -27,7 +27,7 @@ pyfiglet是[figlet](http://www.figlet.org/)的python实现。
 
 ## 使用
 
-```bash
+```powershell
 pip install pyfiglet
 ```
 
@@ -35,7 +35,7 @@ pip install pyfiglet
 
 ### 使用pyfiglet命令行工具
 
-```bash
+```powershell
 C:\WINDOWS\system32>pyfiglet zzx
 
  __________  __
@@ -46,7 +46,7 @@ C:\WINDOWS\system32>pyfiglet zzx
 
 pyfiglet使用帮助：
 
-```bash
+```powershell
 C:\WINDOWS\system32>pyfiglet
 Usage: pyfiglet [options] [text..]
 
@@ -74,7 +74,7 @@ Options:
 
 `-f`设置输出的字体，`-l`可以列出支持的所有字体，figlet官网有部分字体的输出预览：http://www.figlet.org/examples.html
 
-```bash
+```powershell
 C:\WINDOWS\system32>pyfiglet -f doh zzx
 
 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzxxxxxxx      xxxxxxx
@@ -99,7 +99,7 @@ zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzxxxxxxx      xxxxxxx
 - left-to-right
 - right-to-left
 
-```bash
+```powershell
 C:\WINDOWS\system32>pyfiglet -D  left-to-right zzx
 
  __________  __
@@ -122,7 +122,7 @@ C:\WINDOWS\system32>pyfiglet -D right-to-left zzx
 - center
 - right
 
-```bash
+```powershell
 C:\WINDOWS\system32>pyfiglet -j center zzx
 
                                  __________  __
@@ -140,7 +140,7 @@ C:\WINDOWS\system32>pyfiglet -j right zzx
 
 `-r`输出字符的镜像图像
 
-```bash
+```powershell
 C:\WINDOWS\system32>pyfiglet -r Txt
    _      _____
  _| |_  _|_   _|

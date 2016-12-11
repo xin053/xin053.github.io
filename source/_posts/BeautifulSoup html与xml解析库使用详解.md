@@ -1,7 +1,7 @@
 ---
 title: BeautifulSoup html与xml解析库使用详解
 date: 2016-11-14 15:38:10
-categories: 
+categories:
 - Python模块学习
 tags:
 - Python

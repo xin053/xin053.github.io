@@ -1,7 +1,7 @@
 ---
 title: configparser配置文件解析器使用详解
 date: 2016-07-18 14:30:59
-categories: 
+categories:
 - Python模块学习
 tags:
 - Python

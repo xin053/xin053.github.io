@@ -1,7 +1,7 @@
 ---
 title: httpie人性化curl工具使用详解
 date: 2016-08-15 13:36:19
-categories: 
+categories:
 - Python模块学习
 tags:
 - Python
@@ -36,7 +36,7 @@ httpie是一个python写的类curl的命令行工具，跨平台，支持python2
 
 ### 语法
 
-```bash
+```powershell
 http [--json] [--form] [--pretty {all,colors,format,none}]
      [--style STYLE] [--print WHAT] [--headers] [--body] [--verbose]
      [--all] [--history-print WHAT] [--stream] [--output FILE]
@@ -54,7 +54,7 @@ http [--json] [--form] [--pretty {all,colors,format,none}]
 
 简写就是：
 
-```bash
+```powershell
 $ http [flags] [METHOD] URL [ITEM [ITEM]]
 ```
 
@@ -62,7 +62,7 @@ $ http [flags] [METHOD] URL [ITEM [ITEM]]
 
 如果不带METHOD参数，这默认为GET(没有附带请求参数)或POST(附带请求参数,默认以json格式传输)
 
-```bash
+```powershell
 $ http example.org               # => GET
 $ http example.org hello=world   # => POST
 ```
@@ -70,14 +70,14 @@ $ http example.org hello=world   # => POST
 ## URL
 默认协议为`http://`,如果主机是`localhost`,还可以如下简写：
 
-```bash
+```powershell
 $ http :3000                    # => http://localhost:3000
 $ http :/foo                    # => http://localhost/foo
 ```
 
 另外可以使用`param==value`语法像url添加参数，所产生的效果就是浏览器中通过`&`连接的参数，注意区分POST方法所使用的`param=value`语法
 
-```bash
+```powershell
 $ http www.google.com search=='HTTPie logo' tbm==isch
 
 # 
@@ -85,7 +85,7 @@ $ http www.google.com search=='HTTPie logo' tbm==isch
 
 linux系统中可以通过
 
-```bash
+```powershell
 $ alias https='http --default-scheme=https'
 ```
 
@@ -105,11 +105,11 @@ $ alias https='http --default-scheme=https'
 
 `param=value`格式的参数全部会转换成json格式传输，并且value全是字符串
 
-```bash
+```powershell
 $ http PUT example.org name=John email=john@example.org
 ```
 
-```bash
+```powershell
 PUT / HTTP/1.1
 Accept: application/json, */*
 Accept-Encoding: gzip, deflate
@@ -124,7 +124,7 @@ Host: example.org
 
 Non-string fields use the `:=` separator, which allows you to embed raw JSON into the resulting object. Text and raw JSON files can also be embedded into fields using `=@` and `:=@`:
 
-```bash
+```powershell
 $ http PUT api.example.com/person/1 \
     name=John \
     age:=29 married:=false hobbies:='["http", "pies"]' \  # Raw JSON
@@ -132,7 +132,7 @@ $ http PUT api.example.com/person/1 \
     bookmarks:=@bookmarks.json      # Embed JSON file
 ```
 
-```bash
+```powershell
 PUT /person/1 HTTP/1.1
 Accept: application/json, */*
 Content-Type: application/json
@@ -156,12 +156,12 @@ Host: api.example.com
 ## Forms
 Submitting forms is very similar to sending JSON requests. Often the only difference is in adding the `--form, -f` option, which ensures that data fields are serialized as, and `Content-Type` is set to, `application/x-www-form-urlencoded; charset=utf-8`.
 
-```bash
+```powershell
 $ http --form POST api.example.org/person/1 name='John Smith' \
     email=john@example.org cv=@~/Documents/cv.txt
 ```
 
-```bash
+```powershell
 POST /person/1 HTTP/1.1
 Content-Type: application/x-www-form-urlencoded; charset=utf-8
 
@@ -170,13 +170,13 @@ name=John+Smith&email=john%40example.org&cv=John's+CV+...
 
 ### File upload forms
 
-```bash
+```powershell
 $ http -f POST example.com/jobs name='John Smith' cv@~/Documents/cv.pdf
 ```
 
 上面的效果和下面一样：
 
-```bash
+```powershell
 <form enctype="multipart/form-data" method="post" action="http://example.com/jobs">
     <input type="text" name="name" />
     <input type="file" name="cv" />
@@ -185,12 +185,12 @@ $ http -f POST example.com/jobs name='John Smith' cv@~/Documents/cv.pdf
 
 ## HTTP headers
 
-```bash
+```powershell
 $ http example.org  User-Agent:Bacon/1.0  'Cookie:valued-visitor=yes;foo=bar'  \
     X-Foo:Bar  Referer:http://httpie.org/
 ```
 
-```bash
+```powershell
 GET / HTTP/1.1
 Accept: */*
 Accept-Encoding: gzip, deflate
@@ -203,7 +203,7 @@ X-Foo: Bar
 
 There are a couple of default headers that HTTPie sets:
 
-```bash
+```powershell
 GET / HTTP/1.1
 Accept: */*
 Accept-Encoding: gzip, deflate
@@ -214,13 +214,13 @@ Host: <taken-from-URL>
 ## Authentication
 Basic auth:
 
-```bash
+```powershell
 $ http -a username:password example.org
 ```
 
 Digest auth:
 
-```bash
+```powershell
 $ http -A digest -a username:password example.org
 ```
 
@@ -231,32 +231,32 @@ If you additionally wish to see the intermediary requests/responses, then use th
 
 To change the default limit of maximum 30 redirects, use the `--max-redirects=<limit>` option.
 
-```bash
+```powershell
 $ http --follow --all --max-redirects=5 httpbin.org/redirect/3
 ```
 
 ## Proxies
 
-```bash
+```powershell
 $ http --proxy=http:http://user:pass@10.10.1.10:3128 --proxy=https:https://10.10.1.10:1080 example.org
 ```
 
 ## SOCKS
 
-```bash
+```powershell
 $ http --proxy=http:socks5://user:pass@host:port --proxy=https:socks5://user:pass@host:port example.org
 ```
 
 ## HTTPS
 可以通过`--verify=no`忽略证书检查
 
-```bash
+```powershell
 $ http --verify=no https://example.org
 ```
 
 可以使用`--ssl=<PROTOCOL>`制定ssl版本
 
-```bash
+```powershell
 $ http --ssl=ssl3 https://vulnerable.example.org
 ```
 
@@ -276,14 +276,14 @@ $ http --ssl=ssl3 https://vulnerable.example.org
 |`h`|response headers|
 |`b`|response body|
 
-```bash
+```powershell
 $ http --print=Hh PUT httpbin.org/put hello=world
 ```
 
 ## Redirected output
 Download a file:
 
-```bash
+```powershell
 $ http example.org/Movie.mov > Movie.mov
 ```
 
@@ -292,11 +292,11 @@ HTTPie features a download mode in which it acts similarly to `wget`.
 
 When enabled using the `--download, -d` flag, response headers are printed to the terminal (`stderr`), and a progress bar is shown while the response body is being saved to a file.
 
-```bash
+```powershell
 $ http --download https://github.com/jkbrzt/httpie/archive/master.tar.gz
 ```
 
-```bash
+```powershell
 HTTP/1.1 200 OK
 Content-Disposition: attachment; filename=httpie-master.tar.gz
 Content-Length: 257336
@@ -312,13 +312,13 @@ By default, every request is completely independent of any previous ones. HTTPie
 ### Named sessions
 Create a new session named `user1` for `example.org`:
 
-```bash
+```powershell
 $ http --session=user1 -a user1:password example.org X-Foo:Bar
 ```
 
 Now you can refer to the session by its name, and the previously used authorization and HTTP headers will automatically be set:
 
-```bash
+```powershell
 $ http --session=user1 example.org
 ```
 

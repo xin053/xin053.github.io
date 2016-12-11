@@ -1,7 +1,7 @@
 ---
 title: Python描述符descriptor
 date: 2016-11-29 18:40:14
-categories: 
+categories:
 - Python
 tags:
 - Python

@@ -1,7 +1,7 @@
 ---
 title: UTF-8编码
 date: 2016-09-07 16:26:10
-categories: 
+categories:
 - WeNeedToKnow
 tags:
 - UTF-8

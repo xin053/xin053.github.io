@@ -1,7 +1,7 @@
 ---
 title: PyMySQL库使用详解
 date: 2016-11-06 20:19:12
-categories: 
+categories:
 - Python模块学习
 tags:
 - Python

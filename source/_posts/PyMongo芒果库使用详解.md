@@ -1,7 +1,7 @@
 ---
 title: PyMongo芒果库使用详解
 date: 2016-11-09 22:09:36
-categories: 
+categories:
 - Python模块学习
 tags:
 - Python
@@ -14,7 +14,7 @@ MongoDB官方出的针对python平台的库，相当于数据库的客户端，�
 
 并在管理员权限的cmd窗口运行:
 
-```bash
+```powershell
 "D:\MongoDB\Server\3.2\bin\mongod.exe" --config "D:\MongoDB\Server\3.2\mongod.cfg" --install --serviceName "MongoDB"
 ```
 

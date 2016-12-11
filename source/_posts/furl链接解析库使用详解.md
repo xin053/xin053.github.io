@@ -1,7 +1,7 @@
 ---
 title: furl链接解析库使用详解
 date: 2016-11-13 21:53:46
-categories: 
+categories:
 - Python模块学习
 tags:
 - Python

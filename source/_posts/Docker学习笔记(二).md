@@ -1,7 +1,7 @@
 ---
 title: Docker学习笔记(二)
 date: 2016-09-20 16:04:51
-categories: 
+categories:
 - Docker
 tags:
 - Docker
@@ -28,7 +28,7 @@ Failed to open/create the internal network 'HostInterfaceNetworking-VirtualBox H
 
 ### 创建容器
 
-```bash
+```powershell
 docker run [OPTIONS] IMAGE [COMMAND] [ARG...]
 ```
 
@@ -38,7 +38,7 @@ docker run [OPTIONS] IMAGE [COMMAND] [ARG...]
 
 首先通过Kitematic 下载alpine镜像,然后启动容易，输入
 
-```bash
+```powershell
 docker ps -a
 ```
 
@@ -48,7 +48,7 @@ docker ps -a
 
 输入：
 
-```bash
+```powershell
 docker ps
 ```
 
@@ -56,7 +56,7 @@ docker ps
 
 ### 重启和停止容器
 
-```bash
+```powershell
 docker start/stop/restart docker-name/id
 ```
 
@@ -78,7 +78,7 @@ docker attach docker-name/id
 
 以上创建的都是交互式运行的容器，我们也可以创建长期运行的守护式容器，非常适合运行应用程序和服务
 
-```bash
+```powershell
 docker run --name alpine-test -d alpine sh -c "while true;do echo hello world;sleep 1;done"
 ```
 
@@ -88,7 +88,7 @@ docker run --name alpine-test -d alpine sh -c "while true;do echo hello world;sl
 
 ### 查看容器内的进程
 
-```bash
+```powershell
 docker top docker-name/id
 ```
 
@@ -96,13 +96,13 @@ docker top docker-name/id
 
 例子：
 
-```bash
+```powershell
 docker exec -d docker-name/id touch /etc/config_file
 ```
 
 创建了一个后台运行的进程
 
-```bash
+```powershell
 docker exec -t -i docker-name/id /bin/bash
 ```
 
@@ -110,7 +110,7 @@ docker exec -t -i docker-name/id /bin/bash
 
 ### 自动重启容器
 
-```bash
+```powershell
 docker run --restart=always --name alpine-test -d alpine sh
 ```
 
@@ -118,7 +118,7 @@ docker run --restart=always --name alpine-test -d alpine sh
 
 ### 查看容器信息
 
-```bash
+```powershell
 docker inspect docker-name/id
 ```
 
@@ -126,7 +126,7 @@ docker inspect docker-name/id
 
 ### 删除容器
 
-```bash
+```powershell
 docker rm docker-name/id
 ```
 

@@ -1,7 +1,7 @@
 ---
 title: pip包管理器使用详解
 date: 2016-07-02 16:10:15
-categories: 
+categories:
 - Python模块学习
 tags:
 - Python
@@ -16,13 +16,13 @@ pip包管理器下载的python库来自：[PyPI](https://pypi.python.org/pypi/)
 pip在python2.7.9以上和3.4以上自带，通过venv,virtualenv和pyvenv创建的虚拟环境默认也会安装，不过最好通过以下命令更新到最新版
 Windows:
 
-```bash
+```powershell
 python -m pip install -U pip
 ```
 
 Linux或Mac
 
-```bash
+```powershell
 pip install -U pip
 ```
 
@@ -31,20 +31,20 @@ pip install -U pip
 ## pip使用
 ### 包的安装
 
-```bash
+```powershell
 pip install PackageName                # latest version
 pip install PackageName==1.0.4         # specific version
 ```
 
 例如，如果我们安装requests包，那么输入命令：
 
-```bash
+```powershell
 pip install requests
 ```
 
 ### 显示包文件
 
-```bash
+```powershell
 pip show --files PackageName
 ```
 
@@ -52,13 +52,13 @@ pip show --files PackageName
 
 ### 显示过期的包
 
-```bash
+```powershell
 pip list --outdated
 ```
 
 该命令列出所有可以更新的包，而
 
-```bash
+```powershell
 pip list
 ```
 
@@ -66,7 +66,7 @@ pip list
 
 ### 包的更新
 
-```bash
+```powershell
 pip install -U PackageName
 ```
 
@@ -74,13 +74,13 @@ pip install -U PackageName
 
 ### 包的卸载
 
-```bash
+```powershell
 pip uninstall PackageName
 ```
 
 ## pip help
 
-```bash
+```powershell
 Usage:
   pip <command> [options]
 

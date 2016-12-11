@@ -1,7 +1,7 @@
 ---
 title: dataset简易数据库包使用详解
 date: 2016-11-08 13:33:15
-categories: 
+categories:
 - Python模块学习
 tags:
 - Python

@@ -1,7 +1,7 @@
 ---
 title: Go学习笔记(三)
 date: 2016-09-20 14:23:16
-categories: 
+categories:
 - Go
 tags:
 - Go

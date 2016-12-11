@@ -1,7 +1,7 @@
 ---
 title: Tesseract光学识别
 date: 2016-10-28 21:47:23
-categories: 
+categories:
 - Python模块学习
 tags:
 - Python
@@ -26,13 +26,13 @@ tags:
 
 ## tesseract使用
 
-```bash
+```powershell
 tesseract -h
 ```
 
 获取使用帮助，比较详细吧
 
-```bash
+```powershell
 tesseract imagename outputbase [-l lang] [-psm pagesegmode] [configfiles...]
 ```
 
@@ -42,7 +42,7 @@ tesseract imagename outputbase [-l lang] [-psm pagesegmode] [configfiles...]
 
 我们先把cmd的路径切到桌面，然后输入:
 
-```bash
+```powershell
 tesseract 1.jpg test -l chi_sim
 ```
 

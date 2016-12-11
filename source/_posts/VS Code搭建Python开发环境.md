@@ -1,7 +1,7 @@
 ---
 title: VS Code搭建Python开发环境
 date: 2016-06-11 10:18:39
-categories: 
+categories:
 - Python
 tags:
 - Python

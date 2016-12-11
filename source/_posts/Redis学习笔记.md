@@ -1,7 +1,7 @@
 ---
 title: Redis学习笔记
 date: 2016-11-12 11:20:36
-categories: 
+categories:
 - Redis
 tags:
 - Redis
@@ -33,7 +33,7 @@ Redis 是完全开源免费的，遵守BSD协议，是一个高性能的key-valu
 
 ### 连接redis服务器
 
-```bash
+```powershell
 C:\WINDOWS\system32>redis-cli -h 127.0.0.1 -p 6379 -a "123" -n 0
 127.0.0.1:6379>
 ```
@@ -42,7 +42,7 @@ C:\WINDOWS\system32>redis-cli -h 127.0.0.1 -p 6379 -a "123" -n 0
 
 如果默认是本机6397端口,没有密码，可以直接使用以下连接:
 
-```bash
+```powershell
 C:\Users\zzx>redis-cli
 127.0.0.1:6379>
 ```
@@ -57,7 +57,7 @@ string类型是二进制安全的。意思是redis的string可以包含任何数
 
 string类型是Redis最基本的数据类型，一个键最大能存储512MB。
 
-```bash
+```powershell
 127.0.0.1:6379> SET name 'zzx'
 OK
 127.0.0.1:6379> GET name
@@ -74,7 +74,7 @@ OK
 
 Redis hash是一个string类型的field和value的映射表，hash特别适合用于存储对象。
 
-```bash
+```powershell
 127.0.0.1:6379> HMSET user:1 username zzx password 123 age 22
 OK
 127.0.0.1:6379> HGETALL user:1
@@ -96,7 +96,7 @@ OK
 
 #### List
 
-```bash
+```powershell
 127.0.0.1:6379> LPUSH test_list this is
 (integer) 2
 127.0.0.1:6379> LPUSH test_list a
@@ -122,7 +122,7 @@ OK
 
 通过hash实现的，不能保证顺序，元素唯一性
 
-```bash
+```powershell
 127.0.0.1:6379> SADD test_set this is a
 (integer) 3
 127.0.0.1:6379> SADD test_set test for set
@@ -148,7 +148,7 @@ OK
 
 元素不重复并且保持插入元素的顺序,与Set不同的是，zset中的每个元素有都个`score`属性，可以理解为权重，内部是按照权重的大小进行排序的
 
-```bash
+```powershell
 127.0.0.1:6379> ZADD test_zset 1 this 2 is 3 a 4 test 0 for 7 zset
 (integer) 6
 127.0.0.1:6379> ZRANGE test_zset 0 7
@@ -205,7 +205,7 @@ OK
 
 ### Redis数据备份与恢复
 
-```bash
+```powershell
 127.0.0.1:6379> save
 OK
 ```
@@ -214,7 +214,7 @@ OK
 
 如果需要恢复数据，只需将备份文件 `dump.rdb` 移动到 redis 安装目录并启动服务即可。获取 redis 目录可以使用 `CONFIG` 命令
 
-```bash
+```powershell
 127.0.0.1:6379> CONFIG GET dir
 1) "dir"
 2) "D:\\Redis"

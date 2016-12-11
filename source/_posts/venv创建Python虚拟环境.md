@@ -1,7 +1,7 @@
 ---
 title: venv创建Python虚拟环境
 date: 2016-06-30 22:31:13
-categories: 
+categories:
 - Python模块学习
 tags:
 - Python
@@ -34,7 +34,7 @@ Python3.3以上的版本通过venv模块原生支持虚拟环境，可以代替P
 
 打开cmd后cd切换到该目录，然后执行：
 
-```bash
+```powershell
 F:\pythonVE>python -m venv .
 ```
 
@@ -46,7 +46,7 @@ F:\pythonVE>python -m venv .
 
 看下`pyvenv.cfg`文件内容：
 
-```bash
+```powershell
 home = D:\Python 3.5
 include-system-site-packages = false
 version = 3.5.2
@@ -58,7 +58,7 @@ Lib下的 site-packages 用来存放第三方包，Scripts存在一些可用的�
 
 下面是”venv”的详细使用参数:
 
-```bash
+```powershell
 usage: venv [-h] [--system-site-packages] [--symlinks | --copies] [--clear]
             [--upgrade] [--without-pip]
             ENV_DIR [ENV_DIR ...]
@@ -88,7 +88,7 @@ optional arguments:
 
 到虚拟目录下的Scripts目录执行activate.bat
 
-```bash
+```powershell
 F:\pythonVE\Scripts>activate.bat
 ```
 
@@ -100,7 +100,7 @@ F:\pythonVE\Scripts>activate.bat
 
 现在来测试下，首先我的pip版本不是最新，更到最新再说：
 
-```bash
+```powershell
 python -m pip install --upgrade pip
 ```
 
@@ -108,7 +108,7 @@ python -m pip install --upgrade pip
 
 然后先安装著名的`requests`模块看看:
 
-```bash
+```powershell
 pip install requests
 ```
 
@@ -118,7 +118,7 @@ pip install requests
 
 继续测试：
 
-```bash
+```powershell
 (pythonVE) F:\pythonVE\Scripts>python
 Python 3.5.2 (v3.5.2:4def2a2901a5, Jun 25 2016, 22:18:55) [MSC v.1900 64 bit (AMD64)] on win32
 Type "help", "copyright", "credits" or "license" for more information.

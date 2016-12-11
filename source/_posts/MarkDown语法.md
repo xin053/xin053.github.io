@@ -1,7 +1,7 @@
 ---
 title: MarkDown语法
 date: 2016-06-05 09:25:41
-categories: 
+categories:
 - MarkDown
 tags:
 - MarkDown

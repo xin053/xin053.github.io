@@ -1,7 +1,7 @@
 ---
 title: Pillow图片处理库使用详解
 date: 2016-10-26 20:51:34
-categories: 
+categories:
 - Python模块学习
 tags:
 - Python
@@ -29,7 +29,7 @@ im.show()
 
 输出结果：
 
-```bash
+```powershell
 JPEG (650, 352) RGB
 ```
 

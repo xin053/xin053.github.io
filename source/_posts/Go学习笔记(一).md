@@ -1,7 +1,7 @@
 ---
 title: Go学习笔记(一)
 date: 2016-09-07 08:53:06
-categories: 
+categories:
 - Go
 tags:
 - Go
@@ -24,14 +24,14 @@ fmt.Println("Hello, 世界")
 
 命令行执行程序:
 
-```bash
+```powershell
 $ go run helloworld.go
 Hello, 世界
 ```
 
 生成二进制文件:
 
-```bash
+```powershell
 $ go build helloworld.go
 ```
 

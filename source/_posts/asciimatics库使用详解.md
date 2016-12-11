@@ -1,7 +1,7 @@
 ---
 title: asciimatics库简介
 date: 2016-07-19 11:19:03
-categories: 
+categories:
 - Python模块学习
 tags:
 - Python

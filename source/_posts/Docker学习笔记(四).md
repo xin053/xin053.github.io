@@ -1,7 +1,7 @@
 ---
 title: Docker学习笔记(四)
 date: 2016-10-09 09:27:01
-categories: 
+categories:
 - Docker
 tags:
 - Docker
@@ -15,7 +15,7 @@ tags:
 
 可以看到有很多不同标签的镜像，有基于debian的，也有基于alpine的，这里我们选择alpine，我们首先pull选择的镜像
 
-```bash
+```powershell
 docker pull nginx:1.11.4-alpine
 ```
 
@@ -23,7 +23,7 @@ docker pull nginx:1.11.4-alpine
 
 下载完镜像之后我们继续查看文档，第一个例子就是利用nginx托管简单的静态文件
 
-```bash
+```powershell
 docker run --name nginx-test -v /some/content:/usr/share/nginx/html:ro -d nginx:1.11.4-alpine
 ```
 
@@ -66,7 +66,7 @@ docker run --name nginx-test -v /some/content:/usr/share/nginx/html:ro -d nginx:
 
 可以看到容器暴露了80和443端口，而容器的80和443端口分别映射到宿主机的32769和32768端口，而192.168.99.100则是宿主机的ip，也可以通过以下命令查看端口映射:
 
-```bash
+```powershell
 docker port docker-name/id 需要查询的端口
 ```
 
@@ -86,7 +86,7 @@ docker port docker-name/id 需要查询的端口
 
 ## 连接容器
 
-```bash
+```powershell
 docker run -p 4567 --name webapp --link redis:db -t -i -v $PWD/webapp:/opt/webapp alpine sh
 ```
 

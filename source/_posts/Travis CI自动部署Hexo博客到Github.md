@@ -1,7 +1,7 @@
 layout: travis
 title: Travis CI自动部署Hexo博客到Github
 date: 2016-06-05 20:37:10
-categories: 
+categories:
 - Hexo
 tags:
 - Hexo

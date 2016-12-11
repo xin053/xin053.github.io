@@ -1,7 +1,7 @@
 ---
 title: ftfy更正Unicode库使用详解
 date: 2016-07-05 11:13:25
-categories: 
+categories:
 - Python模块学习
 tags:
 - Python
@@ -81,7 +81,7 @@ ftfy can be used from the command line. By default, it takes UTF-8 input and wri
 
 Here’s the usage documentation for the `ftfy` command:
 
-```bash
+```powershell
 usage: ftfy [-h] [-o OUTPUT] [-g] [-e ENCODING] [-n NORMALIZATION]
             [--preserve-entities]
             [filename]

@@ -1,7 +1,7 @@
 ---
 title: Scala学习笔记(一)
 date: 2016-11-04 13:03:57
-categories: 
+categories:
 - Scala
 tags:
 - Scala
@@ -79,7 +79,7 @@ args.foreach(arg => println(arg))
 
 当我们执行:
 
-```bash
+```powershell
 $ scala test.scala Concise is nice
 ```
 

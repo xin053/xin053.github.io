@@ -1,7 +1,7 @@
 ---
 title: Docker学习笔记(三)
 date: 2016-10-07 18:44:42
-categories: 
+categories:
 - Docker
 tags:
 - Docker
@@ -27,7 +27,7 @@ docker将这样的文件系统成为镜像，一个镜像可以放在另一个�
 
 ## 列出镜像
 
-```bash
+```powershell
 docker images
 ```
 
@@ -68,7 +68,7 @@ EXPOSE 80
 
 接着输入以下命令来创建我们的镜像：
 
-```bash
+```powershell
 cd static_web
 docker build -t="jamtur01/static_web"
 ```
@@ -77,7 +77,7 @@ docker build -t="jamtur01/static_web"
 
 也可以通过下面命令来为镜像设置一个标签
 
-```bash
+```powershell
 docker build -t="jamtur01/static_web:v1"
 ```
 
@@ -85,7 +85,7 @@ docker build -t="jamtur01/static_web:v1"
 
 以上的例子告诉docker在当前目录寻找Dockerfile文件，也可以指定一个git仓库的源地址来指定Dockerfile的位置，如：
 
-```bash
+```powershell
 docker build -t="jamtur01/static_web:v1" git@github.com:jamtur01/docker-static_web
 ```
 
@@ -97,13 +97,13 @@ docker build -t="jamtur01/static_web:v1" git@github.com:jamtur01/docker-static_w
 
 默认构建镜像时，会使用缓存技术，所以如果Dockerfile文件内容没有变化，再次构建镜像时，产生的镜像与之前一样，如果有`apt-get update`等命令，这样docker将不会再次更新apt包，所以如果想要docker构建镜像时再一次的执行Dockerfile里面的命令时，需要明确指定不使用缓存功能
 
-```bash
+```powershell
 docker build --no-cache -t="jamtur01/static_web"
 ```
 
 ## 构建历史
 
-```bash
+```powershell
 docker history docker-name/id
 ```
 
@@ -115,7 +115,7 @@ docker history docker-name/id
 
 CMD指令用于指定一个容器启动时要运行的命令。这有点类似与RUN命令，只是RUN指令是指定镜像被构建时要运行的指令，而CMD是指定容器被启动时要运行的命令。这和使用`docker run`命令启动容器时执行要运行的命令非常类似
 
-```bash
+```powershell
 docker run -i -t jamtur01/static_web /bin/true
 ```
 
@@ -234,7 +234,7 @@ ADD latest.tar.gz /var/www/wordpress
 
 ## 将镜像推送到Docker Hub
 
-```bash
+```powershell
 docker push username/imagename
 ```
 

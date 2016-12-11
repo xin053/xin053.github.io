@@ -1,7 +1,7 @@
 ---
 title: Docker学习笔记(一)
 date: 2016-07-13 12:16:39
-categories: 
+categories:
 - Docker
 tags:
 - Docker
@@ -82,7 +82,7 @@ Docker是基于linux中某些特性产生的，所以只支持linux系统，同�
 
 **注意：即使关闭命令行窗口，后台载有docker的虚拟机还是在运行，需要打开virtual box手动关闭。关闭虚拟机后，以后打开`Docker Quickstart Terminal`会自动开启该虚拟机**
 
-```bash
+```powershell
 
 
                         ##         .
@@ -105,7 +105,7 @@ $
 
 然后，可以检测下docker一些命令是否能够正常工作：
 
-```bash
+```powershell
 $ docker run hello-world
 Unable to find image 'hello-world:latest' locally
 latest: Pulling from library/hello-world
@@ -135,7 +135,7 @@ For more examples and ideas, visit:
  https://docs.docker.com/engine/userguide/
 ```
 
-```bash
+```powershell
 $ docker version
 Client:
  Version:      1.12.1
@@ -154,7 +154,7 @@ Server:
  OS/Arch:      linux/amd64
 ```
 
-```bash
+```powershell
 $ docker info
 Containers: 1
  Running: 0

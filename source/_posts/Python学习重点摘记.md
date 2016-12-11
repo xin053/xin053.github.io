@@ -2,7 +2,7 @@
 title: Python学习重点摘记
 date: 2016-10-30 20:01:37
 sticky: 8
-categories: 
+categories:
 - Python
 tags:
 - Python
@@ -71,7 +71,75 @@ tags:
 
 ### 生成器
 
-1. 生成器是特殊的迭代器,关键字`yield`就表示是一个生成器,其`__next__()`方法就是执行到下一次`yield`,其`__iter__()`方法就是返回自身
+1. 生成器是特殊的迭代器,关键字`yield`就表示该方法返回一个生成器对象,其`__next__()`方法就是执行到下一次`yield`,其`__iter__()`方法就是返回自身，可以用for循环执行生成器中的代码。当循环结束，或不满足`if/else`条件时，导致函数运行但不命中`yield`关键字，此时生成器触发`StopIteration`异常。
+2. 调用生成器时`__next__()`方法时，实际上是将函数状态挂起，也就是保存了栈帧的状态
+
+```python
+def test():
+    index = 0
+    for i in range(3):
+        index = i
+        yield i
+    print('hello')    
+    if index > 2:
+        yield '1:'+str(index)
+    print('world')
+    
+a = test()
+a.__next__()
+# 0
+a.__next__()
+# 1
+a.__next__()
+# 2
+a.__next__()
+# hello
+# world
+# ---------------------------------------------------------------------------
+# StopIteration                             Traceback (most recent call last)
+# <ipython-input-41-73aa2c76d676> in <module>()
+# ----> 1 a.__next__()
+
+# StopIteration:
+# 最后一次__next__()到代码末尾，所以触发异常
+```
+
+```python
+def test():
+    index = 0
+    for i in range(3):
+        index = i
+        yield i
+    print('hello')    
+    if index > 1:
+        yield '1:'+str(index)
+    print('world')
+    
+a = test()
+a.__next__()
+# 0
+a.__next__()
+# 1
+a.__next__()
+# 2
+a.__next__()
+# hello
+# '1:2'
+a.__next__()
+# world
+# ---------------------------------------------------------------------------
+# StopIteration                             Traceback (most recent call last)
+# <ipython-input-48-73aa2c76d676> in <module>()
+# ----> 1 a.__next__()
+
+# StopIteration: 
+
+list(test())
+# hello
+# world
+# [0, 1, 2, '1:2']
+# list内部循环执行__next__(),然后append到列表中返回，所以后输出列表
+```
 
 ### `yield`表达式
 
@@ -122,7 +190,7 @@ StopIteration
 ### 迭代器与内置函数
 
 1. `map(f, iterA, iterB, ...)` returns an iterator over the sequence 
-`f(iterA[0], iterB[0]), f(iterA[1], iterB[1]), f(iterA[2], iterB[2]), ....`
+   `f(iterA[0], iterB[0]), f(iterA[1], iterB[1]), f(iterA[2], iterB[2]), ....`
 2. `filter(predicate, iter)` returns an iterator over all the sequence elements that meet a certain condition
 3. `enumerate(iter)` counts off the elements in the iterable, returning 2-tuples containing the count and each element
 4. `sorted(iterable, key=None, reverse=False)` collects all the elements of the iterable into a list, sorts the list, and returns the sorted result
@@ -155,3 +223,28 @@ StopIteration
 1. 级别从低到高为`DEBUG` `INFO` `WARNING` `ERROR` `CRITICAL`
 2. 默认级别为`WARNING`，只有`WARNING`和之上的级别的log控制台才会被输出
 3. [python logging模块使用教程](http://www.jianshu.com/p/feb86c06c4f4) [Python logging模块详解](http://blog.csdn.net/zyz511919766/article/details/25136485)
+
+### sorted
+
+1. 可处理简单列表排序和针对对象中某一属性进行排序，并且与`sort()`不同，前者不改变原列表，后者直接修改原列表
+2. 使用方法参考[Sorting HOW TO](https://docs.python.org/3/howto/sorting.html)
+
+### ipaddress
+
+1. 该模块能提供一些方法对ipv4和ipv6进行识别和处理
+
+### 类
+
+当一个**类定义**被执行，发生了这些事:
+
+1. 一个合适的元类被确定
+2. 类命名空间被准备好
+3. 类主体被执行
+4. 类对象被创建
+
+**类是元类的实例**，在python中，一切都是对象，类也是对象
+
+### 特殊方法
+
+1. `__new__()`是特殊的不用声明的静态方法
+2. `__mro__()`返回类所有的父类

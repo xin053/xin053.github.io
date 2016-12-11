@@ -1,7 +1,7 @@
 ---
 title: os库常用方法使用介绍
 date: 2016-11-29 09:27:27
-categories: 
+categories:
 - Python模块学习
 tags:
 - Python

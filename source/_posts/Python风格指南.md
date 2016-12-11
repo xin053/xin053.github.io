@@ -1,7 +1,7 @@
 ---
 title: Python风格指南
 date: 2016-10-03 19:34:51
-categories: 
+categories:
 - Python
 tags:
 - Python

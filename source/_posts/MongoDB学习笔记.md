@@ -1,7 +1,7 @@
 ---
 title: MongoDB学习笔记
 date: 2016-11-09 12:08:29
-categories: 
+categories:
 - MongoDB
 tags:
 - MongoDB

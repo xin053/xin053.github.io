@@ -1,7 +1,7 @@
 ---
 title: Go学习笔记(二)
 date: 2016-09-08 19:41:42
-categories: 
+categories:
 - Go
 tags:
 - Go

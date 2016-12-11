@@ -1,7 +1,7 @@
 ---
 title: click命令行工具使用详解
 date: 2016-07-31 14:45:59
-categories: 
+categories:
 - Python模块学习
 tags:
 - Python
@@ -41,7 +41,7 @@ if __name__ == '__main__':
 
 我在cmd中运行如下：
 
-```bash
+```powershell
 F:\cookies\python\learnPython\5_常用模块\click>python 1_基本使用.py
 Your name: zzx
 Hello zzx!
@@ -73,7 +73,7 @@ if __name__ == '__main__':
     hello()
 ```
 
-```bash
+```powershell
 $ python hello.py
 Hello World!
 
@@ -109,7 +109,7 @@ if __name__ == '__main__':
     cli()
 ```
 
-```bash
+```powershell
 F:\cookies\python\learnPython\5_常用模块\click>python 2_group.py --help
 Usage: 2_group.py [OPTIONS] COMMAND [ARGS]...
 
@@ -147,7 +147,7 @@ if __name__ == '__main__':
     hello()
 ```
 
-```bash
+```powershell
 F:\cookies\python\learnPython\5_常用模块\click>python 3_argument.py
 Usage: 3_argument.py [OPTIONS] NAME
 
@@ -209,7 +209,7 @@ def digest(hash_type):
     click.echo(hash_type)
 ```
 
-```bash
+```powershell
 $ digest --hash-type=md5
 md5
 
@@ -239,7 +239,7 @@ if __name__ == '__main__':
     repeat()
 ```
 
-```bash
+```powershell
 $ repeat --count=1000 --digit=5
 55555555555555555555
 $ repeat --count=1000 --digit=12
@@ -276,7 +276,7 @@ def commit(message):
     click.echo('\n'.join(message))
 ```
 
-```bash
+```powershell
 $ commit -m foo -m bar
 foo
 bar

@@ -1,7 +1,7 @@
 ---
 title: moviepy视频处理库使用详解
 date: 2016-11-05 15:36:48
-categories: 
+categories:
 - Python模块学习
 tags:
 - Python
