@@ -210,6 +210,7 @@ class QuotesSpider(scrapy.Spider):
             yield {
                 'text': quote.css('span.text::text').extract_first(),
                 'author': quote.css('span small::text').extract_first(),
+                # 'author': quote.xpath('span/small/text()').extract_first(),
                 'tags': quote.css('div.tags a.tag::text').extract(),
             }
 
@@ -250,6 +251,169 @@ class AuthorSpider(scrapy.Spider):
             'bio': extract_with_css('.author-description::text'),
         }
 ```
+
+### 命令行工具
+
+```powershell
+C:\WINDOWS\system32>scrapy
+Scrapy 1.2.2 - no active project
+
+Usage:
+  scrapy <command> [options] [args]
+
+Available commands:
+  bench         Run quick benchmark test
+  commands
+  fetch         Fetch a URL using the Scrapy downloader
+  genspider     Generate new spider using pre-defined templates
+  runspider     Run a self-contained spider (without creating a project)
+  settings      Get settings values
+  shell         Interactive scraping console
+  startproject  Create new project
+  version       Print Scrapy version
+  view          Open URL in browser, as seen by Scrapy
+
+  [ more ]      More commands available when run from project directory
+
+Use "scrapy <command> -h" to see more info about a command
+```
+
+更多命令以及命令的详细使用方法请参考[官方文档](https://doc.scrapy.org/en/latest/topics/commands.html#available-tool-commands)
+
+### CrawlSpider
+
+除了继承`scrapy.Spider`，常用的还有`scrapy.spiders.CrawlSpider`,该类可以在前者的基础上添加`Rule`。
+
+```python
+import scrapy
+from scrapy.spiders import CrawlSpider, Rule
+from scrapy.linkextractors import LinkExtractor
+
+class MySpider(CrawlSpider):
+    name = 'example.com'
+    allowed_domains = ['example.com']
+    start_urls = ['http://www.example.com']
+
+    rules = (
+        # Extract links matching 'category.php' (but not matching 'subsection.php')
+        # and follow links from them (since no callback means follow=True by default).
+        Rule(LinkExtractor(allow=('category\.php', ), deny=('subsection\.php', ))),
+
+        # Extract links matching 'item.php' and parse them with the spider's method parse_item
+        Rule(LinkExtractor(allow=('item\.php', )), callback='parse_item'),
+    )
+
+    def parse_item(self, response):
+        self.logger.info('Hi, this is an item page! %s', response.url)
+        item = scrapy.Item()
+        item['id'] = response.xpath('//td[@id="item_id"]/text()').re(r'ID: (\d+)')
+        item['name'] = response.xpath('//td[@id="item_name"]/text()').extract()
+        item['description'] = response.xpath('//td[@id="item_description"]/text()').extract()
+        return item
+```
+
+### SitemapSpider 
+
+`scrapy.spiders.SitemapSpider`可以根据sitemaps和robots.txt进行爬去
+
+```python
+from scrapy.spiders import SitemapSpider
+
+class MySpider(SitemapSpider):
+    sitemap_urls = ['http://www.example.com/robots.txt']
+    sitemap_rules = [
+        ('/shop/', 'parse_shop'),
+    ]
+    sitemap_follow = ['/sitemap_shops']
+
+    def parse_shop(self, response):
+        pass # ... scrape shop here ...
+```
+
+规则中表示含有`/shop/`的url的回调函数为`parse_shop`,`sitemap_follow`表示只跟随包含`/sitemap_shops`的url
+
+### Item
+
+python自带的`dict`没有结构体的概念，所以scrapy提供了`Item`类
+
+```python
+import scrapy
+
+class Product(scrapy.Item):
+    name = scrapy.Field()
+    price = scrapy.Field()
+    stock = scrapy.Field()
+    last_updated = scrapy.Field(serializer=str)
+```
+
+```python
+>>> product = Product(name='Desktop PC', price=1000)
+>>> print product
+Product(name='Desktop PC', price=1000)
+>>> product['name']
+Desktop PC
+>>> product.get('name')
+Desktop PC
+>>> product['price']
+1000
+
+>>> product.keys()
+['price', 'name']
+>>> product.items()
+[('price', 1000), ('name', 'Desktop PC')]
+```
+
+Item Loader能够更好将`response`中的数据注入到`Item`中
+
+```python
+from scrapy.loader import ItemLoader
+from myproject.items import Product
+
+def parse(self, response):
+    l = ItemLoader(item=Product(), response=response)
+    l.add_xpath('name', '//div[@class="product_name"]')
+    l.add_xpath('name', '//div[@class="product_title"]')
+    l.add_xpath('price', '//p[@id="price"]')
+    l.add_css('stock', 'p#stock]')
+    l.add_value('last_updated', 'today') # you can also use literal values
+    return l.load_item()
+```
+
+### Item Pipeline
+
+`Item`被爬取后会发送给pipeline进行处理，一般pipeline是只用实现`process_item`的类，也可以实现`open_spider()`(爬虫开始前执行)和`close_spider()`
+
+```python
+import pymongo
+
+class MongoPipeline(object):
+
+    collection_name = 'scrapy_items'
+
+    def __init__(self, mongo_uri, mongo_db):
+        self.mongo_uri = mongo_uri
+        self.mongo_db = mongo_db
+
+    @classmethod
+    def from_crawler(cls, crawler):
+        return cls(
+            mongo_uri=crawler.settings.get('MONGO_URI'),
+            mongo_db=crawler.settings.get('MONGO_DATABASE', 'items')
+        )
+
+    def open_spider(self, spider):
+        self.client = pymongo.MongoClient(self.mongo_uri)
+        self.db = self.client[self.mongo_db]
+
+    def close_spider(self, spider):
+        self.client.close()
+
+    def process_item(self, item, spider):
+        self.db[self.collection_name].insert(dict(item))
+        return item
+```
+
+以上是scrapy基础内容，更多有关scrapy，如log和email等查看[官方文档](https://doc.scrapy.org/en/latest/index.html)
 
 ## 参考文档
 
