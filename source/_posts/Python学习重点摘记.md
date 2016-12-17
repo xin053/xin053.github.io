@@ -253,3 +253,12 @@ StopIteration
 
 1. `os.listdir()`获取的只是指定路径下所有文件名组成的字符串列表，`os.scandir()`这可以返回一个生成器，每个元素是`DirEntry`对象，保留了文件相关的信息
 2. `os.remove()`只能删除文件，`os.rmdir()`只能删除空目录，`shutil.rmtree()`可以递归删除目录
+
+### subprocess替代
+
+1. [`envoy` — 对标准库subprocess的封装，比较好用](https://github.com/kennethreitz/envoy)
+2. [`sh` — linux平台下subprocess的替代](https://github.com/amoffat/sh)
+
+### keyring
+
+1. 该模块能够将密码保存在系统keyring服务中
