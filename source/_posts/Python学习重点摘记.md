@@ -262,3 +262,8 @@ StopIteration
 ### keyring
 
 1. 该模块能够将密码保存在系统keyring服务中
+
+### random 与urandom
+
+1. random是标准库中的一个模块，产生的随机数不安全
+2. urandom()是os模块中的方法，使用基于系统的随机数生成器，是安全的
