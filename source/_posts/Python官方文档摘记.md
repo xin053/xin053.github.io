@@ -124,3 +124,8 @@ The Python Standard Library：
 - [MS Windows Specific Services](https://docs.python.org/3/library/windows.html)
   - [`winreg` – Windows registry access](https://docs.python.org/3/library/winreg.html)
 
+
+[python3.6新增](https://docs.python.org/3.6/index.html)
+
+- [Cryptographic Services](https://docs.python.org/3.6/library/crypto.html)
+  - [`secrets` — 生成安全的随机数，功能同`os.urandom()`](https://docs.python.org/3.6/library/secrets.html#module-secrets)
