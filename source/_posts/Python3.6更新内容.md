@@ -25,9 +25,11 @@ python -m venv --upgrade F:\pythonVE
 
 注意这里的`python`是3.6中的`python.exe`,`--upgrade`参数的意思就是将虚拟环境中的python版本升级为此python版本(3.6版本)
 
-所以`PAHT`中只用添加虚拟环境的路径就可以了，然后就是慢慢更新第三方包了，毕竟第三方包适配3.6也需要时间，但是毫无疑问，会很快。**Ipython现在就用不了，因为pyqt还没支持3.6(毕竟3.6今天才出23333)，不过相信过几天就可以用了，python3已经是趋势，不要告诉我你的主要工作环境是python2(话说12月17号更新了python2.7.13)**
+所以`PAHT`中只用添加虚拟环境的路径就可以了，然后就是慢慢更新第三方包了，毕竟第三方包适配3.6也需要时间，但是毫无疑问，会很快。**jupyter的`ipython-qtconsole.exe`现在就用不了，因为pyqt还没支持3.6(毕竟3.6今天才出23333)，不过相信过几天就可以用了，python3已经是趋势，不要告诉我你的主要工作环境是python2(话说12月17号更新了python2.7.13)**
 
-**注意有些包还是要手动更新的，例如windows上无法编译lxml，所以一般都是下载编译好的进行安装，之前下载的是支持python3.5的lxml，现在需要卸载当前库，并手动下载编译好的支持3.6的lxml进行安装**
+**注意有些包还是要手动更新的，例如windows上无法编译lxml，所以一般都是下载编译好的进行安装，之前下载的是支持python3.5的lxml，现在需要卸载当前库，并手动下载编译好的支持3.6的lxml进行安装,有些包使用pip安装的时候会提示编码问题，简单的方法就是从[Unofficial Windows Binaries for Python Extension Packages](http://www.lfd.uci.edu/~gohlke/pythonlibs/)下载，然后直接安装**
+
+***以上只是本人环境，因为我目前只把python当作工具，所以不会像开发库一样考虑版本兼容等情况，不过一般还是建议将常用包放在python安装目录下，对于特定的项目构建虚拟环境，在虚拟环境中安装与python版本相适应的包进行开发。***
 
 ## What’s New In Python 3.6
 
