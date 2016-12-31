@@ -267,3 +267,57 @@ StopIteration
 
 1. random是标准库中的一个模块，产生的随机数不安全
 2. urandom()是os模块中的方法，使用基于系统的随机数生成器，是安全的
+
+### python2与3的编码问题
+
+1. Python2有两种表示字符序列的类型，分别叫做`str`和`Unicode`，`str`实例包含原始的8位值；而`Unicode`的实例，则包含`Unicode`字符。
+
+   1. `str`格式本质含义是“某种编码格式”，绝大多数情况下，被引号框起来的字符串，就是`str`，这时的字符串编码类型，其实就是你Python文件的编码类型，比如在Windows里，默认用的是GBK编码。
+   2. `Unicode`格式的含义就是“用unicode编码的字符串”。Python在进入2.0版后正式定义了了Unicode字符串这个奇怪的特性，目的就是为了处理太多种语言编码的文本。从那时开始，Python语言中的字符串类型就分为两种：一种是传统的Python字符串（各种花样编码），另一种则是新出现的`Unicode`
+
+   ![](https://ooo.0o0.ooo/2016/11/16/582c111e3fa73.png)
+
+2. Python3也有两种表示字符序列的类型：`bytes`和`str`。前者的实例包含原始的8位值，后者的实例包含`Unicode`字符,可以说python3的`str`，就是python2的`Unicode`
+
+   1. `str`格式的定义变更为”Unicode类型的字符串“，也就是说在默认情况下，被引号框起来的字符串，是使用`Unicode`编码的。
+   2. 而“不是Unicode的某种编码格式”，比如UTF-8、GBK，这些编码方式被定义为了`bytes`，这里的`bytes`和py2中的`str`有很多相似的地方
+
+3. 我们需要编写两个辅助（helper）函数，以便在这两种情况之间转换，使得转换后的输入数据能够符合开发者的预期
+
+   ```python
+   #在Python3中，我们需要编写接受str或bytes，并总是返回str的方法：
+   def to_str(bytes_or_str):
+     if isinstance(bytes_or_str, bytes):
+       value = bytes_or_str.decode('utf-8')
+     else:
+       value = bytes_or_str
+     return value # Instance of str
+     
+   #另外，还需要编写接受str或bytes，并总是返回bytes的方法：
+   def to_bytes(bytes_or_str):
+     if isinstance(bytes_or_str, str):
+       value = bytes_or_str.encode('utf-8)
+     else:
+       value = bytes_or_str
+     return value # Instance of bytes
+     
+   #在Python2中，需要编写接受str或unicode，并总是返回unicode的方法：
+   #python2
+   def to_unicode(unicode_or_str):
+     if isinstance(unicode_or_str, str):
+       value = unicode_or_str.decode('utf-8')
+     else:
+       value = unicode_or_str
+     return value # Instance of unicode
+     
+   #另外，还需要编写接受str或unicode，并总是返回str的方法：
+   #Python2
+   def to_str(unicode_or_str):
+     if isinstance(unicode_or_str, unicode):
+       value = unicode_or_str.encode('utf-8')
+     else:
+       value = unicode_or_str
+     reutrn vlaue # Instance of str
+   ```
+
+   ​
