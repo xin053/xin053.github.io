@@ -256,8 +256,9 @@ StopIteration
 
 ### subprocess替代
 
-1. [`envoy` — 对标准库subprocess的封装，比较好用](https://github.com/kennethreitz/envoy)
-2. [`sh` — linux平台下subprocess的替代](https://github.com/amoffat/sh)
+1. [`delegator` — `requests`作者最新作品](https://github.com/kennethreitz/delegator.py)
+2. [`envoy` — 对标准库subprocess的封装，比较好用](https://github.com/kennethreitz/envoy)
+3. [`sh` — linux平台下subprocess的替代](https://github.com/amoffat/sh)
 
 ### keyring
 
@@ -320,4 +321,93 @@ StopIteration
      reutrn vlaue # Instance of str
    ```
 
-   ​
+
+### contextlib
+
+1. 使用`contextlib`标准库可以快速构造上下文管理器
+2. 使用`contextlib`库中的`contextmanager`装饰器装饰一个返回生成器的函数，就构造了一个上下文管理器，其中`yield`前面的内容是`with`表达式执行之前的操作，`yield`之后的内容是`with`表达式执行之后的操作，`yield`如果有返回的内容，则会返回给`with`表达式中`as`之后的变量
+
+### 打包python包到pypi
+
+1. [`flit` — 很方便](https://github.com/takluyver/flit)
+
+### 装饰器
+
+```python
+def identity(f):
+    return f
+
+@identity
+def foo():
+    return 'bar'
+```
+
+上述就是一个最简单的装饰器的实现，实际上，装饰器就是实现了下面的操作:
+
+```python
+def foo():
+    return 'bar'
+
+foo = identity(foo)
+```
+
+注册装饰器的实现:
+
+```python
+_functions = {}
+def register(f):
+    global _functions
+    _functions[f.__name__] = f
+    return f
+    
+@register
+def foo():
+    return 'bar'
+```
+
+上述装饰器没有使用被装饰函数的参数，返回的还是原来的函数，只是在返回之前做了一些事情
+
+而大多数装饰器都会用到被装饰函数的参数，这时候就不能返回函数本身了，因为最后返回函数本身，就没有渠道获取被装饰函数的参数，所以这时候就需要返回一个对被装饰函数进行包装的函数，例如:
+
+```python
+def check_is_admin(f):
+    def wrapper(*args, **kwargs):
+        if kwargs.get('username') != 'admin':
+            raise Exception("This user is not allowd to get food")
+        return f(*args,**kwargs)
+    return wrapper
+
+class Store(object):
+    @check_is_admin
+    def get_food(self, username, food):
+        return self.storage.get(food)
+    
+    @check_is_admin
+    def put_food(self, username, food):
+        self.storage.put(food)
+```
+
+`get_food`被装饰后，实际上我们在调用`get_food`时，调用的是`wrapper`函数，也就是说`get_food`被包装了，所以`wrapper`可以获取到输入的参数，并对参数进行一些操作,并且注意上述代码要传入一个名为`username`的关键字参数，例如:
+
+```python
+get_food(username='admin', food='apple')
+```
+
+为此，我们需要一个更加智能的装饰器，它能够查看被装饰函数的参数，并从中提取需要的参数，`inspect`模块能实现这样的需求
+
+并且由于实际上我们调用的是包装函数`wrapper`,那么像`__name__`等返回的就是`wrapper`函数的信息，而不是`get_food`函数的信息,为此，`functools`提供`wraps`装饰器用来将被装饰函数一些特有属性赋值给包装函数，这样我们使用`wrapper`函数时，就像真的在使用原`get_food`函数一样
+
+```python
+import functools
+import inspect
+
+def check_is_admin(f):
+    @functools.wraps(f)
+    def wrapper(*args, **kwargs):
+        func_args = inspect.getcallargs(f, *args, **kwargs)
+        if func_args.get('username') != 'admin':
+            raise Exception("This user is not allowd to get food")
+        return f(*args,**kwargs)
+    return wrapper
+```
+
