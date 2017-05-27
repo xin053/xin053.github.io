@@ -1,0 +1,995 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="jFTy9MrTO4piYCnfdfFFpOLb9SCydVuSBPbqgakCzCM">
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Python,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="xin053" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="Python3.6北京时间2016年12月23日晚上6点半左右，python官网放出了python3.6.0正式版，安装后，可以看到windows版具体编译时间是2016年12月23日早上8点6分。可以说python3.6从测试到正式发布已经有很长一段时间了，并且官方表示，2017年初开始对3.6版本进行各种bug修复等改进，也就是3.6.x的版本，关于python3.6相较于3.5有哪些变化，请">
+<meta name="keywords" content="Python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python3.6更新内容">
+<meta property="og:url" content="https://xin053.github.io/2016/12/23/Python3.6更新内容/index.html">
+<meta property="og:site_name" content="xin053">
+<meta property="og:description" content="Python3.6北京时间2016年12月23日晚上6点半左右，python官网放出了python3.6.0正式版，安装后，可以看到windows版具体编译时间是2016年12月23日早上8点6分。可以说python3.6从测试到正式发布已经有很长一段时间了，并且官方表示，2017年初开始对3.6版本进行各种bug修复等改进，也就是3.6.x的版本，关于python3.6相较于3.5有哪些变化，请">
+<meta property="og:image" content="https://www.python.org/static/img/python-logo.png">
+<meta property="og:updated_time" content="2017-05-27T13:20:48.771Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python3.6更新内容">
+<meta name="twitter:description" content="Python3.6北京时间2016年12月23日晚上6点半左右，python官网放出了python3.6.0正式版，安装后，可以看到windows版具体编译时间是2016年12月23日早上8点6分。可以说python3.6从测试到正式发布已经有很长一段时间了，并且官方表示，2017年初开始对3.6版本进行各种bug修复等改进，也就是3.6.x的版本，关于python3.6相较于3.5有哪些变化，请">
+<meta name="twitter:image" content="https://www.python.org/static/img/python-logo.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: undefined,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> Python3.6更新内容 | xin053 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-78789863-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?95bc477a974f85651897b76f543028bb";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">xin053</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">在安全圈里徘徊，停滞不前</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Python3.6更新内容
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-12-23T19:15:12+08:00" content="2016-12-23">
+              2016-12-23
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/12/23/Python3.6更新内容/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/12/23/Python3.6更新内容/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <link rel="stylesheet" type="text/css" href="/assets/css/DPlayer.min.css"><script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="Python3-6"><a href="#Python3-6" class="headerlink" title="Python3.6"></a>Python3.6</h2><p>北京时间2016年12月23日晚上6点半左右，<a href="https://www.python.org/" target="_blank" rel="external">python官网</a>放出了python3.6.0正式版，安装后，可以看到windows版具体编译时间是2016年12月23日早上8点6分。可以说python3.6从测试到正式发布已经有很长一段时间了，并且官方表示，2017年初开始对3.6版本进行各种bug修复等改进，也就是3.6.x的版本，关于python3.6相较于3.5有哪些变化，请看<a href="https://docs.python.org/3.6/whatsnew/3.6.html" target="_blank" rel="external">What’s New In Python 3.6</a><br>本文主要讲解如何将工作环境从python3.5转到python3.6，以及python3.6新功能的介绍。</p>
+<p><img src="https://www.python.org/static/img/python-logo.png" alt=""></p>
+<a id="more"></a>
+<h2 id="工作环境"><a href="#工作环境" class="headerlink" title="工作环境"></a>工作环境</h2><p>由于python的每个版本，例如3.5和3.6安装时安装目录是分开的(windows环境)，而如果我们将python第三方库安装在python安装目录下的话，那么现在我如果使用3.6，又得重新将3.6的安装目录添加到环境变量<code>PATH</code>，并且将大量第三方库安装到3.6安装目录，但是这样就引发了一个问题，那就是多份第三方库都存在于电脑中，当然也可以删除3.5相关的所有文件，但是实际上重新安装常用的那些库又很麻烦，所以我将python虚拟环境当作我的工作环境，也就是在<code>F:\pythonVE</code>目录创建一个python虚拟环境，将第三方库都安装在这个虚拟环境中，所以现在刚刚安装好python3.6，只用在cmd执行:</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">python -m venv --upgrade F:\pythonVE</div></pre></td></tr></table></figure>
+<p>注意这里的<code>python</code>是3.6中的<code>python.exe</code>,<code>--upgrade</code>参数的意思就是将虚拟环境中的python版本升级为此python版本(3.6版本)</p>
+<p>所以<code>PAHT</code>中只用添加虚拟环境的路径就可以了，然后就是慢慢更新第三方包了，毕竟第三方包适配3.6也需要时间，但是毫无疑问，会很快。<strong>jupyter的<code>ipython-qtconsole.exe</code>现在就用不了，因为pyqt还没支持3.6(毕竟3.6今天才出23333)，不过相信过几天就可以用了，python3已经是趋势，不要告诉我你的主要工作环境是python2(话说12月17号更新了python2.7.13)</strong></p>
+<p><strong>注意有些包还是要手动更新的，例如windows上无法编译lxml，所以一般都是下载编译好的进行安装，之前下载的是支持python3.5的lxml，现在需要卸载当前库，并手动下载编译好的支持3.6的lxml进行安装,有些包使用pip安装的时候会提示编码问题，简单的方法就是从<a href="http://www.lfd.uci.edu/~gohlke/pythonlibs/" target="_blank" rel="external">Unofficial Windows Binaries for Python Extension Packages</a>下载，然后直接安装</strong></p>
+<p><strong><em>以上只是本人环境，因为我目前只把python当作工具，所以不会像开发库一样考虑版本兼容等情况，不过一般还是建议将常用包放在python安装目录下，对于特定的项目构建虚拟环境，在虚拟环境中安装与python版本相适应的包进行开发。</em></strong></p>
+<h2 id="What’s-New-In-Python-3-6"><a href="#What’s-New-In-Python-3-6" class="headerlink" title="What’s New In Python 3.6"></a>What’s New In Python 3.6</h2><p>主要改变:</p>
+<ul>
+<li>PEP 468 - Preserving the order of **kwargs in a function</li>
+<li>PEP 487 - Simpler customization of class creation</li>
+<li>PEP 495 - Local Time Disambiguation</li>
+<li>PEP 498 - Literal String Formatting</li>
+<li>PEP 506 - Adding A Secrets Module To The Standard Library</li>
+<li>PEP 509 - Add a private version to dict</li>
+<li>PEP 515 - Underscores in Numeric Literals</li>
+<li>PEP 519 - Adding a file system path protocol</li>
+<li>PEP 520 - Preserving Class Attribute Definition Order</li>
+<li>PEP 523 - Adding a frame evaluation API to CPython</li>
+<li>PEP 524 - Make os.urandom() blocking on Linux (during system startup)</li>
+<li>PEP 525 - Asynchronous Generators (provisional)</li>
+<li>PEP 526 - Syntax for Variable Annotations (provisional)</li>
+<li>PEP 528 - Change Windows console encoding to UTF-8</li>
+<li>PEP 529 - Change Windows filesystem encoding to UTF-8</li>
+<li>PEP 530 - Asynchronous Comprehensions</li>
+</ul>
+<h3 id="PEP-498-Formatted-string-literals"><a href="#PEP-498-Formatted-string-literals" class="headerlink" title="PEP 498: Formatted string literals"></a>PEP 498: Formatted string literals</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>name = <span class="string">"Fred"</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">f"He said his name is <span class="subst">&#123;name&#125;</span>."</span></div><div class="line"><span class="string">'He said his name is Fred.'</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>width = <span class="number">10</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>precision = <span class="number">4</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>value = decimal.Decimal(<span class="string">"12.34567"</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">f"result: <span class="subst">&#123;value:&#123;width&#125;</span>.<span class="subst">&#123;precision&#125;</span>&#125;"</span>  <span class="comment"># nested fields</span></div><div class="line"><span class="string">'result:      12.35'</span></div></pre></td></tr></table></figure>
+<p>在字符串前面加<code>f</code>，表示该字符串将被格式化，类似于对字符串进行<code>str.format()</code>操作，不得不说，确实很方便</p>
+<h3 id="PEP-526-Syntax-for-variable-annotations"><a href="#PEP-526-Syntax-for-variable-annotations" class="headerlink" title="PEP 526: Syntax for variable annotations"></a>PEP 526: Syntax for variable annotations</h3><p>提供变量声明语法,，包括类中的变量，实例中的变量和函数参数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">primes: List[int] = []</div><div class="line"></div><div class="line">captain: str  <span class="comment"># Note: no initial value!</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Starship</span>:</span></div><div class="line">    stats: Dict[str, int] = &#123;&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="class"><span class="keyword">class</span> <span class="title">Starship</span>:</span></div><div class="line"><span class="meta">... </span>    stats: str</div><div class="line">...</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>Starship.__annotations__</div><div class="line">&#123;<span class="string">'stats'</span>: &lt;<span class="class"><span class="keyword">class</span> '<span class="title">str</span>'&gt;&#125;</span></div></pre></td></tr></table></figure>
+<p>当然，python始终是一门动态语言，所以这些类型声明实际上只是将这些类型信息存储在类或者模块的<code>__annotations__</code>属性中，并不会在运行时检擦这些属性，只是起到提示的作用，当然，这个特性确实也很有用处，具体类型声明语法请看<a href="https://www.python.org/dev/peps/pep-0484/" target="_blank" rel="external">PEP 484</a></p>
+<h3 id="PEP-515-Underscores-in-Numeric-Literals"><a href="#PEP-515-Underscores-in-Numeric-Literals" class="headerlink" title="PEP 515: Underscores in Numeric Literals"></a>PEP 515: Underscores in Numeric Literals</h3><p>能够在数字间添加下划线以提高阅读性</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt; 1_000_000_000_000_000</div><div class="line">1000000000000000</div><div class="line">&gt;&gt;&gt; type(1_000_000_000_000_000)</div><div class="line">&lt;class 'int'&gt;</div><div class="line">&gt;&gt;&gt; 0x_FF_FF_FF_FF</div><div class="line">4294967295</div></pre></td></tr></table></figure>
+<p>同时字符串格式化也支持这种下划线的格式化方式:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">'&#123;:_&#125;'</span>.format(<span class="number">1000000</span>)</div><div class="line"><span class="string">'1_000_000'</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">'&#123;:_x&#125;'</span>.format(<span class="number">0xFFFFFFFF</span>)</div><div class="line"><span class="string">'ffff_ffff'</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">'&#123;:_X&#125;'</span>.format(<span class="number">0xFFfFFFFF</span>)</div><div class="line"><span class="string">'FFFF_FFFF'</span></div></pre></td></tr></table></figure>
+<p>当然也可以使用二进制<code>b</code>，八进制<code>o</code></p>
+<h3 id="PEP-525-Asynchronous-Generators"><a href="#PEP-525-Asynchronous-Generators" class="headerlink" title="PEP 525: Asynchronous Generators"></a>PEP 525: Asynchronous Generators</h3><p>异步生成器，python3.6中可以在同一函数体中使用<code>await</code>和<code>yield</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Ticker</span>:</span></div><div class="line">    <span class="string">"""Yield numbers from 0 to `to` every `delay` seconds."""</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, delay, to)</span>:</span></div><div class="line">        self.delay = delay</div><div class="line">        self.i = <span class="number">0</span></div><div class="line">        self.to = to</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__aiter__</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">return</span> self</div><div class="line"></div><div class="line">    <span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">__anext__</span><span class="params">(self)</span>:</span></div><div class="line">        i = self.i</div><div class="line">        <span class="keyword">if</span> i &gt;= self.to:</div><div class="line">            <span class="keyword">raise</span> StopAsyncIteration</div><div class="line">        self.i += <span class="number">1</span></div><div class="line">        <span class="keyword">if</span> i:</div><div class="line">            <span class="keyword">await</span> asyncio.sleep(self.delay)</div><div class="line">        <span class="keyword">return</span> i</div></pre></td></tr></table></figure>
+<p>以上代码现在可以简写为:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">ticker</span><span class="params">(delay, to)</span>:</span></div><div class="line">    <span class="string">"""Yield numbers from 0 to `to` every `delay` seconds."""</span></div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(to):</div><div class="line">        <span class="keyword">yield</span> i</div><div class="line">        <span class="keyword">await</span> asyncio.sleep(delay)</div></pre></td></tr></table></figure>
+<h3 id="PEP-530-Asynchronous-Comprehensions"><a href="#PEP-530-Asynchronous-Comprehensions" class="headerlink" title="PEP 530: Asynchronous Comprehensions"></a>PEP 530: Asynchronous Comprehensions</h3><p>可以在列表，元组，字典，生成器表达式中使用<code>async for</code>和<code>await</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">result = []</div><div class="line"><span class="keyword">async</span> <span class="keyword">for</span> i <span class="keyword">in</span> aiter():</div><div class="line">    <span class="keyword">if</span> i % <span class="number">2</span>:</div><div class="line">        result.append(i)</div></pre></td></tr></table></figure>
+<p>可以简写为:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">result = [i <span class="keyword">async</span> <span class="keyword">for</span> i <span class="keyword">in</span> aiter() <span class="keyword">if</span> i % <span class="number">2</span>]</div></pre></td></tr></table></figure>
+<p>有关<code>await</code>的例子:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">result = [<span class="keyword">await</span> fun() <span class="keyword">for</span> fun <span class="keyword">in</span> funcs <span class="keyword">if</span> <span class="keyword">await</span> condition()]</div></pre></td></tr></table></figure>
+<h3 id="PEP-487-Simpler-customization-of-class-creation"><a href="#PEP-487-Simpler-customization-of-class-creation" class="headerlink" title="PEP 487: Simpler customization of class creation"></a>PEP 487: Simpler customization of class creation</h3><p>现在可以不用使用元类来自定义子类的创建</p>
+<p>当子类被创建时，基类中的<code>__init_subclass__()</code>类方法将被调用</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">PluginBase</span>:</span></div><div class="line">    subclasses = []</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init_subclass__</span><span class="params">(cls, **kwargs)</span>:</span></div><div class="line">        super().__init_subclass__(**kwargs)</div><div class="line">        cls.subclasses.append(cls)</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Plugin1</span><span class="params">(PluginBase)</span>:</span></div><div class="line">    <span class="keyword">pass</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Plugin2</span><span class="params">(PluginBase)</span>:</span></div><div class="line">    <span class="keyword">pass</span></div></pre></td></tr></table></figure>
+<h3 id="PEP-487-Descriptor-Protocol-Enhancements"><a href="#PEP-487-Descriptor-Protocol-Enhancements" class="headerlink" title="PEP 487: Descriptor Protocol Enhancements"></a>PEP 487: Descriptor Protocol Enhancements</h3><p>描述符中新增了<code>__set_name__()</code>方法，当描述符被实例化时，便会调用<code>__set_name__()</code>方法</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">IntField</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__get__</span><span class="params">(self, instance, owner)</span>:</span></div><div class="line">        <span class="keyword">return</span> instance.__dict__[self.name]</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__set__</span><span class="params">(self, instance, value)</span>:</span></div><div class="line">        <span class="keyword">if</span> <span class="keyword">not</span> isinstance(value, int):</div><div class="line">            <span class="keyword">raise</span> ValueError(<span class="string">f'expecting integer in <span class="subst">&#123;self.name&#125;</span>'</span>)</div><div class="line">        instance.__dict__[self.name] = value</div><div class="line"></div><div class="line">    <span class="comment"># this is the new initializer:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__set_name__</span><span class="params">(self, owner, name)</span>:</span></div><div class="line">        self.name = name</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Model</span>:</span></div><div class="line">    int_field = IntField() <span class="comment"># 将会调用__set_name__()方法，将属性名int_field保存起来</span></div></pre></td></tr></table></figure>
+<h3 id="PEP-519-Adding-a-file-system-path-protocol"><a href="#PEP-519-Adding-a-file-system-path-protocol" class="headerlink" title="PEP 519: Adding a file system path protocol"></a>PEP 519: Adding a file system path protocol</h3><p>在大多数眼中，路径就是字符串或者是字节对象,以至于python标准库<code>pathlib</code>较少被使用。现在提供了一个<code>os.PathLike</code>接口，只要实现了<code>__fspath__()</code>方法，那么这个对象就表示是一个路径，并且可以使用<code>os.fspath()</code>,<code>os.fsdecode()</code>, 或者 <code>os.fsencode()</code>方法或者这个路径对象的字符串或字节表示</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> pathlib</div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">with</span> open(pathlib.Path(<span class="string">"README"</span>)) <span class="keyword">as</span> f:</div><div class="line"><span class="meta">... </span>    contents = f.read()</div><div class="line">...</div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> os.path</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>os.path.splitext(pathlib.Path(<span class="string">"some_file.txt"</span>))</div><div class="line">(<span class="string">'some_file'</span>, <span class="string">'.txt'</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>os.path.join(<span class="string">"/a/b"</span>, pathlib.Path(<span class="string">"c"</span>))</div><div class="line"><span class="string">'/a/b/c'</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> os</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>os.fspath(pathlib.Path(<span class="string">"some_file.txt"</span>))</div><div class="line"><span class="string">'some_file.txt'</span></div></pre></td></tr></table></figure>
+<h3 id="PEP-529-Change-Windows-filesystem-encoding-to-UTF-8"><a href="#PEP-529-Change-Windows-filesystem-encoding-to-UTF-8" class="headerlink" title="PEP 529: Change Windows filesystem encoding to UTF-8"></a>PEP 529: Change Windows filesystem encoding to UTF-8</h3><p>现在的python3.6版本使得我们可以在windows平台是正确使用字节对象表示的路径，而不会造成数据丢失，事实上，该字节对象就是通过<code>sys.getfilesystemencoding()</code>编码的，也就是<code>UTF-8</code></p>
+<h3 id="PEP-528-Change-Windows-console-encoding-to-UTF-8"><a href="#PEP-528-Change-Windows-console-encoding-to-UTF-8" class="headerlink" title="PEP 528: Change Windows console encoding to UTF-8"></a>PEP 528: Change Windows console encoding to UTF-8</h3><p>The default console on Windows will now accept all Unicode characters and provide correctly read str objects to Python code. <code>sys.stdin</code>, <code>sys.stdout</code> and<code>sys.stderr</code> now default to utf-8 encoding.</p>
+<p>只想说，简直是福音，再也不用担心控制台输出乱码了。。。</p>
+<h3 id="PEP-520-Preserving-Class-Attribute-Definition-Order"><a href="#PEP-520-Preserving-Class-Attribute-Definition-Order" class="headerlink" title="PEP 520: Preserving Class Attribute Definition Order"></a>PEP 520: Preserving Class Attribute Definition Order</h3><p>类中定义的属性的顺序在<code>__dict__</code>中将被保留</p>
+<h3 id="PEP-468-Preserving-Keyword-Argument-Order"><a href="#PEP-468-Preserving-Keyword-Argument-Order" class="headerlink" title="PEP 468: Preserving Keyword Argument Order"></a>PEP 468: Preserving Keyword Argument Order</h3><p><code>**kwargs</code> in a function signature is now guaranteed to be an insertion-order-preserving mapping.</p>
+<h4 id="New-dict-implementation"><a href="#New-dict-implementation" class="headerlink" title="New dict implementation"></a>New dict implementation</h4><p>新的dict实现，比原来的实现快20% 到25%不说，还保留了顺序，也就是说dict现在是有序的。。。所以要OrderedDict何用？不过，官方也说了，现在只是暂时这样，有可能之后的版本又变成无序的了</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>b = &#123;<span class="string">'one'</span>: <span class="number">1</span>, <span class="string">'two'</span>: <span class="number">2</span>, <span class="string">'three'</span>: <span class="number">3</span>&#125;</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>b</div><div class="line">&#123;<span class="string">'one'</span>: <span class="number">1</span>, <span class="string">'two'</span>: <span class="number">2</span>, <span class="string">'three'</span>: <span class="number">3</span>&#125;</div></pre></td></tr></table></figure>
+<h3 id="其他改动"><a href="#其他改动" class="headerlink" title="其他改动"></a>其他改动</h3><p>添加了<a href="https://docs.python.org/3.6/library/secrets.html#module-secrets" target="_blank" rel="external"><code>secrets</code></a>模块</p>
+<p>改进了<code>re</code>模块，在正则表达式中添加了修饰符跨度的支持，Examples: <code>&#39;(i:p)ython&#39;</code> matches <code>&#39;python&#39;</code> and <code>&#39;Python&#39;</code>, but not <code>&#39;PYTHON&#39;</code>; <code>&#39;(?i)g(?-i:v)r&#39;</code>matches <code>&#39;GvR&#39;</code> and <code>&#39;gvr&#39;</code>, but not <code>&#39;GVR&#39;</code></p>
+<p>更多细节改动参考<a href="https://docs.python.org/3.6/whatsnew/3.6.html" target="_blank" rel="external">官网What’s New In Python 3.6</a></p>
+<h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><ul>
+<li><a href="https://docs.python.org/3.6/whatsnew/3.6.html" target="_blank" rel="external">What’s New In Python 3.6</a></li>
+</ul>
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechat.png" alt="xin053 WeChat Pay">
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay.png" alt="xin053 Alipay">
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Python/" rel="tag">#Python</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/12/20/cryptography加密库使用详解/" rel="next" title="cryptography加密库使用详解">
+                <i class="fa fa-chevron-left"></i> cryptography加密库使用详解
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/08/linux命令学习/" rel="prev" title="linux命令学习">
+                linux命令学习 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/me.jpg" alt="xin053">
+          <p class="site-author-name" itemprop="name">xin053</p>
+          <p class="site-description motion-element" itemprop="description">正在用Windbg调试正在调试正在反汇编Windbg的IDA的OD...</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">55</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">50</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/xin053" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/xin053" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/xin053" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://blog.csdn.net/zhouzixin053" target="_blank" title="csdn">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  csdn
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://bbs.pediy.com/" title="看雪" target="_blank">看雪</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.geeklzh.com/" title="怪咖家园" target="_blank">怪咖家园</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.csdh.pub/" title="CS_DH" target="_blank">CS_DH</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://dendise7engithub.github.io/" title="Dendionk" target="_blank">Dendionk</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://cyang.tech/" title="cyang" target="_blank">cyang</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Python3-6"><span class="nav-number">1.</span> <span class="nav-text">Python3.6</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#工作环境"><span class="nav-number">2.</span> <span class="nav-text">工作环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#What’s-New-In-Python-3-6"><span class="nav-number">3.</span> <span class="nav-text">What’s New In Python 3.6</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#PEP-498-Formatted-string-literals"><span class="nav-number">3.1.</span> <span class="nav-text">PEP 498: Formatted string literals</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PEP-526-Syntax-for-variable-annotations"><span class="nav-number">3.2.</span> <span class="nav-text">PEP 526: Syntax for variable annotations</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PEP-515-Underscores-in-Numeric-Literals"><span class="nav-number">3.3.</span> <span class="nav-text">PEP 515: Underscores in Numeric Literals</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PEP-525-Asynchronous-Generators"><span class="nav-number">3.4.</span> <span class="nav-text">PEP 525: Asynchronous Generators</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PEP-530-Asynchronous-Comprehensions"><span class="nav-number">3.5.</span> <span class="nav-text">PEP 530: Asynchronous Comprehensions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PEP-487-Simpler-customization-of-class-creation"><span class="nav-number">3.6.</span> <span class="nav-text">PEP 487: Simpler customization of class creation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PEP-487-Descriptor-Protocol-Enhancements"><span class="nav-number">3.7.</span> <span class="nav-text">PEP 487: Descriptor Protocol Enhancements</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PEP-519-Adding-a-file-system-path-protocol"><span class="nav-number">3.8.</span> <span class="nav-text">PEP 519: Adding a file system path protocol</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PEP-529-Change-Windows-filesystem-encoding-to-UTF-8"><span class="nav-number">3.9.</span> <span class="nav-text">PEP 529: Change Windows filesystem encoding to UTF-8</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PEP-528-Change-Windows-console-encoding-to-UTF-8"><span class="nav-number">3.10.</span> <span class="nav-text">PEP 528: Change Windows console encoding to UTF-8</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PEP-520-Preserving-Class-Attribute-Definition-Order"><span class="nav-number">3.11.</span> <span class="nav-text">PEP 520: Preserving Class Attribute Definition Order</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PEP-468-Preserving-Keyword-Argument-Order"><span class="nav-number">3.12.</span> <span class="nav-text">PEP 468: Preserving Keyword Argument Order</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#New-dict-implementation"><span class="nav-number">3.12.1.</span> <span class="nav-text">New dict implementation</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他改动"><span class="nav-number">3.13.</span> <span class="nav-text">其他改动</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文档"><span class="nav-number">4.</span> <span class="nav-text">参考文档</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xin053</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'xin053';
+      var disqus_identifier = '2016/12/23/Python3.6更新内容/';
+      var disqus_title = "Python3.6更新内容";
+      var disqus_url = 'https://xin053.github.io/2016/12/23/Python3.6更新内容/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+                            
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').mousedown(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+  
+
+  
+
+  
+
+</body>
+</html>

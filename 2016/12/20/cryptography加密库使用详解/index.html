@@ -1,0 +1,981 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="jFTy9MrTO4piYCnfdfFFpOLb9SCydVuSBPbqgakCzCM">
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Python,cryptography,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="xin053" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="cryptography简介cryptography模块主要分为两类，一类是高层次的加密配方，也就是我们只用关心如何使用它提供的api，并不用关心具体加密过程等细节，这也是我们经常使用的。另一类是低层次的加密原语，如果对密码学不是很了解的话，使用加密原语构造自己的加密算法是很危险的。本片文章介绍高层次的对称加密api和低层次非对称的公钥私钥以及证书">
+<meta name="keywords" content="Python,cryptography">
+<meta property="og:type" content="article">
+<meta property="og:title" content="cryptography加密库使用详解">
+<meta property="og:url" content="https://xin053.github.io/2016/12/20/cryptography加密库使用详解/index.html">
+<meta property="og:site_name" content="xin053">
+<meta property="og:description" content="cryptography简介cryptography模块主要分为两类，一类是高层次的加密配方，也就是我们只用关心如何使用它提供的api，并不用关心具体加密过程等细节，这也是我们经常使用的。另一类是低层次的加密原语，如果对密码学不是很了解的话，使用加密原语构造自己的加密算法是很危险的。本片文章介绍高层次的对称加密api和低层次非对称的公钥私钥以及证书">
+<meta property="og:updated_time" content="2017-05-27T13:20:48.771Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="cryptography加密库使用详解">
+<meta name="twitter:description" content="cryptography简介cryptography模块主要分为两类，一类是高层次的加密配方，也就是我们只用关心如何使用它提供的api，并不用关心具体加密过程等细节，这也是我们经常使用的。另一类是低层次的加密原语，如果对密码学不是很了解的话，使用加密原语构造自己的加密算法是很危险的。本片文章介绍高层次的对称加密api和低层次非对称的公钥私钥以及证书">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: undefined,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> cryptography加密库使用详解 | xin053 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-78789863-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?95bc477a974f85651897b76f543028bb";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">xin053</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">在安全圈里徘徊，停滞不前</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                cryptography加密库使用详解
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-12-20T20:59:43+08:00" content="2016-12-20">
+              2016-12-20
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Python模块学习/" itemprop="url" rel="index">
+                    <span itemprop="name">Python模块学习</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/12/20/cryptography加密库使用详解/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/12/20/cryptography加密库使用详解/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <link rel="stylesheet" type="text/css" href="/assets/css/DPlayer.min.css"><script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="cryptography简介"><a href="#cryptography简介" class="headerlink" title="cryptography简介"></a>cryptography简介</h2><p>cryptography模块主要分为两类，一类是高层次的加密配方，也就是我们只用关心如何使用它提供的api，并不用关心具体加密过程等细节，这也是我们经常使用的。另一类是低层次的加密原语，如果对密码学不是很了解的话，使用加密原语构造自己的加密算法是很危险的。本片文章介绍高层次的对称加密api和低层次非对称的公钥私钥以及证书</p>
+<a id="more"></a>
+<h2 id="cryptography使用"><a href="#cryptography使用" class="headerlink" title="cryptography使用"></a>cryptography使用</h2><h3 id="Fernet-对称加密"><a href="#Fernet-对称加密" class="headerlink" title="Fernet(对称加密)"></a>Fernet(对称加密)</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> cryptography.fernet <span class="keyword">import</span> Fernet</div><div class="line"></div><div class="line">key = Fernet.generate_key()</div><div class="line">key  <span class="comment"># A URL-safe base64-encoded 32-byte key</span></div><div class="line"><span class="comment"># b'7A7idpk7MjmvTWqZf4_vWwvXwAJmmi4SFRnomqKTrB8='</span></div><div class="line">f = Fernet(key)</div><div class="line">token = f.encrypt(<span class="string">b"my deep dark secret"</span>)</div><div class="line">token</div><div class="line"><span class="comment"># b'gAAAAABYWUWYZywJx9l3UrSUMGa5OS3dlz15NpUuOu-Wk6UNsLnQmtDx2hGdRRhwe62EhzT7OuvLafjzwjf7fASFRLMBQPhq3fa2U_WsFcEUzCFR0ZcxJC8='</span></div><div class="line">f.decrypt(token)</div><div class="line"><span class="comment"># b'my deep dark secret'</span></div></pre></td></tr></table></figure>
+<h4 id="Using-passwords-with-Fernet"><a href="#Using-passwords-with-Fernet" class="headerlink" title="Using passwords with Fernet"></a>Using passwords with Fernet</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> base64</div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> os</div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">from</span> cryptography.fernet <span class="keyword">import</span> Fernet</div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">from</span> cryptography.hazmat.backends <span class="keyword">import</span> default_backend</div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">from</span> cryptography.hazmat.primitives <span class="keyword">import</span> hashes</div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">from</span> cryptography.hazmat.primitives.kdf.pbkdf2 <span class="keyword">import</span> PBKDF2HMAC</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>password = <span class="string">b"password"</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>salt = os.urandom(<span class="number">16</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>kdf = PBKDF2HMAC(</div><div class="line"><span class="meta">... </span>    algorithm=hashes.SHA256(),</div><div class="line"><span class="meta">... </span>    length=<span class="number">32</span>,</div><div class="line"><span class="meta">... </span>    salt=salt,</div><div class="line"><span class="meta">... </span>    iterations=<span class="number">100000</span>,</div><div class="line"><span class="meta">... </span>    backend=default_backend()</div><div class="line"><span class="meta">... </span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>key = base64.urlsafe_b64encode(kdf.derive(password))</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>f = Fernet(key)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>token = f.encrypt(<span class="string">b"Secret message!"</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>token</div><div class="line"><span class="string">'...'</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>f.decrypt(token)</div><div class="line"><span class="string">'Secret message!'</span></div></pre></td></tr></table></figure>
+<p>为了以后根据<code>password</code>得到<code>token</code>，需要保存好<code>salt</code></p>
+<h3 id="X-509-数字证书标准"><a href="#X-509-数字证书标准" class="headerlink" title="X.509(数字证书标准)"></a>X.509(数字证书标准)</h3><p>数字证书是CA机构签名的含有服务器公钥以及其他网站相关信息的一种电子证书，用来说明该服务器(网站)确实是真的(官方的)，而不是伪造的</p>
+<p>这里主要使用的是非对称加密，也就是公钥和私钥(RSA)，私钥用来签名，公钥用来验签</p>
+<h4 id="Creating-a-Certificate-Signing-Request-CSR"><a href="#Creating-a-Certificate-Signing-Request-CSR" class="headerlink" title="Creating a Certificate Signing Request (CSR)"></a>Creating a Certificate Signing Request (CSR)</h4><p>When obtaining a certificate from a certificate authority (CA), the usual flow is:</p>
+<ol>
+<li>You generate a private/public key pair.</li>
+<li>You create a request for a certificate, which is signed by your key (to prove that you own that key).</li>
+<li>You give your CSR to a CA (but <em>not</em> the private key).</li>
+<li>The CA validates that you own the resource (e.g. domain) you want a certificate for.</li>
+<li>The CA gives you a certificate, signed by them, which identifies your public key, and the resource you are authenticated for.</li>
+<li>You configure your server to use that certificate, combined with your private key, to server traffic.</li>
+</ol>
+<p>所以首先要生成密钥对:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> cryptography.hazmat.backends <span class="keyword">import</span> default_backend</div><div class="line"><span class="keyword">from</span> cryptography.hazmat.primitives <span class="keyword">import</span> serialization</div><div class="line"><span class="keyword">from</span> cryptography.hazmat.primitives.asymmetric <span class="keyword">import</span> rsa</div><div class="line"></div><div class="line">key = rsa.generate_private_key(</div><div class="line">    public_exponent=<span class="number">65537</span>,</div><div class="line">    key_size=<span class="number">2048</span>,</div><div class="line">    backend=default_backend()</div><div class="line">)</div></pre></td></tr></table></figure>
+<p>关于生成certificate signing request，请看<a href="https://cryptography.io/en/latest/x509/tutorial/#creating-a-certificate-signing-request-csr" target="_blank" rel="external">官方文档</a>,然后就可以将生成的证书发送给CA机构，待CA机构处理完，就会返回给你经过他们签名的数字证书，该数字证书也是用户用来核实我们网站的证书。</p>
+<h4 id="RSA-常用操作"><a href="#RSA-常用操作" class="headerlink" title="RSA 常用操作"></a>RSA 常用操作</h4><h5 id="生成"><a href="#生成" class="headerlink" title="生成"></a>生成</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> cryptography.hazmat.backends <span class="keyword">import</span> default_backend</div><div class="line"><span class="keyword">from</span> cryptography.hazmat.primitives.asymmetric <span class="keyword">import</span> rsa</div><div class="line"></div><div class="line">private_key = rsa.generate_private_key(</div><div class="line">    public_exponent=<span class="number">65537</span>,</div><div class="line">    key_size=<span class="number">2048</span>,</div><div class="line">    backend=default_backend()</div><div class="line">)</div></pre></td></tr></table></figure>
+<p>这样就生成了一个<code>RSAPrivateKey</code>对象。参数保持上面就可以了，具体参数解析看<a href="https://cryptography.io/en/latest/hazmat/primitives/asymmetric/rsa/#generation" target="_blank" rel="external">官方文档</a></p>
+<p><strong>私钥公钥是成对生成的，所以当我们使用<code>generate_private_key</code>生成<code>RSAPrivateKey</code>对象时，我们可以通过生成的对象获取到<code>RSAPublicKey</code>对象</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">public_key = private_key.public_key()</div></pre></td></tr></table></figure>
+<p>当然，肯定是不可以从<code>RSAPublicKey</code>对象中获取到<code>RSAPrivateKey</code>对象的。</p>
+<h5 id="从pem文件导入"><a href="#从pem文件导入" class="headerlink" title="从pem文件导入"></a>从pem文件导入</h5><p>也可以从一个pem格式的文件导入一个<code>RSAPrivateKey</code>对象</p>
+<p>pem格式文件就是类似:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">-----BEGIN CERTIFICATE-----</div><div class="line">MIICKjCCAZMCCQDQ8o4kHKdCPDANBgkqhkiG9w0BAQUFADB6MQswCQYDVQQGEwJV</div><div class="line">UzELMAkGA1UECBMCQ0ExCzAJBgNVBAcTAlNGMQ8wDQYDVQQKEwZKb3llbnQxEDAO</div><div class="line">BgNVBAsTB05vZGUuanMxDDAKBgNVBAMTA2NhMTEgMB4GCSqGSIb3DQEJARYRcnlA</div><div class="line">dGlueWNsb3Vkcy5vcmcwHhcNMTEwMzE0MTgyOTEyWhcNMzgwNzI5MTgyOTEyWjB9</div><div class="line">MQswCQYDVQQGEwJVUzELMAkGA1UECBMCQ0ExCzAJBgNVBAcTAlNGMQ8wDQYDVQQK</div><div class="line">EwZKb3llbnQxEDAOBgNVBAsTB05vZGUuanMxDzANBgNVBAMTBmFnZW50MTEgMB4G</div><div class="line">CSqGSIb3DQEJARYRcnlAdGlueWNsb3Vkcy5vcmcwXDANBgkqhkiG9w0BAQEFAANL</div><div class="line">ADBIAkEAnzpAqcoXZxWJz/WFK7BXwD23jlREyG11x7gkydteHvn6PrVBbB5yfu6c</div><div class="line">bk8w3/Ar608AcyMQ9vHjkLQKH7cjEQIDAQABMA0GCSqGSIb3DQEBBQUAA4GBAKha</div><div class="line">HqjCfTIut+m/idKy3AoFh48tBHo3p9Nl5uBjQJmahKdZAaiksL24Pl+NzPQ8LIU+</div><div class="line">FyDHFp6OeJKN6HzZ72Bh9wpBVu6Uj1hwhZhincyTXT80wtSI/BoUAW8Ls2kwPdus</div><div class="line">64LsJhhxqj2m4vPKNRbHB2QxnNrGi30CUf3kt3Ia</div><div class="line">-----END CERTIFICATE-----</div></pre></td></tr></table></figure>
+<p><strong><em>A PEM block which starts with <code>-----BEGIN CERTIFICATE-----</code> is not a public or private key, it’s an<a href="https://cryptography.io/en/latest/x509/" target="_blank" rel="external">X.509 Certificate</a>. You can load it using <a href="https://cryptography.io/en/latest/x509/reference/#cryptography.x509.load_pem_x509_certificate" target="_blank" rel="external"><code>load_pem_x509_certificate()</code></a> and extract the public key with <a href="https://cryptography.io/en/latest/x509/reference/#cryptography.x509.Certificate.public_key" target="_blank" rel="external"><code>Certificate.public_key</code></a></em></strong></p>
+<p>当然这个文件也可以被加密，我们使用如下方法从pem文件中导入<code>RSAPrivateKey</code>对象</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> cryptography.hazmat.primitives <span class="keyword">import</span> serialization</div><div class="line"></div><div class="line"><span class="keyword">with</span> open(<span class="string">"path/to/key.pem"</span>, <span class="string">"rb"</span>) <span class="keyword">as</span> key_file:</div><div class="line">    private_key = serialization.load_pem_private_key(</div><div class="line">        key_file.read(),</div><div class="line">        password=<span class="keyword">None</span>,</div><div class="line">        backend=default_backend()</div><div class="line">    )</div></pre></td></tr></table></figure>
+<p>同理也可以从cer文件和ssh格式文件中导入私钥或公钥。</p>
+<h5 id="序列化"><a href="#序列化" class="headerlink" title="序列化"></a>序列化</h5><p><code>RSAPrivateKey</code>对象和<code>RSAPublicKey</code>对象都可以序列化为pem文件</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> cryptography.hazmat.primitives <span class="keyword">import</span> serialization</div><div class="line"></div><div class="line">pem = private_key.private_bytes(</div><div class="line">   encoding=serialization.Encoding.PEM,</div><div class="line">   format=serialization.PrivateFormat.PKCS8,</div><div class="line">   encryption_algorithm=serialization.BestAvailableEncryption(<span class="string">b'mypassword'</span>)</div><div class="line">)</div><div class="line"></div><div class="line">pem.splitlines()</div><div class="line"><span class="comment"># [b'-----BEGIN ENCRYPTED PRIVATE KEY-----',</span></div><div class="line"><span class="comment">#  b'MIIFHzBJBgkqhkiG9w0BBQ0wPDAbBgkqhkiG9w0BBQwwDgQI4LyuGo+hDoACAggA',</span></div><div class="line"><span class="comment">#  b'MB0GCWCGSAFlAwQBKgQQGuA8UxHCt7qLEF29noqffQSCBNBH0rZH59FTTWaPWEV/',</span></div><div class="line"><span class="comment">#  ......</span></div><div class="line"><span class="comment">#  b'Y6Dt0ACOPHcd8Z2Y9MTJ0QFY8A==',</span></div><div class="line"><span class="comment">#  b'-----END ENCRYPTED PRIVATE KEY-----']</span></div></pre></td></tr></table></figure>
+<p>强烈建议对私钥进行序列化的时候用自己的密钥进行加密，这样不会将私钥完全暴露</p>
+<p><strong>我们之所以说上述过程是序列化，而不是保存私钥，是因为该pem文件不止包含私钥，还包括一些有关私钥的重要信息，具体pem格式请查阅相关文档。而且实际上用的时候并不需要我们手动对pem文件进行解析，只用使用库提供的api就行</strong></p>
+<p>也可以不加密，改变如下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">encryption_algorithm=serialization.NoEncryption()</div></pre></td></tr></table></figure>
+<p>对于公钥的序列化，如下:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> cryptography.hazmat.primitives <span class="keyword">import</span> serialization</div><div class="line">public_key = private_key.public_key()</div><div class="line"></div><div class="line">pem = public_key.public_bytes(</div><div class="line">   encoding=serialization.Encoding.PEM,</div><div class="line">   format=serialization.PublicFormat.SubjectPublicKeyInfo</div><div class="line">)</div><div class="line"></div><div class="line">pem.splitlines()</div><div class="line"><span class="comment"># [b'-----BEGIN PUBLIC KEY-----',</span></div><div class="line"><span class="comment">#  b'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtboyGrCz1JIVru4+eoKG',</span></div><div class="line"><span class="comment">#  b'n/adEsavPDb2FQ6/UkIum392ni/Q9H27chliPXEZWZmEorbJvWeHupuL0ld3IWXi',</span></div><div class="line"><span class="comment">#  ......</span></div><div class="line"><span class="comment">#  b'LwIDAQAB',</span></div><div class="line"><span class="comment">#  b'-----END PUBLIC KEY-----']</span></div></pre></td></tr></table></figure>
+<h5 id="签名"><a href="#签名" class="headerlink" title="签名"></a>签名</h5><p>使用私钥可以对一段信息进行签名，然后别人就可以使用公钥进行验证。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> cryptography.hazmat.primitives <span class="keyword">import</span> hashes</div><div class="line"><span class="keyword">from</span> cryptography.hazmat.primitives.asymmetric <span class="keyword">import</span> padding</div><div class="line"></div><div class="line">signer = private_key.signer(</div><div class="line">    padding.PSS(</div><div class="line">        mgf=padding.MGF1(hashes.SHA256()),</div><div class="line">        salt_length=padding.PSS.MAX_LENGTH</div><div class="line">    ),</div><div class="line">    hashes.SHA256()</div><div class="line">)</div><div class="line"></div><div class="line">message = <span class="string">b"A message I want to sign"</span></div><div class="line">signer.update(message)</div><div class="line">signature = signer.finalize()</div><div class="line"></div><div class="line">signature</div><div class="line"><span class="comment"># b'\x19\x87!5\xc0\xe3s\x01M\xa5-\xf3......\xce\xf5\x03=F\xb3\xd5\xd1\xf9\xc2\xf2\xbak'</span></div></pre></td></tr></table></figure>
+<p><code>padding</code>也就是填充，就是将不够长度的信息填充成指定长度(这里为256)，具体为什么需要填充请参考SHA256算法实现</p>
+<p>也可以使用更简单的方法进行签名:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">message = <span class="string">b"A message I want to sign"</span></div><div class="line">signature = private_key.sign(</div><div class="line">    message,</div><div class="line">    padding.PSS(</div><div class="line">        mgf=padding.MGF1(hashes.SHA256()),</div><div class="line">        salt_length=padding.PSS.MAX_LENGTH</div><div class="line">    ),</div><div class="line">    hashes.SHA256()</div><div class="line">)</div></pre></td></tr></table></figure>
+<h5 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">public_key = private_key.public_key()</div><div class="line">verifier = public_key.verifier(</div><div class="line">    signature,</div><div class="line">    padding.PSS(</div><div class="line">        mgf=padding.MGF1(hashes.SHA256()),</div><div class="line">        salt_length=padding.PSS.MAX_LENGTH</div><div class="line">    ),</div><div class="line">    hashes.SHA256()</div><div class="line">)</div><div class="line"></div><div class="line">verifier.update(message)</div><div class="line">verifier.verify()</div></pre></td></tr></table></figure>
+<p>如果验证不通过，将会触发异常，同样，也有以下简单的方式进行验证:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">public_key.verify(</div><div class="line">    signature,</div><div class="line">    message,</div><div class="line">    padding.PSS(</div><div class="line">        mgf=padding.MGF1(hashes.SHA256()),</div><div class="line">        salt_length=padding.PSS.MAX_LENGTH</div><div class="line">    ),</div><div class="line">    hashes.SHA256()</div><div class="line">)</div></pre></td></tr></table></figure>
+<h5 id="加密"><a href="#加密" class="headerlink" title="加密"></a>加密</h5><p><strong>使用私钥对信息加密没有意义，因为全世界都有你的公钥，毕竟公钥是公开的</strong>，当然，如果你不公开你的公钥，那更失去了意义，所以加密指的是用公钥进行加密，然后我们使用私钥来解密</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">message = <span class="string">b"encrypted data"</span></div><div class="line">ciphertext = public_key.encrypt(</div><div class="line">    message,</div><div class="line">    padding.OAEP(</div><div class="line">        mgf=padding.MGF1(algorithm=hashes.SHA1()),</div><div class="line">        algorithm=hashes.SHA1(),</div><div class="line">        label=<span class="keyword">None</span></div><div class="line">    )</div><div class="line">)</div><div class="line"></div><div class="line">ciphertext</div><div class="line"><span class="comment"># b'J\x95\xadC\xa9......\x18\xbb\\\xa3\xb3\x13f_N\x89\x07`\xa1'</span></div></pre></td></tr></table></figure>
+<h5 id="解密"><a href="#解密" class="headerlink" title="解密"></a>解密</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">plaintext = private_key.decrypt(</div><div class="line">    ciphertext,</div><div class="line">    padding.OAEP(</div><div class="line">        mgf=padding.MGF1(algorithm=hashes.SHA1()),</div><div class="line">        algorithm=hashes.SHA1(),</div><div class="line">        label=<span class="keyword">None</span></div><div class="line">    )</div><div class="line">)</div><div class="line"></div><div class="line">plaintext</div><div class="line"><span class="comment"># b'encrypted data'</span></div></pre></td></tr></table></figure>
+<p>可以看到目前对公钥私钥的操作很多都是使用固定参数就完全够了，所以可以对此进一步封装，于是就出现了<a href="https://github.com/istommao/cryptokit/blob/master/cryptokit/rsa.py" target="_blank" rel="external">该项目</a></p>
+<h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><ul>
+<li><a href="https://cryptography.io/en/latest/" target="_blank" rel="external">cryptography官方文档</a></li>
+<li><a href="https://cryptography.io/en/latest/hazmat/primitives/asymmetric/rsa/" target="_blank" rel="external">cryptography RSA</a></li>
+</ul>
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechat.png" alt="xin053 WeChat Pay">
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay.png" alt="xin053 Alipay">
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Python/" rel="tag">#Python</a>
+          
+            <a href="/tags/cryptography/" rel="tag">#cryptography</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/12/17/yagmail邮件发送库使用详解/" rel="next" title="yagmail邮件发送库使用详解">
+                <i class="fa fa-chevron-left"></i> yagmail邮件发送库使用详解
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/12/23/Python3.6更新内容/" rel="prev" title="Python3.6更新内容">
+                Python3.6更新内容 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/me.jpg" alt="xin053">
+          <p class="site-author-name" itemprop="name">xin053</p>
+          <p class="site-description motion-element" itemprop="description">正在用Windbg调试正在调试正在反汇编Windbg的IDA的OD...</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">55</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">50</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/xin053" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/xin053" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/xin053" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://blog.csdn.net/zhouzixin053" target="_blank" title="csdn">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  csdn
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://bbs.pediy.com/" title="看雪" target="_blank">看雪</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.geeklzh.com/" title="怪咖家园" target="_blank">怪咖家园</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.csdh.pub/" title="CS_DH" target="_blank">CS_DH</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://dendise7engithub.github.io/" title="Dendionk" target="_blank">Dendionk</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://cyang.tech/" title="cyang" target="_blank">cyang</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#cryptography简介"><span class="nav-number">1.</span> <span class="nav-text">cryptography简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cryptography使用"><span class="nav-number">2.</span> <span class="nav-text">cryptography使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Fernet-对称加密"><span class="nav-number">2.1.</span> <span class="nav-text">Fernet(对称加密)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Using-passwords-with-Fernet"><span class="nav-number">2.1.1.</span> <span class="nav-text">Using passwords with Fernet</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#X-509-数字证书标准"><span class="nav-number">2.2.</span> <span class="nav-text">X.509(数字证书标准)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Creating-a-Certificate-Signing-Request-CSR"><span class="nav-number">2.2.1.</span> <span class="nav-text">Creating a Certificate Signing Request (CSR)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RSA-常用操作"><span class="nav-number">2.2.2.</span> <span class="nav-text">RSA 常用操作</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#生成"><span class="nav-number">2.2.2.1.</span> <span class="nav-text">生成</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#从pem文件导入"><span class="nav-number">2.2.2.2.</span> <span class="nav-text">从pem文件导入</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#序列化"><span class="nav-number">2.2.2.3.</span> <span class="nav-text">序列化</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#签名"><span class="nav-number">2.2.2.4.</span> <span class="nav-text">签名</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#验证"><span class="nav-number">2.2.2.5.</span> <span class="nav-text">验证</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#加密"><span class="nav-number">2.2.2.6.</span> <span class="nav-text">加密</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#解密"><span class="nav-number">2.2.2.7.</span> <span class="nav-text">解密</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文档"><span class="nav-number">3.</span> <span class="nav-text">参考文档</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xin053</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'xin053';
+      var disqus_identifier = '2016/12/20/cryptography加密库使用详解/';
+      var disqus_title = "cryptography加密库使用详解";
+      var disqus_url = 'https://xin053.github.io/2016/12/20/cryptography加密库使用详解/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+                            
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').mousedown(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+  
+
+  
+
+  
+
+</body>
+</html>

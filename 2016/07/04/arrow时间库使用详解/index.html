@@ -1,0 +1,1109 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="jFTy9MrTO4piYCnfdfFFpOLb9SCydVuSBPbqgakCzCM">
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Python,arrow,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="xin053" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="arrow简介arrow是一个提供了更易懂和友好的方法来创建、操作、格式化和转化日期、时间和时间戳的python库。可以完全替代datetime，支持python2和3 基本使用123456789101112131415161718192021222324252627282930&amp;gt;&amp;gt;&amp;gt; import arrow&amp;gt;&amp;gt;&amp;gt; utc = arrow.utcnow()&amp;g">
+<meta name="keywords" content="Python,arrow">
+<meta property="og:type" content="article">
+<meta property="og:title" content="arrow时间库使用详解">
+<meta property="og:url" content="https://xin053.github.io/2016/07/04/arrow时间库使用详解/index.html">
+<meta property="og:site_name" content="xin053">
+<meta property="og:description" content="arrow简介arrow是一个提供了更易懂和友好的方法来创建、操作、格式化和转化日期、时间和时间戳的python库。可以完全替代datetime，支持python2和3 基本使用123456789101112131415161718192021222324252627282930&amp;gt;&amp;gt;&amp;gt; import arrow&amp;gt;&amp;gt;&amp;gt; utc = arrow.utcnow()&amp;g">
+<meta property="og:updated_time" content="2017-05-27T13:20:48.771Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="arrow时间库使用详解">
+<meta name="twitter:description" content="arrow简介arrow是一个提供了更易懂和友好的方法来创建、操作、格式化和转化日期、时间和时间戳的python库。可以完全替代datetime，支持python2和3 基本使用123456789101112131415161718192021222324252627282930&amp;gt;&amp;gt;&amp;gt; import arrow&amp;gt;&amp;gt;&amp;gt; utc = arrow.utcnow()&amp;g">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: undefined,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> arrow时间库使用详解 | xin053 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-78789863-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?95bc477a974f85651897b76f543028bb";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">xin053</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">在安全圈里徘徊，停滞不前</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                arrow时间库使用详解
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-07-04T19:43:58+08:00" content="2016-07-04">
+              2016-07-04
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Python模块学习/" itemprop="url" rel="index">
+                    <span itemprop="name">Python模块学习</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/07/04/arrow时间库使用详解/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/07/04/arrow时间库使用详解/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <link rel="stylesheet" type="text/css" href="/assets/css/DPlayer.min.css"><script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="arrow简介"><a href="#arrow简介" class="headerlink" title="arrow简介"></a>arrow简介</h2><p>arrow是一个提供了更易懂和友好的方法来创建、操作、格式化和转化日期、时间和时间戳的python库。可以完全替代datetime，支持python2和3</p>
+<h2 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> arrow</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>utc = arrow.utcnow()</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>utc</div><div class="line">&lt;Arrow [<span class="number">2013</span><span class="number">-05</span><span class="number">-11</span>T21:<span class="number">23</span>:<span class="number">58.970460</span>+<span class="number">00</span>:<span class="number">00</span>]&gt;</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>utc = utc.replace(hours=<span class="number">-1</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>utc</div><div class="line">&lt;Arrow [<span class="number">2013</span><span class="number">-05</span><span class="number">-11</span>T20:<span class="number">23</span>:<span class="number">58.970460</span>+<span class="number">00</span>:<span class="number">00</span>]&gt;</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>local = utc.to(<span class="string">'US/Pacific'</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>local</div><div class="line">&lt;Arrow [<span class="number">2013</span><span class="number">-05</span><span class="number">-11</span>T13:<span class="number">23</span>:<span class="number">58.970460</span><span class="number">-07</span>:<span class="number">00</span>]&gt;</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>arrow.get(<span class="string">'2013-05-11T21:23:58.970460+00:00'</span>)</div><div class="line">&lt;Arrow [<span class="number">2013</span><span class="number">-05</span><span class="number">-11</span>T21:<span class="number">23</span>:<span class="number">58.970460</span>+<span class="number">00</span>:<span class="number">00</span>]&gt;</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>local.timestamp</div><div class="line"><span class="number">1368303838</span></div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>local.format()</div><div class="line"><span class="string">'2013-05-11 13:23:58 -07:00'</span></div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>local.format(<span class="string">'YYYY-MM-DD HH:mm:ss ZZ'</span>)</div><div class="line"><span class="string">'2013-05-11 13:23:58 -07:00'</span></div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>local.humanize()</div><div class="line"><span class="string">'an hour ago'</span></div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>local.humanize(locale=<span class="string">'ko_kr'</span>)</div><div class="line"><span class="string">'1시간 전'</span></div></pre></td></tr></table></figure>
+<a id="more"></a>
+<h2 id="arrow对象的创建"><a href="#arrow对象的创建" class="headerlink" title="arrow对象的创建"></a>arrow对象的创建</h2><h3 id="以当前时间获取arrow对象"><a href="#以当前时间获取arrow对象" class="headerlink" title="以当前时间获取arrow对象"></a>以当前时间获取arrow对象</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>arrow.now()</div><div class="line">&lt;Arrow [<span class="number">2016</span><span class="number">-07</span><span class="number">-04</span>T20:<span class="number">34</span>:<span class="number">26.918272</span>+<span class="number">08</span>:<span class="number">00</span>]&gt;</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>arrow.utcnow()</div><div class="line">&lt;Arrow [<span class="number">2016</span><span class="number">-07</span><span class="number">-04</span>T12:<span class="number">34</span>:<span class="number">34.296419</span>+<span class="number">00</span>:<span class="number">00</span>]&gt;</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>arrow.now(<span class="string">'US/Pacific'</span>)</div><div class="line">&lt;Arrow [<span class="number">2016</span><span class="number">-07</span><span class="number">-04</span>T05:<span class="number">35</span>:<span class="number">19.395502</span><span class="number">-07</span>:<span class="number">00</span>]&gt;</div></pre></td></tr></table></figure>
+<p>默认的<code>now()</code>便会以系统时区作为arrow对象的时区，同时是本地时间格式。而<code>utcnow()</code>获取的是世界标准时间格式，所以一般情况下我们使用最多的就是<code>arrow.now()</code></p>
+<h3 id="以指定时间戳获取arrow对象"><a href="#以指定时间戳获取arrow对象" class="headerlink" title="以指定时间戳获取arrow对象"></a>以指定时间戳获取arrow对象</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>arrow.get(<span class="number">1367900664</span>)</div><div class="line">&lt;Arrow [<span class="number">2013</span><span class="number">-05</span><span class="number">-07</span>T04:<span class="number">24</span>:<span class="number">24</span>+<span class="number">00</span>:<span class="number">00</span>]&gt;</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>arrow.get(<span class="string">'1367900664'</span>)</div><div class="line">&lt;Arrow [<span class="number">2013</span><span class="number">-05</span><span class="number">-07</span>T04:<span class="number">24</span>:<span class="number">24</span>+<span class="number">00</span>:<span class="number">00</span>]&gt;</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>arrow.get(<span class="number">1367900664.152325</span>)</div><div class="line">&lt;Arrow [<span class="number">2013</span><span class="number">-05</span><span class="number">-07</span>T04:<span class="number">24</span>:<span class="number">24.152325</span>+<span class="number">00</span>:<span class="number">00</span>]&gt;</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>arrow.get(<span class="string">'1367900664.152325'</span>)</div><div class="line">&lt;Arrow [<span class="number">2013</span><span class="number">-05</span><span class="number">-07</span>T04:<span class="number">24</span>:<span class="number">24.152325</span>+<span class="number">00</span>:<span class="number">00</span>]&gt;</div></pre></td></tr></table></figure>
+<h3 id="其他获取arrow对象的方式"><a href="#其他获取arrow对象的方式" class="headerlink" title="其他获取arrow对象的方式"></a>其他获取arrow对象的方式</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>arrow.get(<span class="string">'2013-05-05 12:30:45'</span>, <span class="string">'YYYY-MM-DD HH:mm:ss'</span>)</div><div class="line">&lt;Arrow [<span class="number">2013</span><span class="number">-05</span><span class="number">-05</span>T12:<span class="number">30</span>:<span class="number">45</span>+<span class="number">00</span>:<span class="number">00</span>]&gt;</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>arrow.get(<span class="string">'2013-09-30T15:34:00.000-07:00'</span>)</div><div class="line">&lt;Arrow [<span class="number">2013</span><span class="number">-09</span><span class="number">-30</span>T15:<span class="number">34</span>:<span class="number">00</span><span class="number">-07</span>:<span class="number">00</span>]&gt;</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>arrow.get(<span class="number">2016</span>,<span class="number">7</span>,<span class="number">4</span>)</div><div class="line">&lt;Arrow [<span class="number">2016</span><span class="number">-07</span><span class="number">-04</span>T00:<span class="number">00</span>:<span class="number">00</span>+<span class="number">00</span>:<span class="number">00</span>]&gt;</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>arrow.get(<span class="number">2016</span>,<span class="number">7</span>,<span class="number">4</span>,<span class="number">20</span>)</div><div class="line">&lt;Arrow [<span class="number">2016</span><span class="number">-07</span><span class="number">-04</span>T20:<span class="number">00</span>:<span class="number">00</span>+<span class="number">00</span>:<span class="number">00</span>]&gt;</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>arrow.get(<span class="number">2016</span>,<span class="number">7</span>,<span class="number">4</span>,<span class="number">20</span>,<span class="number">14</span>)</div><div class="line">&lt;Arrow [<span class="number">2016</span><span class="number">-07</span><span class="number">-04</span>T20:<span class="number">14</span>:<span class="number">00</span>+<span class="number">00</span>:<span class="number">00</span>]&gt;</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>arrow.get(<span class="number">2016</span>,<span class="number">7</span>,<span class="number">4</span>,<span class="number">20</span>,<span class="number">14</span>,<span class="number">15</span>)</div><div class="line">&lt;Arrow [<span class="number">2016</span><span class="number">-07</span><span class="number">-04</span>T20:<span class="number">14</span>:<span class="number">15</span>+<span class="number">00</span>:<span class="number">00</span>]&gt;</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>arrow.Arrow(<span class="number">2013</span>, <span class="number">5</span>, <span class="number">5</span>)</div><div class="line">&lt;Arrow [<span class="number">2013</span><span class="number">-05</span><span class="number">-05</span>T00:<span class="number">00</span>:<span class="number">00</span>+<span class="number">00</span>:<span class="number">00</span>]&gt;</div></pre></td></tr></table></figure>
+<h2 id="arrow对象的属性"><a href="#arrow对象的属性" class="headerlink" title="arrow对象的属性"></a>arrow对象的属性</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>a = arrow.now()</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>a</div><div class="line">&lt;Arrow [<span class="number">2016</span><span class="number">-07</span><span class="number">-04</span>T20:<span class="number">17</span>:<span class="number">09.633154</span>+<span class="number">08</span>:<span class="number">00</span>]&gt;</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>a.timestamp</div><div class="line"><span class="number">1467634629</span></div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>a.year</div><div class="line"><span class="number">2016</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>a.month</div><div class="line"><span class="number">7</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>a.day</div><div class="line"><span class="number">4</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>a.hour</div><div class="line"><span class="number">20</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>a.minute</div><div class="line"><span class="number">17</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>a.second</div><div class="line"><span class="number">9</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>a.microsecond</div><div class="line"><span class="number">633154</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>a.week</div><div class="line"><span class="number">27</span></div></pre></td></tr></table></figure>
+<h2 id="时间的计算"><a href="#时间的计算" class="headerlink" title="时间的计算"></a>时间的计算</h2><h3 id="基本计算"><a href="#基本计算" class="headerlink" title="基本计算"></a>基本计算</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>a = arrow.now()</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>a</div><div class="line">&lt;Arrow [<span class="number">2016</span><span class="number">-07</span><span class="number">-04</span>T20:<span class="number">17</span>:<span class="number">09.633154</span>+<span class="number">08</span>:<span class="number">00</span>]&gt;</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>a.replace(hour=<span class="number">4</span>)</div><div class="line">&lt;Arrow [<span class="number">2016</span><span class="number">-07</span><span class="number">-04</span>T04:<span class="number">17</span>:<span class="number">09.633154</span>+<span class="number">08</span>:<span class="number">00</span>]&gt;</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>a.replace(hour=<span class="number">4</span>)</div><div class="line">&lt;Arrow [<span class="number">2016</span><span class="number">-07</span><span class="number">-04</span>T04:<span class="number">17</span>:<span class="number">09.633154</span>+<span class="number">08</span>:<span class="number">00</span>]&gt;</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>a.replace(hours=<span class="number">4</span>)</div><div class="line">&lt;Arrow [<span class="number">2016</span><span class="number">-07</span><span class="number">-05</span>T00:<span class="number">17</span>:<span class="number">09.633154</span>+<span class="number">08</span>:<span class="number">00</span>]&gt;</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>b = a.replace(hour=<span class="number">4</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>b</div><div class="line">&lt;Arrow [<span class="number">2016</span><span class="number">-07</span><span class="number">-04</span>T04:<span class="number">17</span>:<span class="number">09.633154</span>+<span class="number">08</span>:<span class="number">00</span>]&gt;</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>b.replace(hours=<span class="number">4</span>)</div><div class="line">&lt;Arrow [<span class="number">2016</span><span class="number">-07</span><span class="number">-04</span>T08:<span class="number">17</span>:<span class="number">09.633154</span>+<span class="number">08</span>:<span class="number">00</span>]&gt;</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>a</div><div class="line">&lt;Arrow [<span class="number">2016</span><span class="number">-07</span><span class="number">-04</span>T20:<span class="number">17</span>:<span class="number">09.633154</span>+<span class="number">08</span>:<span class="number">00</span>]&gt;</div></pre></td></tr></table></figure>
+<p>需要注意的是<code>replace()</code>方法是产生一个新的arrow对象，所以原来的<code>a</code>没变，另外注意<code>hour</code>与<code>hours</code>的区别，前者是设置时间，取值为0-23，而后者是在原来时间的基础上加减，取值可正可负。</p>
+<h3 id="转换为指定时间格式"><a href="#转换为指定时间格式" class="headerlink" title="转换为指定时间格式"></a>转换为指定时间格式</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>arrow.now().format(<span class="string">'YYYY-MM-DD HH:mm:ss ZZ'</span>)</div><div class="line"><span class="string">'2016-07-04 20:32:01 +08:00'</span></div></pre></td></tr></table></figure>
+<h3 id="本地时间与标准时间的转换"><a href="#本地时间与标准时间的转换" class="headerlink" title="本地时间与标准时间的转换"></a>本地时间与标准时间的转换</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>a = arrow.now()</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>a</div><div class="line">&lt;Arrow [<span class="number">2016</span><span class="number">-07</span><span class="number">-04</span>T20:<span class="number">17</span>:<span class="number">09.633154</span>+<span class="number">08</span>:<span class="number">00</span>]&gt;</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>a.to(<span class="string">'local'</span>)</div><div class="line">&lt;Arrow [<span class="number">2016</span><span class="number">-07</span><span class="number">-04</span>T20:<span class="number">17</span>:<span class="number">09.633154</span>+<span class="number">08</span>:<span class="number">00</span>]&gt;</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>a.to(<span class="string">'utc'</span>)</div><div class="line">&lt;Arrow [<span class="number">2016</span><span class="number">-07</span><span class="number">-04</span>T12:<span class="number">17</span>:<span class="number">09.633154</span>+<span class="number">00</span>:<span class="number">00</span>]&gt;</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>a</div><div class="line">&lt;Arrow [<span class="number">2016</span><span class="number">-07</span><span class="number">-04</span>T20:<span class="number">17</span>:<span class="number">09.633154</span>+<span class="number">08</span>:<span class="number">00</span>]&gt;</div></pre></td></tr></table></figure>
+<p>同样<code>to()</code>也是产生新的arrow对象，对原对象没有影响</p>
+<h2 id="Ranges-amp-spans"><a href="#Ranges-amp-spans" class="headerlink" title="Ranges &amp; spans"></a>Ranges &amp; spans</h2><p>Get the time span of any unit:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>arrow.utcnow().span(<span class="string">'hour'</span>)</div><div class="line">(&lt;Arrow [<span class="number">2013</span><span class="number">-05</span><span class="number">-07</span>T05:<span class="number">00</span>:<span class="number">00</span>+<span class="number">00</span>:<span class="number">00</span>]&gt;, &lt;Arrow [<span class="number">2013</span><span class="number">-05</span><span class="number">-07</span>T05:<span class="number">59</span>:<span class="number">59.999999</span>+<span class="number">00</span>:<span class="number">00</span>]&gt;)</div></pre></td></tr></table></figure>
+<p>Or just get the floor and ceiling:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>arrow.utcnow().floor(<span class="string">'hour'</span>)</div><div class="line">&lt;Arrow [<span class="number">2013</span><span class="number">-05</span><span class="number">-07</span>T05:<span class="number">00</span>:<span class="number">00</span>+<span class="number">00</span>:<span class="number">00</span>]&gt;</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>arrow.utcnow().ceil(<span class="string">'hour'</span>)</div><div class="line">&lt;Arrow [<span class="number">2013</span><span class="number">-05</span><span class="number">-07</span>T05:<span class="number">59</span>:<span class="number">59.999999</span>+<span class="number">00</span>:<span class="number">00</span>]&gt;</div></pre></td></tr></table></figure>
+<p>You can also get a range of time spans:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>start = datetime(<span class="number">2013</span>, <span class="number">5</span>, <span class="number">5</span>, <span class="number">12</span>, <span class="number">30</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>end = datetime(<span class="number">2013</span>, <span class="number">5</span>, <span class="number">5</span>, <span class="number">17</span>, <span class="number">15</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">for</span> r <span class="keyword">in</span> arrow.Arrow.span_range(<span class="string">'hour'</span>, start, end):</div><div class="line"><span class="meta">... </span>    <span class="keyword">print</span> r</div><div class="line">...</div><div class="line">(&lt;Arrow [<span class="number">2013</span><span class="number">-05</span><span class="number">-05</span>T12:<span class="number">00</span>:<span class="number">00</span>+<span class="number">00</span>:<span class="number">00</span>]&gt;, &lt;Arrow [<span class="number">2013</span><span class="number">-05</span><span class="number">-05</span>T12:<span class="number">59</span>:<span class="number">59.999999</span>+<span class="number">00</span>:<span class="number">00</span>]&gt;)</div><div class="line">(&lt;Arrow [<span class="number">2013</span><span class="number">-05</span><span class="number">-05</span>T13:<span class="number">00</span>:<span class="number">00</span>+<span class="number">00</span>:<span class="number">00</span>]&gt;, &lt;Arrow [<span class="number">2013</span><span class="number">-05</span><span class="number">-05</span>T13:<span class="number">59</span>:<span class="number">59.999999</span>+<span class="number">00</span>:<span class="number">00</span>]&gt;)</div><div class="line">(&lt;Arrow [<span class="number">2013</span><span class="number">-05</span><span class="number">-05</span>T14:<span class="number">00</span>:<span class="number">00</span>+<span class="number">00</span>:<span class="number">00</span>]&gt;, &lt;Arrow [<span class="number">2013</span><span class="number">-05</span><span class="number">-05</span>T14:<span class="number">59</span>:<span class="number">59.999999</span>+<span class="number">00</span>:<span class="number">00</span>]&gt;)</div><div class="line">(&lt;Arrow [<span class="number">2013</span><span class="number">-05</span><span class="number">-05</span>T15:<span class="number">00</span>:<span class="number">00</span>+<span class="number">00</span>:<span class="number">00</span>]&gt;, &lt;Arrow [<span class="number">2013</span><span class="number">-05</span><span class="number">-05</span>T15:<span class="number">59</span>:<span class="number">59.999999</span>+<span class="number">00</span>:<span class="number">00</span>]&gt;)</div><div class="line">(&lt;Arrow [<span class="number">2013</span><span class="number">-05</span><span class="number">-05</span>T16:<span class="number">00</span>:<span class="number">00</span>+<span class="number">00</span>:<span class="number">00</span>]&gt;, &lt;Arrow [<span class="number">2013</span><span class="number">-05</span><span class="number">-05</span>T16:<span class="number">59</span>:<span class="number">59.999999</span>+<span class="number">00</span>:<span class="number">00</span>]&gt;)</div></pre></td></tr></table></figure>
+<p>Or just iterate over a range of time:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>start = datetime(<span class="number">2013</span>, <span class="number">5</span>, <span class="number">5</span>, <span class="number">12</span>, <span class="number">30</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>end = datetime(<span class="number">2013</span>, <span class="number">5</span>, <span class="number">5</span>, <span class="number">17</span>, <span class="number">15</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">for</span> r <span class="keyword">in</span> arrow.Arrow.range(<span class="string">'hour'</span>, start, end):</div><div class="line"><span class="meta">... </span>    <span class="keyword">print</span> repr(r)</div><div class="line">...</div><div class="line">&lt;Arrow [<span class="number">2013</span><span class="number">-05</span><span class="number">-05</span>T12:<span class="number">30</span>:<span class="number">00</span>+<span class="number">00</span>:<span class="number">00</span>]&gt;</div><div class="line">&lt;Arrow [<span class="number">2013</span><span class="number">-05</span><span class="number">-05</span>T13:<span class="number">30</span>:<span class="number">00</span>+<span class="number">00</span>:<span class="number">00</span>]&gt;</div><div class="line">&lt;Arrow [<span class="number">2013</span><span class="number">-05</span><span class="number">-05</span>T14:<span class="number">30</span>:<span class="number">00</span>+<span class="number">00</span>:<span class="number">00</span>]&gt;</div><div class="line">&lt;Arrow [<span class="number">2013</span><span class="number">-05</span><span class="number">-05</span>T15:<span class="number">30</span>:<span class="number">00</span>+<span class="number">00</span>:<span class="number">00</span>]&gt;</div><div class="line">&lt;Arrow [<span class="number">2013</span><span class="number">-05</span><span class="number">-05</span>T16:<span class="number">30</span>:<span class="number">00</span>+<span class="number">00</span>:<span class="number">00</span>]&gt;</div></pre></td></tr></table></figure>
+<h2 id="Tokens"><a href="#Tokens" class="headerlink" title="Tokens"></a>Tokens</h2><table>
+<thead>
+<tr>
+<th style="text-align:center">&nbsp;</th>
+<th style="text-align:center">Token</th>
+<th style="text-align:center">Output</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Year</td>
+<td style="text-align:center">YYYY</td>
+<td style="text-align:center">2000, 2001, 2002 … 2012, 2013</td>
+</tr>
+<tr>
+<td style="text-align:center">&nbsp;</td>
+<td style="text-align:center">YY</td>
+<td style="text-align:center">00, 01, 02 … 12, 13</td>
+</tr>
+<tr>
+<td style="text-align:center">Month</td>
+<td style="text-align:center">MMMM</td>
+<td style="text-align:center">January, February, March …</td>
+</tr>
+<tr>
+<td style="text-align:center">&nbsp;</td>
+<td style="text-align:center">MMM</td>
+<td style="text-align:center">Jan, Feb, Mar …</td>
+</tr>
+<tr>
+<td style="text-align:center">&nbsp;</td>
+<td style="text-align:center">MM</td>
+<td style="text-align:center">01, 02, 03 … 11, 12</td>
+</tr>
+<tr>
+<td style="text-align:center">&nbsp;</td>
+<td style="text-align:center">M</td>
+<td style="text-align:center">1, 2, 3 … 11, 12</td>
+</tr>
+<tr>
+<td style="text-align:center">Day of Year</td>
+<td style="text-align:center">DDDD</td>
+<td style="text-align:center">001, 002, 003 … 364, 365</td>
+</tr>
+<tr>
+<td style="text-align:center">&nbsp;</td>
+<td style="text-align:center">DDD</td>
+<td style="text-align:center">1, 2, 3 … 4, 5</td>
+</tr>
+<tr>
+<td style="text-align:center">Day of Month</td>
+<td style="text-align:center">DD</td>
+<td style="text-align:center">01, 02, 03 … 30, 31</td>
+</tr>
+<tr>
+<td style="text-align:center">&nbsp;</td>
+<td style="text-align:center">D</td>
+<td style="text-align:center">1, 2, 3 … 30, 31</td>
+</tr>
+<tr>
+<td style="text-align:center">Day of Week</td>
+<td style="text-align:center">dddd</td>
+<td style="text-align:center">Monday, Tuesday, Wednesday …</td>
+</tr>
+<tr>
+<td style="text-align:center">&nbsp;</td>
+<td style="text-align:center">ddd</td>
+<td style="text-align:center">Mon, Tue, Wed …</td>
+</tr>
+<tr>
+<td style="text-align:center">&nbsp;</td>
+<td style="text-align:center">d</td>
+<td style="text-align:center">1, 2, 3 … 6, 7</td>
+</tr>
+<tr>
+<td style="text-align:center">Hour</td>
+<td style="text-align:center">HH</td>
+<td style="text-align:center">00, 01, 02 … 23, 24</td>
+</tr>
+<tr>
+<td style="text-align:center">&nbsp;</td>
+<td style="text-align:center">H</td>
+<td style="text-align:center">0, 1, 2 … 23, 24</td>
+</tr>
+<tr>
+<td style="text-align:center">&nbsp;</td>
+<td style="text-align:center">hh</td>
+<td style="text-align:center">01, 02, 03 … 11, 12</td>
+</tr>
+<tr>
+<td style="text-align:center">&nbsp;</td>
+<td style="text-align:center">h</td>
+<td style="text-align:center">1, 2, 3 … 11, 12</td>
+</tr>
+<tr>
+<td style="text-align:center">AM / PM</td>
+<td style="text-align:center">A</td>
+<td style="text-align:center">AM, PM</td>
+</tr>
+<tr>
+<td style="text-align:center">&nbsp;</td>
+<td style="text-align:center">a</td>
+<td style="text-align:center">am, pm</td>
+</tr>
+<tr>
+<td style="text-align:center">Minute</td>
+<td style="text-align:center">mm</td>
+<td style="text-align:center">00, 01, 02 … 58, 59</td>
+</tr>
+<tr>
+<td style="text-align:center">&nbsp;</td>
+<td style="text-align:center">m</td>
+<td style="text-align:center">0, 1, 2 … 58, 59</td>
+</tr>
+<tr>
+<td style="text-align:center">Second</td>
+<td style="text-align:center">ss</td>
+<td style="text-align:center">00, 01, 02 … 58, 59</td>
+</tr>
+<tr>
+<td style="text-align:center">&nbsp;</td>
+<td style="text-align:center">s</td>
+<td style="text-align:center">0, 1, 2 … 58, 59</td>
+</tr>
+<tr>
+<td style="text-align:center">Sub-second</td>
+<td style="text-align:center">SSS</td>
+<td style="text-align:center">000, 001, 002 … 998, 999</td>
+</tr>
+<tr>
+<td style="text-align:center">&nbsp;</td>
+<td style="text-align:center">SS</td>
+<td style="text-align:center">00, 01, 02 … 98, 99</td>
+</tr>
+<tr>
+<td style="text-align:center">&nbsp;</td>
+<td style="text-align:center">S</td>
+<td style="text-align:center">0, 1, 2 … 8, 9</td>
+</tr>
+<tr>
+<td style="text-align:center">Timezone</td>
+<td style="text-align:center">ZZ</td>
+<td style="text-align:center">-07:00, -06:00 … +06:00, +07:00</td>
+</tr>
+<tr>
+<td style="text-align:center">&nbsp;</td>
+<td style="text-align:center">Z</td>
+<td style="text-align:center">-0700, -0600 … +0600, +0700</td>
+</tr>
+<tr>
+<td style="text-align:center">Timestamp</td>
+<td style="text-align:center">X</td>
+<td style="text-align:center">1381685817</td>
+</tr>
+</tbody>
+</table>
+<h2 id="API-Guide"><a href="#API-Guide" class="headerlink" title="API Guide"></a>API Guide</h2><ul>
+<li><a href="https://arrow.readthedocs.io/en/latest/#api-guide" target="_blank" rel="external">API Guide</a></li>
+</ul>
+<h2 id="其他相关文章"><a href="#其他相关文章" class="headerlink" title="其他相关文章"></a>其他相关文章</h2><ul>
+<li><a href="https://arrow.readthedocs.io/en/latest/#api-guide" target="_blank" rel="external">arrow官方文档</a></li>
+</ul>
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechat.png" alt="xin053 WeChat Pay">
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay.png" alt="xin053 Alipay">
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Python/" rel="tag">#Python</a>
+          
+            <a href="/tags/arrow/" rel="tag">#arrow</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/07/03/pathlib路径库使用详解/" rel="next" title="pathlib路径库使用详解">
+                <i class="fa fa-chevron-left"></i> pathlib路径库使用详解
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/07/05/ftfy更正Unicode库使用详解/" rel="prev" title="ftfy更正Unicode库使用详解">
+                ftfy更正Unicode库使用详解 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/me.jpg" alt="xin053">
+          <p class="site-author-name" itemprop="name">xin053</p>
+          <p class="site-description motion-element" itemprop="description">正在用Windbg调试正在调试正在反汇编Windbg的IDA的OD...</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">55</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">50</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/xin053" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/xin053" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/xin053" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://blog.csdn.net/zhouzixin053" target="_blank" title="csdn">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  csdn
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://bbs.pediy.com/" title="看雪" target="_blank">看雪</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.geeklzh.com/" title="怪咖家园" target="_blank">怪咖家园</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.csdh.pub/" title="CS_DH" target="_blank">CS_DH</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://dendise7engithub.github.io/" title="Dendionk" target="_blank">Dendionk</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://cyang.tech/" title="cyang" target="_blank">cyang</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#arrow简介"><span class="nav-number">1.</span> <span class="nav-text">arrow简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本使用"><span class="nav-number">2.</span> <span class="nav-text">基本使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#arrow对象的创建"><span class="nav-number">3.</span> <span class="nav-text">arrow对象的创建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#以当前时间获取arrow对象"><span class="nav-number">3.1.</span> <span class="nav-text">以当前时间获取arrow对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#以指定时间戳获取arrow对象"><span class="nav-number">3.2.</span> <span class="nav-text">以指定时间戳获取arrow对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他获取arrow对象的方式"><span class="nav-number">3.3.</span> <span class="nav-text">其他获取arrow对象的方式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#arrow对象的属性"><span class="nav-number">4.</span> <span class="nav-text">arrow对象的属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#时间的计算"><span class="nav-number">5.</span> <span class="nav-text">时间的计算</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基本计算"><span class="nav-number">5.1.</span> <span class="nav-text">基本计算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#转换为指定时间格式"><span class="nav-number">5.2.</span> <span class="nav-text">转换为指定时间格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#本地时间与标准时间的转换"><span class="nav-number">5.3.</span> <span class="nav-text">本地时间与标准时间的转换</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ranges-amp-spans"><span class="nav-number">6.</span> <span class="nav-text">Ranges & spans</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tokens"><span class="nav-number">7.</span> <span class="nav-text">Tokens</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#API-Guide"><span class="nav-number">8.</span> <span class="nav-text">API Guide</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他相关文章"><span class="nav-number">9.</span> <span class="nav-text">其他相关文章</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xin053</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'xin053';
+      var disqus_identifier = '2016/07/04/arrow时间库使用详解/';
+      var disqus_title = "arrow时间库使用详解";
+      var disqus_url = 'https://xin053.github.io/2016/07/04/arrow时间库使用详解/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+                            
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').mousedown(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+  
+
+  
+
+  
+
+</body>
+</html>

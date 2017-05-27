@@ -1,0 +1,1083 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="jFTy9MrTO4piYCnfdfFFpOLb9SCydVuSBPbqgakCzCM">
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Python,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="xin053" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="说明该文档为学习python过程中觉得非常重要的内容(利于理解某些实现原理)，也就是作为一名pythoner，必须知道的内容，但是好记性不如烂笔头，还是记下来，定时复习还是比较好的。 持续更新">
+<meta name="keywords" content="Python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python学习重点摘记">
+<meta property="og:url" content="https://xin053.github.io/2016/10/30/Python学习重点摘记/index.html">
+<meta property="og:site_name" content="xin053">
+<meta property="og:description" content="说明该文档为学习python过程中觉得非常重要的内容(利于理解某些实现原理)，也就是作为一名pythoner，必须知道的内容，但是好记性不如烂笔头，还是记下来，定时复习还是比较好的。 持续更新">
+<meta property="og:image" content="http://i.imgur.com/jwwhOiY.png">
+<meta property="og:image" content="https://ooo.0o0.ooo/2016/11/16/582c111e3fa73.png">
+<meta property="og:updated_time" content="2017-05-27T13:20:48.771Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python学习重点摘记">
+<meta name="twitter:description" content="说明该文档为学习python过程中觉得非常重要的内容(利于理解某些实现原理)，也就是作为一名pythoner，必须知道的内容，但是好记性不如烂笔头，还是记下来，定时复习还是比较好的。 持续更新">
+<meta name="twitter:image" content="http://i.imgur.com/jwwhOiY.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: undefined,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> Python学习重点摘记 | xin053 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-78789863-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?95bc477a974f85651897b76f543028bb";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">xin053</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">在安全圈里徘徊，停滞不前</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+    
+  
+
+  <article class="post post-type-normal post-sticky" itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Python学习重点摘记
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-10-30T20:01:37+08:00" content="2016-10-30">
+              2016-10-30
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/10/30/Python学习重点摘记/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/10/30/Python学习重点摘记/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <link rel="stylesheet" type="text/css" href="/assets/css/DPlayer.min.css"><script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><p>该文档为学习python过程中觉得非常重要的内容(利于理解某些实现原理)，也就是作为一名pythoner，必须知道的内容，但是好记性不如烂笔头，还是记下来，定时复习还是比较好的。</p>
+<p><strong>持续更新</strong></p>
+<a id="more"></a>
+<h2 id="重点"><a href="#重点" class="headerlink" title="重点"></a>重点</h2><h3 id="Python模块搜索机制"><a href="#Python模块搜索机制" class="headerlink" title="Python模块搜索机制"></a>Python模块搜索机制</h3><ol>
+<li>程序当前目录</li>
+<li>PYTHONPATH(环境变量)目录</li>
+<li>标准库目录</li>
+</ol>
+<h3 id="CPython-PyPy-Jython"><a href="#CPython-PyPy-Jython" class="headerlink" title="CPython,PyPy,Jython"></a>CPython,PyPy,Jython</h3><ol>
+<li>CPython即底层用c/c++语言实现的Python,也是我们通常所用的python解释器</li>
+<li>PyPy是使用Python实现的python解释器，速度比CPython快</li>
+<li>Jython可以让python code跑在JVM上,并可以调用java code的解释器</li>
+</ol>
+<h3 id="一个项目标准文件层次结构"><a href="#一个项目标准文件层次结构" class="headerlink" title="一个项目标准文件层次结构"></a>一个项目标准文件层次结构</h3><p><img src="http://i.imgur.com/jwwhOiY.png" alt=""></p>
+<h3 id="import导入模块顺序"><a href="#import导入模块顺序" class="headerlink" title="import导入模块顺序"></a>import导入模块顺序</h3><ol>
+<li>标准库</li>
+<li>第三方库</li>
+<li>本地库</li>
+</ol>
+<h3 id="命名"><a href="#命名" class="headerlink" title="命名"></a>命名</h3><ol>
+<li>类命名采用驼峰命名法</li>
+<li>异常定义使用Error前缀</li>
+<li>函数命名使用小写,并用下划线连接每个word</li>
+<li>模块命名使用小写，word直接连接(较多)或者用下划线</li>
+</ol>
+<h3 id="库API"><a href="#库API" class="headerlink" title="库API"></a>库API</h3><ol>
+<li>公共API：库暴露给用户使用的API</li>
+<li>私有API：为实现功能，库内部使用的API，函数名前面有下划线</li>
+</ol>
+<h3 id="库更新时应该注意的问题"><a href="#库更新时应该注意的问题" class="headerlink" title="库更新时应该注意的问题"></a>库更新时应该注意的问题</h3><ol>
+<li>废弃的接口不要立即删除</li>
+<li>可以在新版本中使用<code>warnings</code>对使用废弃API的程序员显示警告信息</li>
+</ol>
+<h3 id="pip安装包"><a href="#pip安装包" class="headerlink" title="pip安装包"></a>pip安装包</h3><ol>
+<li>如果在linux系统，可以使用<code>pip install --user 包名</code>来将包安装在<code>home</code>目录以避免在系统层面安装而造成操作系统目录的污染</li>
+</ol>
+<h3 id="for循环"><a href="#for循环" class="headerlink" title="for循环"></a>for循环</h3><ol>
+<li>当使用for循环的时候，for语句就会自动的通过<code>__iter__()</code>方法来获得迭代器对象，并且通过<code>__next__()</code>方法来获取下一个元素</li>
+</ol>
+<h3 id="可迭代与迭代器"><a href="#可迭代与迭代器" class="headerlink" title="可迭代与迭代器"></a>可迭代与迭代器</h3><ol>
+<li>如果一个对象具有<code>__iter__()</code>方法，那么它便是一个可迭代对象(iterable)</li>
+<li>如果一个可迭代对象具有<code>next()</code>(python 2)或者<code>__next__()</code>(python 3)方法,并且函数返回是<code>return</code>而不是<code>yield</code>,那么它就是一个迭代器(iterator)</li>
+</ol>
+<h3 id="生成器"><a href="#生成器" class="headerlink" title="生成器"></a>生成器</h3><ol>
+<li>生成器是特殊的迭代器,关键字<code>yield</code>就表示该方法返回一个生成器对象,其<code>__next__()</code>方法就是执行到下一次<code>yield</code>,其<code>__iter__()</code>方法就是返回自身，可以用for循环执行生成器中的代码。当循环结束，或不满足<code>if/else</code>条件时，导致函数运行但不命中<code>yield</code>关键字，此时生成器触发<code>StopIteration</code>异常。</li>
+<li>调用生成器时<code>__next__()</code>方法时，实际上是将函数状态挂起，也就是保存了栈帧的状态</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">test</span><span class="params">()</span>:</span></div><div class="line">    index = <span class="number">0</span></div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">3</span>):</div><div class="line">        index = i</div><div class="line">        <span class="keyword">yield</span> i</div><div class="line">    print(<span class="string">'hello'</span>)    </div><div class="line">    <span class="keyword">if</span> index &gt; <span class="number">2</span>:</div><div class="line">        <span class="keyword">yield</span> <span class="string">'1:'</span>+str(index)</div><div class="line">    print(<span class="string">'world'</span>)</div><div class="line">    </div><div class="line">a = test()</div><div class="line">a.__next__()</div><div class="line"><span class="comment"># 0</span></div><div class="line">a.__next__()</div><div class="line"><span class="comment"># 1</span></div><div class="line">a.__next__()</div><div class="line"><span class="comment"># 2</span></div><div class="line">a.__next__()</div><div class="line"><span class="comment"># hello</span></div><div class="line"><span class="comment"># world</span></div><div class="line"><span class="comment"># ---------------------------------------------------------------------------</span></div><div class="line"><span class="comment"># StopIteration                             Traceback (most recent call last)</span></div><div class="line"><span class="comment"># &lt;ipython-input-41-73aa2c76d676&gt; in &lt;module&gt;()</span></div><div class="line"><span class="comment"># ----&gt; 1 a.__next__()</span></div><div class="line"></div><div class="line"><span class="comment"># StopIteration:</span></div><div class="line"><span class="comment"># 最后一次__next__()到代码末尾，所以触发异常</span></div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">test</span><span class="params">()</span>:</span></div><div class="line">    index = <span class="number">0</span></div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">3</span>):</div><div class="line">        index = i</div><div class="line">        <span class="keyword">yield</span> i</div><div class="line">    print(<span class="string">'hello'</span>)    </div><div class="line">    <span class="keyword">if</span> index &gt; <span class="number">1</span>:</div><div class="line">        <span class="keyword">yield</span> <span class="string">'1:'</span>+str(index)</div><div class="line">    print(<span class="string">'world'</span>)</div><div class="line">    </div><div class="line">a = test()</div><div class="line">a.__next__()</div><div class="line"><span class="comment"># 0</span></div><div class="line">a.__next__()</div><div class="line"><span class="comment"># 1</span></div><div class="line">a.__next__()</div><div class="line"><span class="comment"># 2</span></div><div class="line">a.__next__()</div><div class="line"><span class="comment"># hello</span></div><div class="line"><span class="comment"># '1:2'</span></div><div class="line">a.__next__()</div><div class="line"><span class="comment"># world</span></div><div class="line"><span class="comment"># ---------------------------------------------------------------------------</span></div><div class="line"><span class="comment"># StopIteration                             Traceback (most recent call last)</span></div><div class="line"><span class="comment"># &lt;ipython-input-48-73aa2c76d676&gt; in &lt;module&gt;()</span></div><div class="line"><span class="comment"># ----&gt; 1 a.__next__()</span></div><div class="line"></div><div class="line"><span class="comment"># StopIteration: </span></div><div class="line"></div><div class="line">list(test())</div><div class="line"><span class="comment"># hello</span></div><div class="line"><span class="comment"># world</span></div><div class="line"><span class="comment"># [0, 1, 2, '1:2']</span></div><div class="line"><span class="comment"># list内部循环执行__next__(),然后append到列表中返回，所以后输出列表</span></div></pre></td></tr></table></figure>
+<h3 id="yield表达式"><a href="#yield表达式" class="headerlink" title="yield表达式"></a><code>yield</code>表达式</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">counter</span><span class="params">(maximum)</span>:</span></div><div class="line">    i = <span class="number">0</span></div><div class="line">    <span class="keyword">while</span> i &lt; maximum:</div><div class="line">        val = (<span class="keyword">yield</span> i)</div><div class="line">        <span class="comment"># If value provided, change counter</span></div><div class="line">        <span class="keyword">if</span> val <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span>:</div><div class="line">            i = val</div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            i += <span class="number">1</span></div></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt; it = counter(10)  </div><div class="line">&gt;&gt;&gt; next(it)  </div><div class="line">0</div><div class="line">&gt;&gt;&gt; next(it)  </div><div class="line">1</div><div class="line">&gt;&gt;&gt; it.send(8)  </div><div class="line">8</div><div class="line">&gt;&gt;&gt; next(it)  </div><div class="line">9</div><div class="line">&gt;&gt;&gt; next(it)  </div><div class="line">Traceback (most recent call last):</div><div class="line">  File "t.py", line 15, in ?</div><div class="line">    it.next()</div><div class="line">StopIteration</div></pre></td></tr></table></figure>
+<p>可以通过<code>send()</code>方法向生成器发送数据，<code>(yield i)</code>表达式的值就是<code>send(value)</code>中的<code>value</code>,而默认情况，<code>(yield i)</code>表达式的值为<code>None</code></p>
+<h3 id="列表解析与生成器表达式"><a href="#列表解析与生成器表达式" class="headerlink" title="列表解析与生成器表达式"></a>列表解析与生成器表达式</h3><ol>
+<li><code>[]</code>返回列表</li>
+<li><code>()</code>返回生成器</li>
+</ol>
+<h3 id="迭代器与生成器"><a href="#迭代器与生成器" class="headerlink" title="迭代器与生成器"></a>迭代器与生成器</h3><ol>
+<li>两者都比list节省内存，也就是运行的时候才生成数据，而不是像list一次性存储全部数据</li>
+<li>生成器的编写比自定义一个迭代器简单很多,使用<code>yield</code>关键字或者<code>()</code>表达式就可以返回一个生成器,而不用自己写<code>__iter__()</code>与<code>__next__()</code>方法，并且生成器可以做更多的事情</li>
+<li>生成器在进行迭代的时候只是暂停,并不是结束，而<code>finally</code>语句中的内容是在结束的时候才执行的</li>
+<li><code>list()</code> <code>tuple()</code> <code>max()</code> <code>min()</code>等函数以及<code>in</code>,<code>not in</code>操作符都支持迭代器或者生成器作为参数,但是要注意如果迭代器或者生成器是无限的，那么很明显会一直循环，所以使用前要搞清楚迭代器或生成器是否是有限的</li>
+<li>对字典进行<code>for</code>操作，默认是获取的<code>key</code>的迭代器，并且注意普通字典是无序的，要想获取<code>value</code>的迭代器或者是<code>key/value</code>的迭代器，就调用字典的<code>values()</code>和<code>items()</code>方法</li>
+</ol>
+<h3 id="迭代器与内置函数"><a href="#迭代器与内置函数" class="headerlink" title="迭代器与内置函数"></a>迭代器与内置函数</h3><ol>
+<li><code>map(f, iterA, iterB, ...)</code> returns an iterator over the sequence<br><code>f(iterA[0], iterB[0]), f(iterA[1], iterB[1]), f(iterA[2], iterB[2]), ....</code></li>
+<li><code>filter(predicate, iter)</code> returns an iterator over all the sequence elements that meet a certain condition</li>
+<li><code>enumerate(iter)</code> counts off the elements in the iterable, returning 2-tuples containing the count and each element</li>
+<li><code>sorted(iterable, key=None, reverse=False)</code> collects all the elements of the iterable into a list, sorts the list, and returns the sorted result</li>
+<li><code>any(iter)</code> and <code>all(iter)</code> built-ins look at the <strong>truth values of an iterable’s contents</strong>. <code>any()</code> returns <code>True</code> if any element in the iterable is a true value, and <code>all()</code> returns <code>True</code> if all of the elements are true values</li>
+<li><code>zip(iterA, iterB, ...)</code> takes one element from each iterable and returns them in a tuple.It doesn’t construct an in-memory list and exhaust all the input iterators before returning; instead tuples are constructed and returned only if they’re requested. (The technical term for this behaviour is lazy evaluation.)</li>
+<li><code>functools.reduce(func, iter, [initial_value])</code> cumulatively performs an operation on all the iterable’s elements and, therefore, can’t be applied to infinite iterables. <code>func</code> must be a function that takes two elements and returns a single value. <code>functools.reduce()</code> takes the first two elements <code>A</code> and <code>B</code> returned by the iterator and calculates <code>func(A, B)</code>. It then requests the third element, <code>C</code>, calculates <code>func(func(A, B), C)</code>, combines this result with the fourth element returned, and continues until the iterable is exhausted. If the iterable returns no values at all, a <code>TypeError</code> exception is raised. If the initial value is supplied, it’s used as a starting point and <code>func(initial_value, A)</code> is the first calculation.参考 <a href="https://www.cnblogs.com/XXCXY/p/5180245.html" target="_blank" rel="external">python的reduce()函数</a> <code>reduce</code>常与<code>operator</code>模块中的函数搭配使用</li>
+</ol>
+<h3 id="列表与元组"><a href="#列表与元组" class="headerlink" title="列表与元组"></a>列表与元组</h3><ol>
+<li>列表与远足最大的区别就是前者可变，后者不可变，所以元组较安全</li>
+</ol>
+<h3 id="绑定与非绑定方法"><a href="#绑定与非绑定方法" class="headerlink" title="绑定与非绑定方法"></a>绑定与非绑定方法</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="class"><span class="keyword">class</span> <span class="title">D</span><span class="params">(object)</span>:</span></div><div class="line"><span class="meta">... </span>    <span class="function"><span class="keyword">def</span> <span class="title">f</span><span class="params">(self, x)</span>:</span></div><div class="line"><span class="meta">... </span>        <span class="keyword">return</span> x</div><div class="line">...</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>d = D()</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>D.__dict__[<span class="string">'f'</span>]  <span class="comment"># Stored internally as a function</span></div><div class="line">&lt;function f at <span class="number">0x00C45070</span>&gt;</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>D.f              <span class="comment"># Get from a class becomes an unbound method</span></div><div class="line">&lt;unbound method D.f&gt;</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>d.f              <span class="comment"># Get from an instance becomes a bound method</span></div><div class="line">&lt;bound method D.f of &lt;__main__.D object at <span class="number">0x00B18C90</span>&gt;&gt;</div></pre></td></tr></table></figure>
+<h3 id="log"><a href="#log" class="headerlink" title="log"></a>log</h3><ol>
+<li>级别从低到高为<code>DEBUG</code> <code>INFO</code> <code>WARNING</code> <code>ERROR</code> <code>CRITICAL</code></li>
+<li>默认级别为<code>WARNING</code>，只有<code>WARNING</code>和之上的级别的log控制台才会被输出</li>
+<li><a href="http://www.jianshu.com/p/feb86c06c4f4" target="_blank" rel="external">python logging模块使用教程</a> <a href="http://blog.csdn.net/zyz511919766/article/details/25136485" target="_blank" rel="external">Python logging模块详解</a></li>
+</ol>
+<h3 id="sorted"><a href="#sorted" class="headerlink" title="sorted"></a>sorted</h3><ol>
+<li>可处理简单列表排序和针对对象中某一属性进行排序，并且与<code>sort()</code>不同，前者不改变原列表，后者直接修改原列表</li>
+<li>使用方法参考<a href="https://docs.python.org/3/howto/sorting.html" target="_blank" rel="external">Sorting HOW TO</a></li>
+</ol>
+<h3 id="ipaddress"><a href="#ipaddress" class="headerlink" title="ipaddress"></a>ipaddress</h3><ol>
+<li>该模块能提供一些方法对ipv4和ipv6进行识别和处理</li>
+</ol>
+<h3 id="类"><a href="#类" class="headerlink" title="类"></a>类</h3><p>当一个<strong>类定义</strong>被执行，发生了这些事:</p>
+<ol>
+<li>一个合适的元类被确定</li>
+<li>类命名空间被准备好</li>
+<li>类主体被执行</li>
+<li>类对象被创建</li>
+</ol>
+<p><strong>类是元类的实例</strong>，在python中，一切都是对象，类也是对象</p>
+<h3 id="特殊方法"><a href="#特殊方法" class="headerlink" title="特殊方法"></a>特殊方法</h3><ol>
+<li><code>__new__()</code>是特殊的不用声明的静态方法</li>
+<li><code>__mro__()</code>返回类所有的父类</li>
+</ol>
+<h3 id="文件操作"><a href="#文件操作" class="headerlink" title="文件操作"></a>文件操作</h3><ol>
+<li><code>os.listdir()</code>获取的只是指定路径下所有文件名组成的字符串列表，<code>os.scandir()</code>这可以返回一个生成器，每个元素是<code>DirEntry</code>对象，保留了文件相关的信息</li>
+<li><code>os.remove()</code>只能删除文件，<code>os.rmdir()</code>只能删除空目录，<code>shutil.rmtree()</code>可以递归删除目录</li>
+</ol>
+<h3 id="subprocess替代"><a href="#subprocess替代" class="headerlink" title="subprocess替代"></a>subprocess替代</h3><ol>
+<li><a href="https://github.com/kennethreitz/delegator.py" target="_blank" rel="external"><code>delegator</code> — <code>requests</code>作者最新作品</a></li>
+<li><a href="https://github.com/kennethreitz/envoy" target="_blank" rel="external"><code>envoy</code> — 对标准库subprocess的封装，比较好用</a></li>
+<li><a href="https://github.com/amoffat/sh" target="_blank" rel="external"><code>sh</code> — linux平台下subprocess的替代</a></li>
+</ol>
+<h3 id="keyring"><a href="#keyring" class="headerlink" title="keyring"></a>keyring</h3><ol>
+<li>该模块能够将密码保存在系统keyring服务中</li>
+</ol>
+<h3 id="random-与urandom"><a href="#random-与urandom" class="headerlink" title="random 与urandom"></a>random 与urandom</h3><ol>
+<li>random是标准库中的一个模块，产生的随机数不安全</li>
+<li>urandom()是os模块中的方法，使用基于系统的随机数生成器，是安全的</li>
+</ol>
+<h3 id="python2与3的编码问题"><a href="#python2与3的编码问题" class="headerlink" title="python2与3的编码问题"></a>python2与3的编码问题</h3><ol>
+<li><p>Python2有两种表示字符序列的类型，分别叫做<code>str</code>和<code>Unicode</code>，<code>str</code>实例包含原始的8位值；而<code>Unicode</code>的实例，则包含<code>Unicode</code>字符。</p>
+<ol>
+<li><code>str</code>格式本质含义是“某种编码格式”，绝大多数情况下，被引号框起来的字符串，就是<code>str</code>，这时的字符串编码类型，其实就是你Python文件的编码类型，比如在Windows里，默认用的是GBK编码。</li>
+<li><code>Unicode</code>格式的含义就是“用unicode编码的字符串”。Python在进入2.0版后正式定义了了Unicode字符串这个奇怪的特性，目的就是为了处理太多种语言编码的文本。从那时开始，Python语言中的字符串类型就分为两种：一种是传统的Python字符串（各种花样编码），另一种则是新出现的<code>Unicode</code></li>
+</ol>
+<p><img src="https://ooo.0o0.ooo/2016/11/16/582c111e3fa73.png" alt=""></p>
+</li>
+<li><p>Python3也有两种表示字符序列的类型：<code>bytes</code>和<code>str</code>。前者的实例包含原始的8位值，后者的实例包含<code>Unicode</code>字符,可以说python3的<code>str</code>，就是python2的<code>Unicode</code></p>
+<ol>
+<li><code>str</code>格式的定义变更为”Unicode类型的字符串“，也就是说在默认情况下，被引号框起来的字符串，是使用<code>Unicode</code>编码的。</li>
+<li>而“不是Unicode的某种编码格式”，比如UTF-8、GBK，这些编码方式被定义为了<code>bytes</code>，这里的<code>bytes</code>和py2中的<code>str</code>有很多相似的地方</li>
+</ol>
+</li>
+<li><p>我们需要编写两个辅助（helper）函数，以便在这两种情况之间转换，使得转换后的输入数据能够符合开发者的预期</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">#在Python3中，我们需要编写接受str或bytes，并总是返回str的方法：</div><div class="line">def to_str(bytes_or_str):</div><div class="line">  if isinstance(bytes_or_str, bytes):</div><div class="line">    value = bytes_or_str.decode('utf-8')</div><div class="line">  else:</div><div class="line">    value = bytes_or_str</div><div class="line">  return value # Instance of str</div><div class="line">  </div><div class="line">#另外，还需要编写接受str或bytes，并总是返回bytes的方法：</div><div class="line">def to_bytes(bytes_or_str):</div><div class="line">  if isinstance(bytes_or_str, str):</div><div class="line">    value = bytes_or_str.encode('utf-8)</div><div class="line">  else:</div><div class="line">    value = bytes_or_str</div><div class="line">  return value # Instance of bytes</div><div class="line">  </div><div class="line">#在Python2中，需要编写接受str或unicode，并总是返回unicode的方法：</div><div class="line">#python2</div><div class="line">def to_unicode(unicode_or_str):</div><div class="line">  if isinstance(unicode_or_str, str):</div><div class="line">    value = unicode_or_str.decode('utf-8')</div><div class="line">  else:</div><div class="line">    value = unicode_or_str</div><div class="line">  return value # Instance of unicode</div><div class="line">  </div><div class="line">#另外，还需要编写接受str或unicode，并总是返回str的方法：</div><div class="line">#Python2</div><div class="line">def to_str(unicode_or_str):</div><div class="line">  if isinstance(unicode_or_str, unicode):</div><div class="line">    value = unicode_or_str.encode('utf-8')</div><div class="line">  else:</div><div class="line">    value = unicode_or_str</div><div class="line">  reutrn vlaue # Instance of str</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="contextlib"><a href="#contextlib" class="headerlink" title="contextlib"></a>contextlib</h3><ol>
+<li>使用<code>contextlib</code>标准库可以快速构造上下文管理器</li>
+<li>使用<code>contextlib</code>库中的<code>contextmanager</code>装饰器装饰一个返回生成器的函数，就构造了一个上下文管理器，其中<code>yield</code>前面的内容是<code>with</code>表达式执行之前的操作，<code>yield</code>之后的内容是<code>with</code>表达式执行之后的操作，<code>yield</code>如果有返回的内容，则会返回给<code>with</code>表达式中<code>as</code>之后的变量</li>
+</ol>
+<h3 id="打包python包到pypi"><a href="#打包python包到pypi" class="headerlink" title="打包python包到pypi"></a>打包python包到pypi</h3><ol>
+<li><a href="https://github.com/takluyver/flit" target="_blank" rel="external"><code>flit</code> — 很方便</a></li>
+</ol>
+<h3 id="装饰器"><a href="#装饰器" class="headerlink" title="装饰器"></a>装饰器</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">identity</span><span class="params">(f)</span>:</span></div><div class="line">    <span class="keyword">return</span> f</div><div class="line"></div><div class="line"><span class="meta">@identity</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">foo</span><span class="params">()</span>:</span></div><div class="line">    <span class="keyword">return</span> <span class="string">'bar'</span></div></pre></td></tr></table></figure>
+<p>上述就是一个最简单的装饰器的实现，实际上，装饰器就是实现了下面的操作:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">foo</span><span class="params">()</span>:</span></div><div class="line">    <span class="keyword">return</span> <span class="string">'bar'</span></div><div class="line"></div><div class="line">foo = identity(foo)</div></pre></td></tr></table></figure>
+<p>注册装饰器的实现:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">_functions = &#123;&#125;</div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">register</span><span class="params">(f)</span>:</span></div><div class="line">    <span class="keyword">global</span> _functions</div><div class="line">    _functions[f.__name__] = f</div><div class="line">    <span class="keyword">return</span> f</div><div class="line">    </div><div class="line"><span class="meta">@register</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">foo</span><span class="params">()</span>:</span></div><div class="line">    <span class="keyword">return</span> <span class="string">'bar'</span></div></pre></td></tr></table></figure>
+<p>上述装饰器没有使用被装饰函数的参数，返回的还是原来的函数，只是在返回之前做了一些事情</p>
+<p>而大多数装饰器都会用到被装饰函数的参数，这时候就不能返回函数本身了，因为最后返回函数本身，就没有渠道获取被装饰函数的参数，所以这时候就需要返回一个对被装饰函数进行包装的函数，例如:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">check_is_admin</span><span class="params">(f)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">wrapper</span><span class="params">(*args, **kwargs)</span>:</span></div><div class="line">        <span class="keyword">if</span> kwargs.get(<span class="string">'username'</span>) != <span class="string">'admin'</span>:</div><div class="line">            <span class="keyword">raise</span> Exception(<span class="string">"This user is not allowd to get food"</span>)</div><div class="line">        <span class="keyword">return</span> f(*args,**kwargs)</div><div class="line">    <span class="keyword">return</span> wrapper</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Store</span><span class="params">(object)</span>:</span></div><div class="line"><span class="meta">    @check_is_admin</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_food</span><span class="params">(self, username, food)</span>:</span></div><div class="line">        <span class="keyword">return</span> self.storage.get(food)</div><div class="line">    </div><div class="line"><span class="meta">    @check_is_admin</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">put_food</span><span class="params">(self, username, food)</span>:</span></div><div class="line">        self.storage.put(food)</div></pre></td></tr></table></figure>
+<p><code>get_food</code>被装饰后，实际上我们在调用<code>get_food</code>时，调用的是<code>wrapper</code>函数，也就是说<code>get_food</code>被包装了，所以<code>wrapper</code>可以获取到输入的参数，并对参数进行一些操作,并且注意上述代码要传入一个名为<code>username</code>的关键字参数，例如:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">get_food(username=<span class="string">'admin'</span>, food=<span class="string">'apple'</span>)</div></pre></td></tr></table></figure>
+<p>为此，我们需要一个更加智能的装饰器，它能够查看被装饰函数的参数，并从中提取需要的参数，<code>inspect</code>模块能实现这样的需求</p>
+<p>并且由于实际上我们调用的是包装函数<code>wrapper</code>,那么像<code>__name__</code>等返回的就是<code>wrapper</code>函数的信息，而不是<code>get_food</code>函数的信息,为此，<code>functools</code>提供<code>wraps</code>装饰器用来将被装饰函数一些特有属性赋值给包装函数，这样我们使用<code>wrapper</code>函数时，就像真的在使用原<code>get_food</code>函数一样</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> functools</div><div class="line"><span class="keyword">import</span> inspect</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">check_is_admin</span><span class="params">(f)</span>:</span></div><div class="line"><span class="meta">    @functools.wraps(f)</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">wrapper</span><span class="params">(*args, **kwargs)</span>:</span></div><div class="line">        func_args = inspect.getcallargs(f, *args, **kwargs)</div><div class="line">        <span class="keyword">if</span> func_args.get(<span class="string">'username'</span>) != <span class="string">'admin'</span>:</div><div class="line">            <span class="keyword">raise</span> Exception(<span class="string">"This user is not allowd to get food"</span>)</div><div class="line">        <span class="keyword">return</span> f(*args,**kwargs)</div><div class="line">    <span class="keyword">return</span> wrapper</div></pre></td></tr></table></figure>
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechat.png" alt="xin053 WeChat Pay">
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay.png" alt="xin053 Alipay">
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Python/" rel="tag">#Python</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/10/28/Tesseract光学识别/" rel="next" title="Tesseract光学识别">
+                <i class="fa fa-chevron-left"></i> Tesseract光学识别
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/11/04/Scala学习笔记(一)/" rel="prev" title="Scala学习笔记(一)">
+                Scala学习笔记(一) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/me.jpg" alt="xin053">
+          <p class="site-author-name" itemprop="name">xin053</p>
+          <p class="site-description motion-element" itemprop="description">正在用Windbg调试正在调试正在反汇编Windbg的IDA的OD...</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">55</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">50</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/xin053" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/xin053" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/xin053" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://blog.csdn.net/zhouzixin053" target="_blank" title="csdn">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  csdn
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://bbs.pediy.com/" title="看雪" target="_blank">看雪</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.geeklzh.com/" title="怪咖家园" target="_blank">怪咖家园</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.csdh.pub/" title="CS_DH" target="_blank">CS_DH</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://dendise7engithub.github.io/" title="Dendionk" target="_blank">Dendionk</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://cyang.tech/" title="cyang" target="_blank">cyang</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#说明"><span class="nav-number">1.</span> <span class="nav-text">说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重点"><span class="nav-number">2.</span> <span class="nav-text">重点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Python模块搜索机制"><span class="nav-number">2.1.</span> <span class="nav-text">Python模块搜索机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CPython-PyPy-Jython"><span class="nav-number">2.2.</span> <span class="nav-text">CPython,PyPy,Jython</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一个项目标准文件层次结构"><span class="nav-number">2.3.</span> <span class="nav-text">一个项目标准文件层次结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#import导入模块顺序"><span class="nav-number">2.4.</span> <span class="nav-text">import导入模块顺序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#命名"><span class="nav-number">2.5.</span> <span class="nav-text">命名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#库API"><span class="nav-number">2.6.</span> <span class="nav-text">库API</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#库更新时应该注意的问题"><span class="nav-number">2.7.</span> <span class="nav-text">库更新时应该注意的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pip安装包"><span class="nav-number">2.8.</span> <span class="nav-text">pip安装包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#for循环"><span class="nav-number">2.9.</span> <span class="nav-text">for循环</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#可迭代与迭代器"><span class="nav-number">2.10.</span> <span class="nav-text">可迭代与迭代器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生成器"><span class="nav-number">2.11.</span> <span class="nav-text">生成器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#yield表达式"><span class="nav-number">2.12.</span> <span class="nav-text">yield表达式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#列表解析与生成器表达式"><span class="nav-number">2.13.</span> <span class="nav-text">列表解析与生成器表达式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#迭代器与生成器"><span class="nav-number">2.14.</span> <span class="nav-text">迭代器与生成器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#迭代器与内置函数"><span class="nav-number">2.15.</span> <span class="nav-text">迭代器与内置函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#列表与元组"><span class="nav-number">2.16.</span> <span class="nav-text">列表与元组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#绑定与非绑定方法"><span class="nav-number">2.17.</span> <span class="nav-text">绑定与非绑定方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#log"><span class="nav-number">2.18.</span> <span class="nav-text">log</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sorted"><span class="nav-number">2.19.</span> <span class="nav-text">sorted</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ipaddress"><span class="nav-number">2.20.</span> <span class="nav-text">ipaddress</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类"><span class="nav-number">2.21.</span> <span class="nav-text">类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特殊方法"><span class="nav-number">2.22.</span> <span class="nav-text">特殊方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文件操作"><span class="nav-number">2.23.</span> <span class="nav-text">文件操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#subprocess替代"><span class="nav-number">2.24.</span> <span class="nav-text">subprocess替代</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#keyring"><span class="nav-number">2.25.</span> <span class="nav-text">keyring</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#random-与urandom"><span class="nav-number">2.26.</span> <span class="nav-text">random 与urandom</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#python2与3的编码问题"><span class="nav-number">2.27.</span> <span class="nav-text">python2与3的编码问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#contextlib"><span class="nav-number">2.28.</span> <span class="nav-text">contextlib</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#打包python包到pypi"><span class="nav-number">2.29.</span> <span class="nav-text">打包python包到pypi</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#装饰器"><span class="nav-number">2.30.</span> <span class="nav-text">装饰器</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xin053</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'xin053';
+      var disqus_identifier = '2016/10/30/Python学习重点摘记/';
+      var disqus_title = "Python学习重点摘记";
+      var disqus_url = 'https://xin053.github.io/2016/10/30/Python学习重点摘记/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+                            
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').mousedown(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+  
+
+  
+
+  
+
+</body>
+</html>

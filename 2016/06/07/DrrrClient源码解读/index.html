@@ -1,0 +1,1165 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="jFTy9MrTO4piYCnfdfFFpOLb9SCydVuSBPbqgakCzCM">
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="PyQt5,Python3.5,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="xin053" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="fork的PyQt5项目简述近来想找个PyQt项目好好学习学习，毕竟正在学PyQt5，刚去官网下了PyQt5.6,刚好PyQt5.6支持python3.5,电脑上又有python3.5.1，然而关于PyQt5，网上的资料实在是太少了，就连官网的文档大多都是转向Qt的c++文档，我也是醉了。 找到一个用python2.7+PyQt5(低于5.6)的版本写的一个针对Drrr chat room 网站写">
+<meta name="keywords" content="PyQt5,Python3.5">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DrrrClient源码解读">
+<meta property="og:url" content="https://xin053.github.io/2016/06/07/DrrrClient源码解读/index.html">
+<meta property="og:site_name" content="xin053">
+<meta property="og:description" content="fork的PyQt5项目简述近来想找个PyQt项目好好学习学习，毕竟正在学PyQt5，刚去官网下了PyQt5.6,刚好PyQt5.6支持python3.5,电脑上又有python3.5.1，然而关于PyQt5，网上的资料实在是太少了，就连官网的文档大多都是转向Qt的c++文档，我也是醉了。 找到一个用python2.7+PyQt5(低于5.6)的版本写的一个针对Drrr chat room 网站写">
+<meta property="og:image" content="http://i.imgur.com/ji5KPOJ.png">
+<meta property="og:image" content="http://i.imgur.com/e6d0XHJ.png">
+<meta property="og:updated_time" content="2017-05-27T13:20:48.767Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="DrrrClient源码解读">
+<meta name="twitter:description" content="fork的PyQt5项目简述近来想找个PyQt项目好好学习学习，毕竟正在学PyQt5，刚去官网下了PyQt5.6,刚好PyQt5.6支持python3.5,电脑上又有python3.5.1，然而关于PyQt5，网上的资料实在是太少了，就连官网的文档大多都是转向Qt的c++文档，我也是醉了。 找到一个用python2.7+PyQt5(低于5.6)的版本写的一个针对Drrr chat room 网站写">
+<meta name="twitter:image" content="http://i.imgur.com/ji5KPOJ.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: undefined,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> DrrrClient源码解读 | xin053 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-78789863-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?95bc477a974f85651897b76f543028bb";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">xin053</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">在安全圈里徘徊，停滞不前</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                DrrrClient源码解读
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-06-07T23:49:41+08:00" content="2016-06-07">
+              2016-06-07
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/PyQt5/" itemprop="url" rel="index">
+                    <span itemprop="name">PyQt5</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/06/07/DrrrClient源码解读/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/06/07/DrrrClient源码解读/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <link rel="stylesheet" type="text/css" href="/assets/css/DPlayer.min.css"><script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="fork的PyQt5项目"><a href="#fork的PyQt5项目" class="headerlink" title="fork的PyQt5项目"></a>fork的PyQt5项目</h2><h3 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h3><p>近来想找个<code>PyQt</code>项目好好学习学习，毕竟正在学<code>PyQt5</code>，刚去官网下了<code>PyQt5.6</code>,刚好<code>PyQt5.6</code>支持<code>python3.5</code>,电脑上又有<code>python3.5.1</code>，然而关于<code>PyQt5</code>，网上的资料实在是太少了，就连官网的文档大多都是转向<code>Qt</code>的<code>c++</code>文档，我也是醉了。</p>
+<p>找到一个用<code>python2.7+PyQt5</code>(低于5.6)的版本写的一个针对<a href="http://drrr.com/" target="_blank" rel="external">Drrr chat room </a>网站写的客户端，界面如下：</p>
+<p><img src="http://i.imgur.com/ji5KPOJ.png" alt=""></p>
+<a id="more"></a>
+<p>想好好研读下人家的代码，并向<code>python3.5.1+PyQt5.6</code>移植，对于<code>Python</code>2到3的移植，由于源代码比较简单，就1000+行代码，而且就一个<code>py</code>文件，界面和功能都在这个文件中，基本上对于<code>python</code>的移植就是将：</p>
+<pre><code>print &quot;something&quot;
+</code></pre><p>改为：</p>
+<pre><code>print(&quot;something&quot;)
+</code></pre><p>令人头疼的是<code>PyQt</code>的移植，只想说版本之间兼容性无话可说，有些内容差距真是太大了，尤其是<code>QtWebKit</code> 到 <code>QtWebEngine</code>的移植，表示官网文档都快被翻烂了，也就是根据函数名猜其功能，实在是受不了了。附上官网的这篇文章，供<code>PyQt</code>移植用：</p>
+<p><a href="https://wiki.qt.io/Porting_from_QtWebKit_to_QtWebEngine" target="_blank" rel="external">Porting from QtWebKit to QtWebEngine</a></p>
+<p>原作者<a href="https://github.com/harry159821/DrrrClient" target="_blank" rel="external">github</a></p>
+<p>看的出来，是作者的练手作品，作者还做了<code>PyQt4</code>到<code>PyQt5</code>的移植，主要也就是信号与槽函数建立连接的方式。大体来说整个程序先自绘窗口，然后中间窗口是个<code>QWebView</code>，确实像作者所言大体是个浏览器，但是依然还是有很多值得学习的地方。下面开始源码解读</p>
+<h3 id="大体描述"><a href="#大体描述" class="headerlink" title="大体描述"></a>大体描述</h3><p>目录结构比较简单：</p>
+<p><img src="http://i.imgur.com/e6d0XHJ.png" alt=""></p>
+<p><code>Shot</code>目录是几个截图，不重要，<code>img</code>目录是项目需要的图片和几个音频文件，<code>ini</code>配置文件存放用户名和语言等配置信息，不重要，<code>Makefile.py</code>是<code>py2exe</code>用于打包整个项目所写的配置文件(目前<code>python3.5</code>的项目不能用<code>py2exe</code>打包，可以用<code>pyInstaller</code>)，不重要，<code>bat</code>是执行打包，不重要。唯一重要的也就是<code>DrrrChatRoom.py</code>这个文件，代码总共1000+行，也不是特别麻烦，程序有不少注释，结构比较清晰，如果把界面和功能代码分离那就更好了。</p>
+<h3 id="源码解读"><a href="#源码解读" class="headerlink" title="源码解读"></a>源码解读</h3><p><code>labelBtn</code>类：</p>
+<pre><code>class labelBtn(QtWidgets.QLabel):
+    clicked = QtCore.pyqtSignal(str)
+    Entered = QtCore.pyqtSignal(str)
+    Leaved = QtCore.pyqtSignal(str)
+    Moved = QtCore.pyqtSignal(str,int,int)
+
+    def __init__(self,name,timeoutset=None,parent=None):
+        super(labelBtn,self).__init__()
+        self.setMouseTracking(True)
+        self.name = name
+
+    def mouseReleaseEvent(self,event):
+        self.clicked.emit(self.name)
+
+    def mouseMoveEvent(self,event):
+        self.Moved.emit(self.name,event.globalPos().x(),event.globalPos().y())
+
+    def enterEvent(self,event):
+        self.Entered.emit(self.name)
+
+    def leaveEvent(self,event):
+        self.Leaved.emit(self.name)
+</code></pre><p>这个类是作者用来自定义窗口右上角最大化，最小化，关闭三个按钮，类中定义了四个信号，并重写四个事件，分别<code>emit</code>这四个信号。</p>
+<p><code>FrameLessTransparentWindow</code>类：</p>
+<pre><code>class FrameLessTransparentWindow(QtWidgets.QMainWindow):
+
+    def __init__(self):...
+
+    def minFunc(self,name):...
+
+    def showMinimized2(self):...
+
+    def maxFunc(self,name):...
+
+    def closeFunc(self,name):...
+
+    def exitFunc(self):...
+
+    def buttonEnterFunc(self,name):...
+
+    def buttonLeavedFunc(self,name):...
+
+    def mousePressEvent(self, event):...
+
+    def mouseMoveEvent(self, event):...
+
+    def leaveEvent(self,event):...
+</code></pre><p>这个类是主要窗口的基类，里面都是些通用函数，顾名思义就知道他们是干什么用的。</p>
+<p><code>ShadowsWindow</code>类</p>
+<pre><code>class ShadowsWindow(FrameLessTransparentWindow):
+    def __init__(self):
+        super(ShadowsWindow, self).__init__()
+        self.setWindowFlags(Qt.FramelessWindowHint)  #去掉窗口标题栏
+        self.setAttribute(Qt.WA_TranslucentBackground)   #窗体标题栏不透明,背景透明
+        self.SHADOW_WIDTH=15
+
+    def drawShadow(self,painter):
+        self.pixmaps=[]
+        self.pixmaps.append(&quot;./img/left_top.png&quot;)
+        self.pixmaps.append(&quot;./img/left_bottom.png&quot;)
+        self.pixmaps.append(&quot;./img/right_top.png&quot;)
+        self.pixmaps.append(&quot;./img/right_bottom.png&quot;)
+        self.pixmaps.append(&quot;./img/top_mid.png&quot;)
+        self.pixmaps.append(&quot;./img/bottom_mid.png&quot;)
+        self.pixmaps.append(&quot;./img/left_mid.png&quot;)
+        self.pixmaps.append(&quot;./img/right_mid.png&quot;)
+        painter.drawPixmap(0, 0, 
+            self.SHADOW_WIDTH, self.SHADOW_WIDTH, QPixmap(self.pixmaps[0]))   # 左上角
+        painter.drawPixmap(self.width()-self.SHADOW_WIDTH, 0, 
+            self.SHADOW_WIDTH, self.SHADOW_WIDTH, QPixmap(self.pixmaps[2]))   # 右上角
+        painter.drawPixmap(0,self.height()-self.SHADOW_WIDTH, 
+            self.SHADOW_WIDTH, self.SHADOW_WIDTH, QPixmap(self.pixmaps[1]))   # 左下角
+        painter.drawPixmap(self.width()-self.SHADOW_WIDTH, self.height()-self.SHADOW_WIDTH, 
+            self.SHADOW_WIDTH, self.SHADOW_WIDTH, QPixmap(self.pixmaps[3]))  # 右下角
+        painter.drawPixmap(0, self.SHADOW_WIDTH, self.SHADOW_WIDTH, 
+            self.height()-2*self.SHADOW_WIDTH, 
+            QPixmap(self.pixmaps[6]).scaled(self.SHADOW_WIDTH, self.height()-2*self.SHADOW_WIDTH)) # 左
+        painter.drawPixmap(self.width()-self.SHADOW_WIDTH, self.SHADOW_WIDTH, 
+            self.SHADOW_WIDTH, self.height()-2*self.SHADOW_WIDTH, 
+            QPixmap(self.pixmaps[7]).scaled(self.SHADOW_WIDTH, self.height()- 2*self.SHADOW_WIDTH)) # 右
+        painter.drawPixmap(self.SHADOW_WIDTH, 0, self.width()-2*self.SHADOW_WIDTH, self.SHADOW_WIDTH, 
+            QPixmap(self.pixmaps[4]).scaled(self.width()-2*self.SHADOW_WIDTH, self.SHADOW_WIDTH)) # 上
+        painter.drawPixmap(self.SHADOW_WIDTH, 
+            self.height()-self.SHADOW_WIDTH, 
+            self.width()-2*self.SHADOW_WIDTH, 
+            self.SHADOW_WIDTH, QPixmap(self.pixmaps[5]).scaled(self.width()-2*self.SHADOW_WIDTH, 
+            self.SHADOW_WIDTH))   # 下        
+
+    def paintEvent(self, event):
+        painter = QPainter(self)
+        self.drawShadow(painter)
+        painter.setPen(Qt.NoPen)
+        painter.setBrush(Qt.white)
+</code></pre><p><code>ShadowsWindow</code>窗口类继承自<code>FrameLessTransparentWindow</code>，没有标题栏，客户区背景透明，重写了绘图事件，手动绘制了窗口的四个角，和上下左右的阴影，所以这个类取名为<code>shadow</code></p>
+<p><code>titleBar</code>类</p>
+<pre><code>class titleBar(QWidget):
+
+    def __init__(self,parent=None):...
+
+    def drawShadow(self,painter):...
+
+    def paintEvent(self, event):...
+
+    def enterEvent(self,event):...
+</code></pre><p>这个类画的是窗口标题栏，重写绘图事件，并在标题栏窗口边上画阴影就不说了，具体来看下构造函数：</p>
+<p>首先设置好长宽等属性后，通过：</p>
+<pre><code>self.setStyleSheet(...)
+</code></pre><p>设置一些样式。</p>
+<pre><code>self.title_label = QLabel()
+self.title_label.setText(u&quot;    DRRR Chat Room&quot;)
+self.font = QtGui.QFont()
+self.font.setPixelSize(22)   # 设置字号32,以像素为单位
+self.font.setFamily(&quot;SimSun&quot;)# 设置字体，宋体
+self.font.setBold(True)
+self.font.setItalic(False)   # 设置字型,不倾斜
+self.font.setUnderline(False)# 设置字型,无下划线
+self.title_label.setFont(self.font)
+</code></pre><p>设置标题栏文字，并设置字体。</p>
+<pre><code>self.close_button = labelBtn(&apos;x&apos;)
+self.min_button = labelBtn(&apos;-&apos;)
+self.max_button = labelBtn(&apos;口&apos;)
+
+self.close_button.setPixmap(QPixmap(&quot;./img/orange.png&quot;))
+self.min_button.setPixmap(QPixmap(&quot;./img/green.png&quot;))
+self.max_button.setPixmap(QPixmap(&quot;./img/blue.png&quot;))
+</code></pre><p>新建最大化，最小化，关闭三个按钮，并设置按钮图片，之后设置样式和一些其他属性</p>
+<pre><code>self.title_layout = QHBoxLayout()
+self.title_layout.setContentsMargins(0, 0, 20, 0)
+self.title_layout.addWidget(self.title_label,1,Qt.AlignCenter)
+self.title_layout.addStretch()
+self.title_layout.addWidget(self.min_button  ,0,Qt.AlignVCenter)
+self.title_layout.addWidget(self.max_button  ,0,Qt.AlignVCenter)
+self.title_layout.addWidget(self.close_button,0,Qt.AlignVCenter)
+
+self.setLayout(self.title_layout)
+</code></pre><p>将文字和三个按钮分别放在布局中，并设置<code>titleBar</code>窗口内的布局</p>
+<p><code>StatusWindow</code>窗口类：</p>
+<p>用来画窗口的状态栏，基本和<code>titleBar</code>类一样。</p>
+<p><code>DrrrWindow</code>类：</p>
+<p>继承自<code>ShadowsWindow</code>类，是程序的主要窗口。来看下其构造方法：</p>
+<pre><code>self.getSetting()
+...
+def getSetting(self):
+    &apos;&apos;&apos;获取应用设置&apos;&apos;&apos;
+    self.settings = QtCore.QSettings(&quot;DrrrChatRoom.ini&quot;, QtCore.QSettings.IniFormat)
+</code></pre><p>首先获取<code>ini</code>中的配置</p>
+<pre><code>self.WebView = QWebEngineView()
+</code></pre><p>new 一个<code>QWebEngineView</code>，然后</p>
+<pre><code># 设置加载网页，和网页加载完成以及加载过程信号与槽函数关联
+self.WebView.loadStarted.connect(self.loadStarted)
+self.WebView.loadFinished.connect(self.loadFinished)
+self.WebView.loadProgress.connect(self.loading)
+
+# 重定义QWebEnginePage中javaScriptAlert等函数
+self.WebView.page().javaScriptAlert = self._javascript_alert                
+self.WebView.page().javaScriptConsoleMessage = self._javascript_console_message
+self.WebView.page().javaScriptConfirm = self._javascript_confirm
+self.WebView.page().javaScriptPrompt = self._javascript_prompt
+</code></pre><p>然后：</p>
+<pre><code># new一个标题栏和状态栏
+self.titlebar = titleBar()
+self.statusBar = StatusWindow()
+
+# 中心窗口布局，并添加标题栏和状态栏
+self.contentLayout = QVBoxLayout()
+self.contentWidget = QWidget()
+self.contentWidget.gridLayout = QtWidgets.QGridLayout(self.contentWidget)
+self.contentWidget.gridLayout.addLayout(self.contentLayout, 0, 0, 1, 1)
+self.contentLayout.addWidget(self.WebView)
+self.contentWidget.gridLayout.setContentsMargins(0,0,0,0)
+self.contentLayout.setContentsMargins(1,0,1,0)
+self.contentWidget.setStyleSheet(&quot;&quot;&quot;
+    border-left:    1px solid black;
+    border-right:   1px solid black;
+    &quot;&quot;&quot;)
+
+self.main_layout = QVBoxLayout()
+self.main_layout.addWidget(self.titlebar)
+self.main_layout.addWidget(self.contentWidget)
+self.main_layout.addWidget(self.statusBar)
+self.main_layout.setSpacing(0)
+
+# 窗口属性
+self.setWindowFlags(Qt.Widget | QtCore.Qt.FramelessWindowHint)
+self.setAttribute(Qt.WA_NoSystemBackground, True)
+self.setAttribute(QtCore.Qt.WA_TranslucentBackground,True)
+
+self.widget = QWidget()
+self.setCentralWidget(self.widget)
+self.widget.setLayout(self.main_layout)
+self.widget.setMouseTracking(True)        
+self.resize(650,650)
+self.center()
+
+# 将三个按钮点击信号与相关槽函数相关联
+self.titlebar.min_button.clicked.connect(self.hideIt)
+self.titlebar.max_button.clicked.connect(self.MaxAndNormal)
+self.titlebar.close_button.clicked.connect(self.closeIt)
+
+# 状态栏进度条：将LoadProgress信号与loading槽函数相关联
+self.WebView.loadProgress.connect(self.loading)
+</code></pre><p>最后：</p>
+<pre><code># 设置加载时的网页，显示主窗口，并加载drrr.com
+self.WebView.setHtml(WaitingHTML)
+self.show()
+self.WebView.setStyleSheet(&quot;&quot;&quot;
+    QWebView {
+        background-color:black
+    }        
+    QWebView::QScrollBar:Vertical {
+        background-color:black
+    }
+    &quot;&quot;&quot;)
+self.WebView.load(QUrl(&quot;http://drrr.com/&quot;))
+</code></pre><p>该类中重写了<code>loadStarted()</code>，<code>loadFinished()</code>和方法，在其中获取网页中用户名等信息，并存储在<code>ini</code>配置文件中，或根据ini配置文件填写网页表单中的内容，由于<code>PyQt5.6</code>去除了<code>mainFrame()</code>方法，所以删除了这部分的操作。至此，整个程序基本结束。</p>
+<h3 id="移植过后存在的问题"><a href="#移植过后存在的问题" class="headerlink" title="移植过后存在的问题"></a>移植过后存在的问题</h3><ul>
+<li>程序能运行，但是进入<code>room</code>播放不了音乐，可能是<code>QtWebEngine</code>不支持吧</li>
+<li>右上角三个按钮的功能没有实现，因为源程序用了<code>animation</code>动画，这个某些设置与<code>PyQt5.6</code>不兼容，也不想再弄了，麻烦。</li>
+</ul>
+<h3 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h3><p>整个项目用来学习<code>PyQt5</code>还算不错。移植后的项目托管与<a href="https://github.com/xin053/DrrrClient" target="_blank" rel="external">我的github</a></p>
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechat.png" alt="xin053 WeChat Pay">
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay.png" alt="xin053 Alipay">
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/PyQt5/" rel="tag">#PyQt5</a>
+          
+            <a href="/tags/Python3-5/" rel="tag">#Python3.5</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/06/05/Travis CI自动部署Hexo博客到Github/" rel="next" title="Travis CI自动部署Hexo博客到Github">
+                <i class="fa fa-chevron-left"></i> Travis CI自动部署Hexo博客到Github
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/06/11/VS Code搭建Python开发环境/" rel="prev" title="VS Code搭建Python开发环境">
+                VS Code搭建Python开发环境 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/me.jpg" alt="xin053">
+          <p class="site-author-name" itemprop="name">xin053</p>
+          <p class="site-description motion-element" itemprop="description">正在用Windbg调试正在调试正在反汇编Windbg的IDA的OD...</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">55</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">50</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/xin053" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/xin053" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/xin053" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://blog.csdn.net/zhouzixin053" target="_blank" title="csdn">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  csdn
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://bbs.pediy.com/" title="看雪" target="_blank">看雪</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.geeklzh.com/" title="怪咖家园" target="_blank">怪咖家园</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.csdh.pub/" title="CS_DH" target="_blank">CS_DH</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://dendise7engithub.github.io/" title="Dendionk" target="_blank">Dendionk</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://cyang.tech/" title="cyang" target="_blank">cyang</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#fork的PyQt5项目"><span class="nav-number">1.</span> <span class="nav-text">fork的PyQt5项目</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简述"><span class="nav-number">1.1.</span> <span class="nav-text">简述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#大体描述"><span class="nav-number">1.2.</span> <span class="nav-text">大体描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#源码解读"><span class="nav-number">1.3.</span> <span class="nav-text">源码解读</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#移植过后存在的问题"><span class="nav-number">1.4.</span> <span class="nav-text">移植过后存在的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结语"><span class="nav-number">1.5.</span> <span class="nav-text">结语</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xin053</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'xin053';
+      var disqus_identifier = '2016/06/07/DrrrClient源码解读/';
+      var disqus_title = "DrrrClient源码解读";
+      var disqus_url = 'https://xin053.github.io/2016/06/07/DrrrClient源码解读/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+                            
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').mousedown(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+  
+
+  
+
+  
+
+</body>
+</html>

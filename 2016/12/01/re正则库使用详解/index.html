@@ -1,0 +1,1000 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="jFTy9MrTO4piYCnfdfFFpOLb9SCydVuSBPbqgakCzCM">
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Python,re,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="xin053" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="re简介正则表达式会被python解释器编译成字节码，这样查找的效率比单纯用python代码实现查找要快，但是匹配统一内容可以有多种不同的正则表达式，并且他们的效率各不相同 特殊符号1. ^ $ * + ? &amp;#123; &amp;#125; [ ] \ | ( ) 匹配这些特殊符号需要使用\进行转义">
+<meta name="keywords" content="Python,re">
+<meta property="og:type" content="article">
+<meta property="og:title" content="re正则库使用详解">
+<meta property="og:url" content="https://xin053.github.io/2016/12/01/re正则库使用详解/index.html">
+<meta property="og:site_name" content="xin053">
+<meta property="og:description" content="re简介正则表达式会被python解释器编译成字节码，这样查找的效率比单纯用python代码实现查找要快，但是匹配统一内容可以有多种不同的正则表达式，并且他们的效率各不相同 特殊符号1. ^ $ * + ? &amp;#123; &amp;#125; [ ] \ | ( ) 匹配这些特殊符号需要使用\进行转义">
+<meta property="og:updated_time" content="2017-05-27T13:20:48.775Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="re正则库使用详解">
+<meta name="twitter:description" content="re简介正则表达式会被python解释器编译成字节码，这样查找的效率比单纯用python代码实现查找要快，但是匹配统一内容可以有多种不同的正则表达式，并且他们的效率各不相同 特殊符号1. ^ $ * + ? &amp;#123; &amp;#125; [ ] \ | ( ) 匹配这些特殊符号需要使用\进行转义">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: undefined,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> re正则库使用详解 | xin053 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-78789863-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?95bc477a974f85651897b76f543028bb";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">xin053</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">在安全圈里徘徊，停滞不前</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                re正则库使用详解
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-12-01T16:00:45+08:00" content="2016-12-01">
+              2016-12-01
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Python模块学习/" itemprop="url" rel="index">
+                    <span itemprop="name">Python模块学习</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/12/01/re正则库使用详解/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/12/01/re正则库使用详解/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <link rel="stylesheet" type="text/css" href="/assets/css/DPlayer.min.css"><script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="re简介"><a href="#re简介" class="headerlink" title="re简介"></a>re简介</h2><p>正则表达式会被python解释器编译成字节码，这样查找的效率比单纯用python代码实现查找要快，但是匹配统一内容可以有多种不同的正则表达式，并且他们的效率各不相同</p>
+<h2 id="特殊符号"><a href="#特殊符号" class="headerlink" title="特殊符号"></a>特殊符号</h2><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">. ^ $ * + ? &#123; &#125; [ ] \ | ( )</div></pre></td></tr></table></figure>
+<p>匹配这些特殊符号需要使用<code>\</code>进行转义</p>
+<a id="more"></a>
+<h3 id=""><a href="#" class="headerlink" title="."></a><code>.</code></h3><p>匹配除换行符以外的任意字符，如果指定了<code>DOTALL</code>标志，则匹配所有字符，但注意<code>.</code>表示仅仅匹配一个字符</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> re</div><div class="line">re.findall(<span class="string">r'.'</span>, <span class="string">'\r\nabc'</span>)</div><div class="line"><span class="comment"># ['\r', 'a', 'b', 'c']</span></div><div class="line">re.findall(<span class="string">r'.'</span>, <span class="string">'\r\nabc'</span>, flags=re.DOTALL)</div><div class="line"><span class="comment"># ['\r', '\n', 'a', 'b', 'c']</span></div></pre></td></tr></table></figure>
+<h3 id="-1"><a href="#-1" class="headerlink" title="^"></a><code>^</code></h3><p>匹配字符串的开始，当指定<code>MULTILINE</code>标志，则匹配每一行的开头</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">re.findall(<span class="string">r'ab.'</span>, <span class="string">'abcdefabhy'</span>)</div><div class="line"><span class="comment"># ['abc', 'abh']</span></div><div class="line">re.findall(<span class="string">r'^ab.'</span>, <span class="string">'abcdefabhy'</span>)</div><div class="line"><span class="comment"># ['abc']</span></div><div class="line">re.findall(<span class="string">r'^ab.'</span>,</div><div class="line">           <span class="string">'''abcd</span></div><div class="line">           abcd</div><div class="line">           acd</div><div class="line">           abcd''')</div><div class="line"><span class="comment"># ['abc']</span></div><div class="line">re.findall(<span class="string">r'^ab.'</span>,</div><div class="line">           <span class="string">'''abcd</span></div><div class="line">           abcd</div><div class="line">           acd</div><div class="line">           abcd''', flags=re.MULTILINE)</div><div class="line"><span class="comment"># ['abc', 'abc', 'abc']</span></div></pre></td></tr></table></figure>
+<h3 id="-2"><a href="#-2" class="headerlink" title="###"></a><code>###</code></h3><p>匹配字符串的结尾，当指定<code>MULTILINE</code>标志，则匹配每一行的结尾(匹配换行符之前的)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">re.findall(<span class="string">r'.ab$'</span>, <span class="string">'aabcbab'</span>)</div><div class="line"><span class="comment"># ['bab']</span></div><div class="line">re.findall(<span class="string">r'ab.$'</span>, <span class="string">'aabcbab'</span>)</div><div class="line"><span class="comment"># []</span></div><div class="line">re.findall(<span class="string">r'ab.$'</span>, <span class="string">'aabcbab1\n'</span>) <span class="comment"># 注意换行符不是结尾，换行符之前的才是结尾</span></div><div class="line"><span class="comment"># ['ab1']</span></div></pre></td></tr></table></figure>
+<h3 id="-3"><a href="#-3" class="headerlink" title="*"></a><code>*</code></h3><p><code>*</code>表示0个或多个前一字符或正则</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">re.findall(<span class="string">r'ab*c'</span>, <span class="string">'ac.abc.abbbbc'</span>)</div><div class="line"><span class="comment"># ['ac', 'abc', 'abbbbc']</span></div></pre></td></tr></table></figure>
+<h3 id="-4"><a href="#-4" class="headerlink" title="+"></a><code>+</code></h3><p><code>+</code>表示1个或多个前一字符或正则</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">re.findall(<span class="string">r'ab+c'</span>, <span class="string">'ac.abc.abbbbc'</span>)</div><div class="line"><span class="comment"># ['abc', 'abbbbc']</span></div></pre></td></tr></table></figure>
+<h3 id="-5"><a href="#-5" class="headerlink" title="?"></a><code>?</code></h3><p><code>?</code>表示0个或1个前一字符或正则</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">re.findall(<span class="string">r'ab?c'</span>, <span class="string">'ac.abc.abbbbc'</span>)</div><div class="line"><span class="comment"># ['ac', 'abc']</span></div></pre></td></tr></table></figure>
+<h3 id="-6"><a href="#-6" class="headerlink" title="*? +? ??"></a><code>*?</code> <code>+?</code> <code>??</code></h3><p><code>*</code> <code>+</code> <code>?</code> 都是贪婪的，会匹配最长的</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">re.findall(<span class="string">r'&lt;.*&gt;'</span>, <span class="string">'&lt;a&gt; b &lt;c&gt;'</span>)</div><div class="line"><span class="comment"># ['&lt;a&gt; b &lt;c&gt;']</span></div></pre></td></tr></table></figure>
+<p>在这些操作符后面添加<code>?</code>能够使之变为不贪婪的，也就是匹配最短的</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">re.findall(<span class="string">r'&lt;.*?&gt;'</span>, <span class="string">'&lt;a&gt; b &lt;c&gt;'</span>)</div><div class="line"><span class="comment"># ['&lt;a&gt;', '&lt;c&gt;']</span></div></pre></td></tr></table></figure>
+<h3 id="m"><a href="#m" class="headerlink" title="{m}"></a><code>{m}</code></h3><p><code>{m}</code>表示m个前一字符或正则</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">re.findall(<span class="string">r'a&#123;3&#125;b'</span>, <span class="string">'aabaaabaaaab'</span>)</div><div class="line"><span class="comment"># ['aaab', 'aaab']</span></div></pre></td></tr></table></figure>
+<h3 id="m-n"><a href="#m-n" class="headerlink" title="{m,n}"></a><code>{m,n}</code></h3><p><code>{m,n}</code>表示m到n个前一字符或正则  注意:<code>,</code>后面没有空格</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">re.findall(<span class="string">r'a&#123;2,3&#125;b'</span>, <span class="string">'aabaaabaaaab'</span>)</div><div class="line"><span class="comment"># ['aab', 'aaab', 'aaab']</span></div></pre></td></tr></table></figure>
+<p>省略m表示没有下限，省略n表示没有上限</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">re.findall(<span class="string">r'a&#123;,3&#125;b'</span>, <span class="string">'babaabaaabaaaab'</span>)</div><div class="line"><span class="comment"># ['b', 'ab', 'aab', 'aaab', 'aaab']</span></div><div class="line">re.findall(<span class="string">r'a&#123;2,&#125;b'</span>, <span class="string">'babaabaaabaaaab'</span>)</div><div class="line"><span class="comment"># ['aab', 'aaab', 'aaaab']</span></div></pre></td></tr></table></figure>
+<h3 id="m-n-1"><a href="#m-n-1" class="headerlink" title="{m,n}?"></a><code>{m,n}?</code></h3><p><code>{m,n}</code>会匹配最长的，在后面加<code>?</code>，则匹配最短的</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">re.findall(<span class="string">r'a&#123;2,4&#125;'</span>, <span class="string">'aaaa'</span>)</div><div class="line"><span class="comment"># ['aaaa']</span></div><div class="line">re.findall(<span class="string">r'a&#123;2,4&#125;?'</span>, <span class="string">'aaaa'</span>)</div><div class="line"><span class="comment"># ['aa', 'aa']</span></div></pre></td></tr></table></figure>
+<h3 id="-7"><a href="#-7" class="headerlink" title="[]"></a><code>[]</code></h3><p><code>[]</code>指定一组字符</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">re.findall(<span class="string">r'[a-z]'</span>, <span class="string">'adfzADFZ059'</span>)</div><div class="line"><span class="comment"># ['a', 'd', 'f', 'z']</span></div><div class="line">re.findall(<span class="string">r'[a-zA-Z0-9]'</span>, <span class="string">'adfzADFZ059'</span>)</div><div class="line"><span class="comment"># ['a', 'd', 'f', 'z', 'A', 'D', 'F', 'Z', '0', '5', '9']</span></div></pre></td></tr></table></figure>
+<p>很多特殊符号在<code>[]</code>环境内无效,其他特殊符号需要转义:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">re.findall(<span class="string">r'[.$*+?&#123;&#125;|()]'</span>, <span class="string">'.^$*+?&#123;&#125;[]\|()'</span>)</div><div class="line"><span class="comment"># ['.', '$', '*', '+', '?', '&#123;', '&#125;', '|', '(', ')']</span></div></pre></td></tr></table></figure>
+<p><code>[]</code>内的<code>^</code>表示非，<code>^^</code>表示除<code>^</code>以外的全部字符:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">re.findall(<span class="string">r'[^5]'</span>, <span class="string">'1359'</span>)</div><div class="line"><span class="comment"># ['1', '3', '9']</span></div><div class="line">re.findall(<span class="string">r'[^^]'</span>, <span class="string">'1359^'</span>)</div><div class="line"><span class="comment"># ['1', '3', '5', '9']</span></div></pre></td></tr></table></figure>
+<h3 id="-8"><a href="#-8" class="headerlink" title="|"></a><code>|</code></h3><p><code>|</code>也就是或，注意也是短路操作</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">re.findall(<span class="string">r'a|bc'</span>, <span class="string">'acbcabc'</span>)</div><div class="line"><span class="comment"># ['a', 'bc', 'a', 'bc']</span></div><div class="line">re.findall(<span class="string">r'[a|b]c'</span>, <span class="string">'acbcabc'</span>)</div><div class="line"><span class="comment"># ['ac', 'bc', 'bc']</span></div></pre></td></tr></table></figure>
+<h3 id="-9"><a href="#-9" class="headerlink" title="(...)"></a><code>(...)</code></h3><p>匹配圆括号里的RE匹配的内容，并指定组的开始和结束位置。组里面的内容可以被提取,要匹配<code>(</code>和<code>)</code>，则需要使用转义符号或者是<code>[(]</code>,<code>[)]</code></p>
+<h3 id="aiLmsux"><a href="#aiLmsux" class="headerlink" title="(?aiLmsux)"></a><code>(?aiLmsux)</code></h3><p><code>i</code>,<code>L</code>,<code>m</code>,<code>s</code>,<code>u</code>,<code>x</code>里的一个或多个字母。表达式不匹配任何字符，但是指定相应的标志：<code>re.I</code>(忽略大小写)、<code>re.L</code>(依赖locale)、<code>re.M</code>(多行模式)、<code>re.S</code>(.匹配所有字符)、<code>re.U</code>(依赖Unicode)、<code>re.X</code>(详细模式)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">re.findall(<span class="string">r'(?i)ab'</span>, <span class="string">'abABAbaB'</span>)</div><div class="line"><span class="comment"># ['ab', 'AB', 'Ab', 'aB']</span></div></pre></td></tr></table></figure>
+<h3 id="P-lt-name-gt"><a href="#P-lt-name-gt" class="headerlink" title="(?P&lt;name&gt;...)"></a><code>(?P&lt;name&gt;...)</code></h3><p>和普通的圆括号类似，但是子串匹配到的内容将可以用命名的<code>name</code>参数来提取。组的<code>name</code>必须是有效的python标识符，而且在本表达式内不重名。命名了的组和普通组一样，也用数字来提取，也就是说名字只是个额外的属性。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">m = re.match(<span class="string">'(?P&lt;name&gt;\w+)'</span>, <span class="string">'zzx:22'</span>)</div><div class="line">m.group(<span class="string">'name'</span>)</div><div class="line"><span class="comment"># 'zzx'</span></div><div class="line">m.group(<span class="number">1</span>)</div><div class="line"><span class="comment"># 'zzx'</span></div></pre></td></tr></table></figure>
+<h2 id="special-sequences"><a href="#special-sequences" class="headerlink" title="special sequences"></a>special sequences</h2><h3 id="number"><a href="#number" class="headerlink" title="\number"></a><code>\number</code></h3><p>表示之前的分组</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">re.match(<span class="string">r'(.+) \1 (abc) \2'</span>, <span class="string">'55 55 abc abc'</span>)</div><div class="line"><span class="comment"># &lt;_sre.SRE_Match object; span=(0, 13), match='55 55 abc abc'&gt;</span></div></pre></td></tr></table></figure>
+<h3 id="A"><a href="#A" class="headerlink" title="\A"></a><code>\A</code></h3><p>仅匹配字符串的开头</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">re.findall(<span class="string">r'\Aabc'</span>, <span class="string">'abcabc'</span>)</div><div class="line"><span class="comment"># ['abc']</span></div></pre></td></tr></table></figure>
+<h3 id="b"><a href="#b" class="headerlink" title="\b"></a><code>\b</code></h3><p>表示单词开始和结尾处的空白字符以及非字母非数字的字符</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">re.findall(<span class="string">r'\babc\b'</span>, <span class="string">'abc.'</span>)</div><div class="line"><span class="comment"># ['abc']</span></div><div class="line">re.findall(<span class="string">r'\babc\b'</span>, <span class="string">'abc!'</span>)</div><div class="line"><span class="comment"># ['abc']</span></div><div class="line">re.findall(<span class="string">r'\babc\b'</span>, <span class="string">'abca'</span>)</div><div class="line"><span class="comment"># []</span></div></pre></td></tr></table></figure>
+<h3 id="B"><a href="#B" class="headerlink" title="\B"></a><code>\B</code></h3><p><code>\b</code>的反面</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">re.findall(<span class="string">r'py\B'</span>, <span class="string">'python'</span>)</div><div class="line"><span class="comment"># ['py']</span></div><div class="line">re.findall(<span class="string">r'py\B'</span>, <span class="string">'py.'</span>)</div><div class="line"><span class="comment"># []</span></div></pre></td></tr></table></figure>
+<h3 id="s"><a href="#s" class="headerlink" title="\s"></a><code>\s</code></h3><p>匹配空白字符,包括<code>[ \t\n\r\f\v]</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">re.findall(<span class="string">r'aa\s+bb'</span>, <span class="string">'aa \n\t  bb'</span>)</div><div class="line"><span class="comment"># ['aa \n\t  bb']</span></div></pre></td></tr></table></figure>
+<h3 id="S"><a href="#S" class="headerlink" title="\S"></a><code>\S</code></h3><p><code>\s</code>的反面</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">re.findall(<span class="string">r'aa\S+bb'</span>, <span class="string">'aahg.!bb'</span>)</div><div class="line"><span class="comment"># ['aahg.!bb']</span></div><div class="line">re.findall(<span class="string">r'aa\S+bb'</span>, <span class="string">'aa bb'</span>)</div><div class="line"><span class="comment"># []</span></div></pre></td></tr></table></figure>
+<h3 id="w"><a href="#w" class="headerlink" title="\w"></a><code>\w</code></h3><p>匹配数字和字母</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">re.findall(<span class="string">r'\w+'</span>, <span class="string">'aa3bb 45AS'</span>)</div><div class="line"><span class="comment"># ['aa3bb', '45AS']</span></div></pre></td></tr></table></figure>
+<h3 id="W"><a href="#W" class="headerlink" title="\W"></a><code>\W</code></h3><p><code>\w</code>的反面</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">re.findall(<span class="string">r'\W+'</span>, <span class="string">'aa3bb .! 45AS'</span>)</div><div class="line"><span class="comment"># [' .! ']</span></div></pre></td></tr></table></figure>
+<h3 id="Z"><a href="#Z" class="headerlink" title="\Z"></a><code>\Z</code></h3><p>匹配字符串结尾</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">re.findall(<span class="string">r'ab\Z'</span>, <span class="string">'abab'</span>)</div><div class="line"><span class="comment"># ['ab']</span></div></pre></td></tr></table></figure>
+<h2 id="re模块方法"><a href="#re模块方法" class="headerlink" title="re模块方法"></a><code>re</code>模块方法</h2><h3 id="re-compile-pattern-flags-0"><a href="#re-compile-pattern-flags-0" class="headerlink" title="re.compile(pattern, flags=0)"></a><code>re.compile(pattern, flags=0)</code></h3><p>编译一个正则表达式为一个正则表达式对象，之后就可以使用该对象对字符串进行匹配了</p>
+<h3 id="re-search-pattern-string-flags-0"><a href="#re-search-pattern-string-flags-0" class="headerlink" title="re.search(pattern, string, flags=0)"></a><code>re.search(pattern, string, flags=0)</code></h3><p>从字符串的开头开始搜索匹配，返回匹配到的第一个</p>
+<h3 id="re-match-pattern-string-flags-0"><a href="#re-match-pattern-string-flags-0" class="headerlink" title="re.match(pattern, string, flags=0)"></a><code>re.match(pattern, string, flags=0)</code></h3><p>返回字符串中匹配的第一个</p>
+<h3 id="re-fullmatch-pattern-string-flags-0"><a href="#re-fullmatch-pattern-string-flags-0" class="headerlink" title="re.fullmatch(pattern, string, flags=0)"></a><code>re.fullmatch(pattern, string, flags=0)</code></h3><p>对整个字符串进行匹配</p>
+<h3 id="re-split-pattern-string-maxsplit-0-flags-0"><a href="#re-split-pattern-string-maxsplit-0-flags-0" class="headerlink" title="re.split(pattern, string, maxsplit=0, flags=0)"></a><code>re.split(pattern, string, maxsplit=0, flags=0)</code></h3><p>凭正则表达式分割字符串</p>
+<h3 id="re-findall-pattern-string-flags-0"><a href="#re-findall-pattern-string-flags-0" class="headerlink" title="re.findall(pattern, string, flags=0)"></a><code>re.findall(pattern, string, flags=0)</code></h3><p>如果匹配模式中包含分组，则返回分组，如果有多个分组，则返回分组组成的元组</p>
+<h3 id="re-finditer-pattern-string-flags-0"><a href="#re-finditer-pattern-string-flags-0" class="headerlink" title="re.finditer(pattern, string, flags=0)"></a><code>re.finditer(pattern, string, flags=0)</code></h3><p>返回迭代器</p>
+<h3 id="re-sub-pattern-repl-string-count-0-flags-0"><a href="#re-sub-pattern-repl-string-count-0-flags-0" class="headerlink" title="re.sub(pattern, repl, string, count=0, flags=0)"></a><code>re.sub(pattern, repl, string, count=0, flags=0)</code></h3><p>替换</p>
+<h2 id="Match-Objects"><a href="#Match-Objects" class="headerlink" title="Match Objects"></a>Match Objects</h2><p>像<code>match()</code> <code>search()</code>等方法返回的就是一个<code>Match</code>对象，该对象包括的属性和方法请看<a href="https://docs.python.org/3/library/re.html#match-objects" target="_blank" rel="external">官方文档</a></p>
+<p>注意，关于分组，第0组就是匹配到的字符串</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">a = re.match(<span class="string">r'\babc\b'</span>, <span class="string">'abc!'</span>)</div><div class="line">a.group()</div><div class="line"><span class="comment"># 'abc'</span></div></pre></td></tr></table></figure>
+<h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><ul>
+<li><a href="https://docs.python.org/3/library/re.html" target="_blank" rel="external">re官方文档</a></li>
+<li><a href="https://docs.python.org/3/howto/regex.html" target="_blank" rel="external">Regular Expression HOWTO</a></li>
+</ul>
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechat.png" alt="xin053 WeChat Pay">
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay.png" alt="xin053 Alipay">
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Python/" rel="tag">#Python</a>
+          
+            <a href="/tags/re/" rel="tag">#re</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/11/29/Python描述符descriptor/" rel="next" title="Python描述符descriptor">
+                <i class="fa fa-chevron-left"></i> Python描述符descriptor
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/12/10/Scrapy爬虫库使用详解/" rel="prev" title="Scrapy爬虫库使用详解">
+                Scrapy爬虫库使用详解 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/me.jpg" alt="xin053">
+          <p class="site-author-name" itemprop="name">xin053</p>
+          <p class="site-description motion-element" itemprop="description">正在用Windbg调试正在调试正在反汇编Windbg的IDA的OD...</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">55</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">50</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/xin053" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/xin053" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/xin053" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://blog.csdn.net/zhouzixin053" target="_blank" title="csdn">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  csdn
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://bbs.pediy.com/" title="看雪" target="_blank">看雪</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.geeklzh.com/" title="怪咖家园" target="_blank">怪咖家园</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.csdh.pub/" title="CS_DH" target="_blank">CS_DH</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://dendise7engithub.github.io/" title="Dendionk" target="_blank">Dendionk</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://cyang.tech/" title="cyang" target="_blank">cyang</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#re简介"><span class="nav-number">1.</span> <span class="nav-text">re简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#特殊符号"><span class="nav-number">2.</span> <span class="nav-text">特殊符号</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#"><span class="nav-number">2.1.</span> <span class="nav-text">.</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#-1"><span class="nav-number">2.2.</span> <span class="nav-text">^</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#-2"><span class="nav-number">2.3.</span> <span class="nav-text">###</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#-3"><span class="nav-number">2.4.</span> <span class="nav-text">*</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#-4"><span class="nav-number">2.5.</span> <span class="nav-text">+</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#-5"><span class="nav-number">2.6.</span> <span class="nav-text">?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#-6"><span class="nav-number">2.7.</span> <span class="nav-text">*? +? ??</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#m"><span class="nav-number">2.8.</span> <span class="nav-text">{m}</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#m-n"><span class="nav-number">2.9.</span> <span class="nav-text">{m,n}</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#m-n-1"><span class="nav-number">2.10.</span> <span class="nav-text">{m,n}?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#-7"><span class="nav-number">2.11.</span> <span class="nav-text">[]</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#-8"><span class="nav-number">2.12.</span> <span class="nav-text">|</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#-9"><span class="nav-number">2.13.</span> <span class="nav-text">(...)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#aiLmsux"><span class="nav-number">2.14.</span> <span class="nav-text">(?aiLmsux)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#P-lt-name-gt"><span class="nav-number">2.15.</span> <span class="nav-text">(?P<name>...)</name></span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#special-sequences"><span class="nav-number">3.</span> <span class="nav-text">special sequences</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#number"><span class="nav-number">3.1.</span> <span class="nav-text">\number</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#A"><span class="nav-number">3.2.</span> <span class="nav-text">\A</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#b"><span class="nav-number">3.3.</span> <span class="nav-text">\b</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#B"><span class="nav-number">3.4.</span> <span class="nav-text">\B</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#s"><span class="nav-number">3.5.</span> <span class="nav-text">\s</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#S"><span class="nav-number">3.6.</span> <span class="nav-text">\S</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#w"><span class="nav-number">3.7.</span> <span class="nav-text">\w</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#W"><span class="nav-number">3.8.</span> <span class="nav-text">\W</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Z"><span class="nav-number">3.9.</span> <span class="nav-text">\Z</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#re模块方法"><span class="nav-number">4.</span> <span class="nav-text">re模块方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#re-compile-pattern-flags-0"><span class="nav-number">4.1.</span> <span class="nav-text">re.compile(pattern, flags=0)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#re-search-pattern-string-flags-0"><span class="nav-number">4.2.</span> <span class="nav-text">re.search(pattern, string, flags=0)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#re-match-pattern-string-flags-0"><span class="nav-number">4.3.</span> <span class="nav-text">re.match(pattern, string, flags=0)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#re-fullmatch-pattern-string-flags-0"><span class="nav-number">4.4.</span> <span class="nav-text">re.fullmatch(pattern, string, flags=0)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#re-split-pattern-string-maxsplit-0-flags-0"><span class="nav-number">4.5.</span> <span class="nav-text">re.split(pattern, string, maxsplit=0, flags=0)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#re-findall-pattern-string-flags-0"><span class="nav-number">4.6.</span> <span class="nav-text">re.findall(pattern, string, flags=0)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#re-finditer-pattern-string-flags-0"><span class="nav-number">4.7.</span> <span class="nav-text">re.finditer(pattern, string, flags=0)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#re-sub-pattern-repl-string-count-0-flags-0"><span class="nav-number">4.8.</span> <span class="nav-text">re.sub(pattern, repl, string, count=0, flags=0)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Match-Objects"><span class="nav-number">5.</span> <span class="nav-text">Match Objects</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文档"><span class="nav-number">6.</span> <span class="nav-text">参考文档</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xin053</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'xin053';
+      var disqus_identifier = '2016/12/01/re正则库使用详解/';
+      var disqus_title = "re正则库使用详解";
+      var disqus_url = 'https://xin053.github.io/2016/12/01/re正则库使用详解/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+                            
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').mousedown(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+  
+
+  
+
+  
+
+</body>
+</html>

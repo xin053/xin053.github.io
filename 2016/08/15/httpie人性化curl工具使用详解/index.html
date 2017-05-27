@@ -1,0 +1,1086 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="jFTy9MrTO4piYCnfdfFFpOLb9SCydVuSBPbqgakCzCM">
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Python,httpie,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="xin053" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="httpie简介httpie是一个python写的类curl的命令行工具，跨平台，支持python2和3，友好的高亮显示以及其他的特性，基于Requests和Pygments库编写">
+<meta name="keywords" content="Python,httpie">
+<meta property="og:type" content="article">
+<meta property="og:title" content="httpie人性化curl工具使用详解">
+<meta property="og:url" content="https://xin053.github.io/2016/08/15/httpie人性化curl工具使用详解/index.html">
+<meta property="og:site_name" content="xin053">
+<meta property="og:description" content="httpie简介httpie是一个python写的类curl的命令行工具，跨平台，支持python2和3，友好的高亮显示以及其他的特性，基于Requests和Pygments库编写">
+<meta property="og:image" content="https://raw.githubusercontent.com/jkbrzt/httpie/master/httpie.png">
+<meta property="og:updated_time" content="2017-05-27T13:20:48.771Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="httpie人性化curl工具使用详解">
+<meta name="twitter:description" content="httpie简介httpie是一个python写的类curl的命令行工具，跨平台，支持python2和3，友好的高亮显示以及其他的特性，基于Requests和Pygments库编写">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/jkbrzt/httpie/master/httpie.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: undefined,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> httpie人性化curl工具使用详解 | xin053 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-78789863-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?95bc477a974f85651897b76f543028bb";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">xin053</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">在安全圈里徘徊，停滞不前</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                httpie人性化curl工具使用详解
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-08-15T13:36:19+08:00" content="2016-08-15">
+              2016-08-15
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Python模块学习/" itemprop="url" rel="index">
+                    <span itemprop="name">Python模块学习</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/08/15/httpie人性化curl工具使用详解/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/08/15/httpie人性化curl工具使用详解/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <link rel="stylesheet" type="text/css" href="/assets/css/DPlayer.min.css"><script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="httpie简介"><a href="#httpie简介" class="headerlink" title="httpie简介"></a>httpie简介</h2><p>httpie是一个python写的类curl的命令行工具，跨平台，支持python2和3，友好的高亮显示以及其他的特性，基于<code>Requests</code>和<code>Pygments</code>库编写</p>
+<p><img src="https://raw.githubusercontent.com/jkbrzt/httpie/master/httpie.png" alt=""></p>
+<a id="more"></a>
+<h3 id="主要特性"><a href="#主要特性" class="headerlink" title="主要特性"></a>主要特性</h3><ul>
+<li>Expressive and intuitive syntax</li>
+<li>Formatted and colorized terminal output</li>
+<li>Built-in JSON support</li>
+<li>Forms and file uploads</li>
+<li>HTTPS, proxies, and authentication</li>
+<li>Arbitrary request data</li>
+<li>Custom headers</li>
+<li>Persistent sessions</li>
+<li>Wget-like downloads</li>
+<li>Python 2.6, 2.7 and 3.x support</li>
+<li>Linux, Mac OS X and Windows support</li>
+<li>Plugins</li>
+<li>Documentation</li>
+<li>Test coverage</li>
+</ul>
+<h2 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h2><h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">http [--json] [--form] [--pretty &#123;all,colors,format,none&#125;]</div><div class="line">     [--style STYLE] [--print WHAT] [--headers] [--body] [--verbose]</div><div class="line">     [--all] [--history-print WHAT] [--stream] [--output FILE]</div><div class="line">     [--download] [--continue]</div><div class="line">     [--session SESSION_NAME_OR_PATH | --session-read-only SESSION_NAME_OR_PATH]</div><div class="line">     [--auth USER[:PASS]] [--auth-type &#123;basic,digest&#125;]</div><div class="line">     [--proxy PROTOCOL:PROXY_URL] [--follow]</div><div class="line">     [--max-redirects MAX_REDIRECTS] [--timeout SECONDS]</div><div class="line">     [--check-status] [--verify VERIFY]</div><div class="line">     [--ssl &#123;ssl2.<span class="number">3</span>,ssl3,tls1,tls1.<span class="number">1</span>,tls1.<span class="number">2</span>&#125;] [--cert CERT]</div><div class="line">     [--cert-key CERT_KEY] [--ignore-stdin] [--help] [--version]</div><div class="line">     [--traceback] [--default-scheme DEFAULT_SCHEME] [--debug]</div><div class="line">     [METHOD] URL [REQUEST_ITEM [REQUEST_ITEM ...]]</div></pre></td></tr></table></figure>
+<p>简写就是：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ http [flags] [METHOD] URL [ITEM [ITEM]]</div></pre></td></tr></table></figure>
+<h2 id="METHOD"><a href="#METHOD" class="headerlink" title="METHOD"></a>METHOD</h2><p>如果不带METHOD参数，这默认为GET(没有附带请求参数)或POST(附带请求参数,默认以json格式传输)</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ http example.org               <span class="comment"># =&gt; GET</span></div><div class="line">$ http example.org hello=world   <span class="comment"># =&gt; POST</span></div></pre></td></tr></table></figure>
+<h2 id="URL"><a href="#URL" class="headerlink" title="URL"></a>URL</h2><p>默认协议为<code>http://</code>,如果主机是<code>localhost</code>,还可以如下简写：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ http :<span class="number">3000</span>                    <span class="comment"># =&gt; http://localhost:3000</span></div><div class="line">$ http :/foo                    <span class="comment"># =&gt; http://localhost/foo</span></div></pre></td></tr></table></figure>
+<p>另外可以使用<code>param==value</code>语法像url添加参数，所产生的效果就是浏览器中通过<code>&amp;</code>连接的参数，注意区分POST方法所使用的<code>param=value</code>语法</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ http www.google.com search==<span class="string">'HTTPie logo'</span> tbm==isch</div><div class="line"></div><div class="line"><span class="comment">#</span></div></pre></td></tr></table></figure>
+<p>linux系统中可以通过</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ alias https=<span class="string">'http --default-scheme=https'</span></div></pre></td></tr></table></figure>
+<p>来创建更方便https的命令</p>
+<h2 id="Request-items"><a href="#Request-items" class="headerlink" title="Request items"></a>Request items</h2><table>
+<thead>
+<tr>
+<th style="text-align:center">Item Type</th>
+<th style="text-align:center">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">HTTP Headers <code>Name:Value</code></td>
+<td style="text-align:center">Arbitrary HTTP header, e.g. <code>X-API-Token:123</code></td>
+</tr>
+<tr>
+<td style="text-align:center">URL parameters <code>name==value</code></td>
+<td style="text-align:center">Appends the given name/value pair as a query string parameter to the URL. The <code>==</code> separator is used.</td>
+</tr>
+<tr>
+<td style="text-align:center">Data Fields <code>field=value</code>, <code>field=@file.txt</code></td>
+<td style="text-align:center">Request data fields to be serialized as a JSON object (default), or to be form-encoded (<code>--form, -f</code>).</td>
+</tr>
+<tr>
+<td style="text-align:center">Raw JSON fields <code>field:=json</code>, <code>field:=@file.json</code></td>
+<td style="text-align:center">Useful when sending JSON and one or more fields need to be a <code>Boolean</code>, <code>Number</code>, nested <code>Object</code>, or an <code>Array</code>, e.g., <code>meals:=&#39;[&quot;ham&quot;,&quot;spam&quot;]&#39;</code> or <code>pies:=[1,2,3]</code> (note the quotes).</td>
+</tr>
+<tr>
+<td style="text-align:center">Form File Fields <code>field@/dir/file</code></td>
+<td style="text-align:center">Only available with <code>--form, -f</code>. For example <code>screenshot@~/Pictures/img.png</code>. The presence of a file field results in a <code>multipart/form-data</code> request.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="JSON"><a href="#JSON" class="headerlink" title="JSON"></a>JSON</h2><p><code>param=value</code>格式的参数全部会转换成json格式传输，并且value全是字符串</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ http PUT example.org name=John email=john@example.org</div></pre></td></tr></table></figure>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">PUT / HTTP/<span class="number">1.1</span></div><div class="line">Accept: application/json, */*</div><div class="line">Accept-Encoding: gzip, deflate</div><div class="line">Content-Type: application/json</div><div class="line">Host: example.org</div><div class="line"></div><div class="line">&#123;</div><div class="line">    <span class="string">"name"</span>: <span class="string">"John"</span>,</div><div class="line">    <span class="string">"email"</span>: <span class="string">"john@example.org"</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Non-string fields use the <code>:=</code> separator, which allows you to embed raw JSON into the resulting object. Text and raw JSON files can also be embedded into fields using <code>=@</code> and <code>:=@</code>:</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$ http PUT api.example.com/person/<span class="number">1</span> \</div><div class="line">    name=John \</div><div class="line">    age:=<span class="number">29</span> married:=false hobbies:=<span class="string">'["http", "pies"]'</span> \  <span class="comment"># Raw JSON</span></div><div class="line">    description=@about-john.txt \   <span class="comment"># Embed text file</span></div><div class="line">    bookmarks:=@bookmarks.json      <span class="comment"># Embed JSON file</span></div></pre></td></tr></table></figure>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">PUT /person/<span class="number">1</span> HTTP/<span class="number">1.1</span></div><div class="line">Accept: application/json, */*</div><div class="line">Content-Type: application/json</div><div class="line">Host: api.example.com</div><div class="line"></div><div class="line">&#123;</div><div class="line">    <span class="string">"age"</span>: <span class="number">29</span>,</div><div class="line">    <span class="string">"hobbies"</span>: [</div><div class="line">        <span class="string">"http"</span>,</div><div class="line">        <span class="string">"pies"</span></div><div class="line">    ],</div><div class="line">    <span class="string">"description"</span>: <span class="string">"John is a nice guy who likes pies."</span>,</div><div class="line">    <span class="string">"married"</span>: false,</div><div class="line">    <span class="string">"name"</span>: <span class="string">"John"</span>,</div><div class="line">    <span class="string">"bookmarks"</span>: &#123;</div><div class="line">        <span class="string">"HTTPie"</span>: <span class="string">"http://httpie.org"</span>,</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="Forms"><a href="#Forms" class="headerlink" title="Forms"></a>Forms</h2><p>Submitting forms is very similar to sending JSON requests. Often the only difference is in adding the <code>--form, -f</code> option, which ensures that data fields are serialized as, and <code>Content-Type</code> is set to, <code>application/x-www-form-urlencoded; charset=utf-8</code>.</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ http --form POST api.example.org/person/<span class="number">1</span> name=<span class="string">'John Smith'</span> \</div><div class="line">    email=john@example.org cv=@~/Documents/cv.txt</div></pre></td></tr></table></figure>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">POST /person/<span class="number">1</span> HTTP/<span class="number">1.1</span></div><div class="line">Content-Type: application/x-www-form-urlencoded; charset=utf-<span class="number">8</span></div><div class="line"></div><div class="line">name=John+Smith&amp;email=john%<span class="number">40</span>example.org&amp;cv=John<span class="string">'s+CV+...</span></div></pre></td></tr></table></figure>
+<h3 id="File-upload-forms"><a href="#File-upload-forms" class="headerlink" title="File upload forms"></a>File upload forms</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ http -f POST example.com/jobs name=<span class="string">'John Smith'</span> cv@~/Documents/cv.pdf</div></pre></td></tr></table></figure>
+<p>上面的效果和下面一样：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;form enctype=<span class="string">"multipart/form-data"</span> method=<span class="string">"post"</span> action=<span class="string">"http://example.com/jobs"</span>&gt;</div><div class="line">    &lt;input type=<span class="string">"text"</span> name=<span class="string">"name"</span> /&gt;</div><div class="line">    &lt;input type=<span class="string">"file"</span> name=<span class="string">"cv"</span> /&gt;</div><div class="line">&lt;/form&gt;</div></pre></td></tr></table></figure>
+<h2 id="HTTP-headers"><a href="#HTTP-headers" class="headerlink" title="HTTP headers"></a>HTTP headers</h2><figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ http example.org  User-Agent:Bacon/<span class="number">1.0</span>  <span class="string">'Cookie:valued-visitor=yes;foo=bar'</span>  \</div><div class="line">    X-Foo:Bar  Referer:http://httpie.org/</div></pre></td></tr></table></figure>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">GET / HTTP/<span class="number">1.1</span></div><div class="line">Accept: */*</div><div class="line">Accept-Encoding: gzip, deflate</div><div class="line">Cookie: valued-visitor=yes;foo=bar</div><div class="line">Host: example.org</div><div class="line">Referer: http://httpie.org/</div><div class="line">User-Agent: Bacon/<span class="number">1.0</span></div><div class="line">X-Foo: Bar</div></pre></td></tr></table></figure>
+<p>There are a couple of default headers that HTTPie sets:</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">GET / HTTP/<span class="number">1.1</span></div><div class="line">Accept: */*</div><div class="line">Accept-Encoding: gzip, deflate</div><div class="line">User-Agent: HTTPie/&lt;version&gt;</div><div class="line">Host: &lt;taken-from-URL&gt;</div></pre></td></tr></table></figure>
+<h2 id="Authentication"><a href="#Authentication" class="headerlink" title="Authentication"></a>Authentication</h2><p>Basic auth:</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ http -a username:password example.org</div></pre></td></tr></table></figure>
+<p>Digest auth:</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ http -A digest -a username:password example.org</div></pre></td></tr></table></figure>
+<h2 id="HTTP-redirects"><a href="#HTTP-redirects" class="headerlink" title="HTTP redirects"></a>HTTP redirects</h2><p>By default, HTTP redirects are not followed and only the first response is shown. To instruct HTTPie to follow the <code>Location</code> header of <code>30x</code> responses and show the final response instead, use the <code>--follow, -F</code> option.</p>
+<p>If you additionally wish to see the intermediary requests/responses, then use the <code>--all</code> option as well.</p>
+<p>To change the default limit of maximum 30 redirects, use the <code>--max-redirects=&lt;limit&gt;</code> option.</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ http --follow --all --max-redirects=<span class="number">5</span> httpbin.org/redirect/<span class="number">3</span></div></pre></td></tr></table></figure>
+<h2 id="Proxies"><a href="#Proxies" class="headerlink" title="Proxies"></a>Proxies</h2><figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ http --proxy=http:http://user:pass@<span class="number">10.10</span>.<span class="number">1.10</span>:<span class="number">3128</span> --proxy=https:https://<span class="number">10.10</span>.<span class="number">1.10</span>:<span class="number">1080</span> example.org</div></pre></td></tr></table></figure>
+<h2 id="SOCKS"><a href="#SOCKS" class="headerlink" title="SOCKS"></a>SOCKS</h2><figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ http --proxy=http:socks5://user:pass@host:port --proxy=https:socks5://user:pass@host:port example.org</div></pre></td></tr></table></figure>
+<h2 id="HTTPS"><a href="#HTTPS" class="headerlink" title="HTTPS"></a>HTTPS</h2><p>可以通过<code>--verify=no</code>忽略证书检查</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ http --verify=no https://example.org</div></pre></td></tr></table></figure>
+<p>可以使用<code>--ssl=&lt;PROTOCOL&gt;</code>制定ssl版本</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ http --ssl=ssl3 https://vulnerable.example.org</div></pre></td></tr></table></figure>
+<h2 id="Output-options"><a href="#Output-options" class="headerlink" title="Output options"></a>Output options</h2><table>
+<thead>
+<tr>
+<th style="text-align:center">Param</th>
+<th style="text-align:center">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><code>--headers, -h</code></td>
+<td style="text-align:center">Only the response headers are printed.</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>--body, -b</code></td>
+<td style="text-align:center">Only the response body is printed.</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>--verbose, -v</code></td>
+<td style="text-align:center">Print the whole HTTP exchange (request and response). This option also enables <code>--all</code> (see bellow).</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>--print, -p</code></td>
+<td style="text-align:center">Selects parts of the HTTP exchange.</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Character</th>
+<th style="text-align:center">Stands for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><code>H</code></td>
+<td style="text-align:center">request headers</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>B</code></td>
+<td style="text-align:center">request body</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>h</code></td>
+<td style="text-align:center">response headers</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>b</code></td>
+<td style="text-align:center">response body</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ http --print=Hh PUT httpbin.org/put hello=world</div></pre></td></tr></table></figure>
+<h2 id="Redirected-output"><a href="#Redirected-output" class="headerlink" title="Redirected output"></a>Redirected output</h2><p>Download a file:</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ http example.org/Movie.mov &gt; Movie.mov</div></pre></td></tr></table></figure>
+<h2 id="Download-mode"><a href="#Download-mode" class="headerlink" title="Download mode"></a>Download mode</h2><p>HTTPie features a download mode in which it acts similarly to <code>wget</code>.</p>
+<p>When enabled using the <code>--download, -d</code> flag, response headers are printed to the terminal (<code>stderr</code>), and a progress bar is shown while the response body is being saved to a file.</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ http --download https://github.com/jkbrzt/httpie/archive/master.tar.gz</div></pre></td></tr></table></figure>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">HTTP/<span class="number">1.1</span> <span class="number">200</span> OK</div><div class="line">Content-Disposition: attachment; filename=httpie-master.tar.gz</div><div class="line">Content-Length: <span class="number">257336</span></div><div class="line">Content-Type: application/x-gzip</div><div class="line"></div><div class="line">Downloading <span class="number">251.30</span> kB to <span class="string">"httpie-master.tar.gz"</span></div><div class="line">Done. <span class="number">251.30</span> kB <span class="keyword">in</span> <span class="number">2.73862</span>s (<span class="number">91.76</span> kB/s)</div></pre></td></tr></table></figure>
+<h2 id="Sessions"><a href="#Sessions" class="headerlink" title="Sessions"></a>Sessions</h2><p>By default, every request is completely independent of any previous ones. HTTPie also supports persistent sessions, where custom headers (except for the ones starting with <code>Content-</code> or <code>If-</code>), authorization, and cookies (manually specified or sent by the server) persist between requests to the same host.</p>
+<h3 id="Named-sessions"><a href="#Named-sessions" class="headerlink" title="Named sessions"></a>Named sessions</h3><p>Create a new session named <code>user1</code> for <code>example.org</code>:</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ http --session=user1 -a user1:password example.org X-Foo:Bar</div></pre></td></tr></table></figure>
+<p>Now you can refer to the session by its name, and the previously used authorization and HTTP headers will automatically be set:</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ http --session=user1 example.org</div></pre></td></tr></table></figure>
+<h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><ul>
+<li><a href="https://github.com/jkbrzt/httpie" target="_blank" rel="external">httpie官方文档</a></li>
+</ul>
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechat.png" alt="xin053 WeChat Pay">
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay.png" alt="xin053 Alipay">
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Python/" rel="tag">#Python</a>
+          
+            <a href="/tags/httpie/" rel="tag">#httpie</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/07/31/click命令行工具使用详解/" rel="next" title="click命令行工具使用详解">
+                <i class="fa fa-chevron-left"></i> click命令行工具使用详解
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/09/07/Go学习笔记(一)/" rel="prev" title="Go学习笔记(一)">
+                Go学习笔记(一) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/me.jpg" alt="xin053">
+          <p class="site-author-name" itemprop="name">xin053</p>
+          <p class="site-description motion-element" itemprop="description">正在用Windbg调试正在调试正在反汇编Windbg的IDA的OD...</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">55</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">50</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/xin053" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/xin053" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/xin053" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://blog.csdn.net/zhouzixin053" target="_blank" title="csdn">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  csdn
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://bbs.pediy.com/" title="看雪" target="_blank">看雪</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.geeklzh.com/" title="怪咖家园" target="_blank">怪咖家园</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.csdh.pub/" title="CS_DH" target="_blank">CS_DH</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://dendise7engithub.github.io/" title="Dendionk" target="_blank">Dendionk</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://cyang.tech/" title="cyang" target="_blank">cyang</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#httpie简介"><span class="nav-number">1.</span> <span class="nav-text">httpie简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#主要特性"><span class="nav-number">1.1.</span> <span class="nav-text">主要特性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本使用"><span class="nav-number">2.</span> <span class="nav-text">基本使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#语法"><span class="nav-number">2.1.</span> <span class="nav-text">语法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#METHOD"><span class="nav-number">3.</span> <span class="nav-text">METHOD</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#URL"><span class="nav-number">4.</span> <span class="nav-text">URL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Request-items"><span class="nav-number">5.</span> <span class="nav-text">Request items</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JSON"><span class="nav-number">6.</span> <span class="nav-text">JSON</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Forms"><span class="nav-number">7.</span> <span class="nav-text">Forms</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#File-upload-forms"><span class="nav-number">7.1.</span> <span class="nav-text">File upload forms</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP-headers"><span class="nav-number">8.</span> <span class="nav-text">HTTP headers</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Authentication"><span class="nav-number">9.</span> <span class="nav-text">Authentication</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP-redirects"><span class="nav-number">10.</span> <span class="nav-text">HTTP redirects</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Proxies"><span class="nav-number">11.</span> <span class="nav-text">Proxies</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SOCKS"><span class="nav-number">12.</span> <span class="nav-text">SOCKS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTPS"><span class="nav-number">13.</span> <span class="nav-text">HTTPS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Output-options"><span class="nav-number">14.</span> <span class="nav-text">Output options</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redirected-output"><span class="nav-number">15.</span> <span class="nav-text">Redirected output</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Download-mode"><span class="nav-number">16.</span> <span class="nav-text">Download mode</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Sessions"><span class="nav-number">17.</span> <span class="nav-text">Sessions</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Named-sessions"><span class="nav-number">17.1.</span> <span class="nav-text">Named sessions</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文档"><span class="nav-number">18.</span> <span class="nav-text">参考文档</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xin053</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'xin053';
+      var disqus_identifier = '2016/08/15/httpie人性化curl工具使用详解/';
+      var disqus_title = "httpie人性化curl工具使用详解";
+      var disqus_url = 'https://xin053.github.io/2016/08/15/httpie人性化curl工具使用详解/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+                            
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').mousedown(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+  
+
+  
+
+  
+
+</body>
+</html>

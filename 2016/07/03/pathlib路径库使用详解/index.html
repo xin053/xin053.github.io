@@ -1,0 +1,1003 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="jFTy9MrTO4piYCnfdfFFpOLb9SCydVuSBPbqgakCzCM">
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Python,pathlib,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="xin053" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="pathlib简介pathlib库在python 3.4以后已经成为标准库，基本上可以代替os.path来处理路径。它采用完全面对对象的编程方式。 总共有6个类用来处理路径，大体可以分为两类：  pure paths 单纯的路径计算操作而没有IO功能 concrete paths 路经计算操作和IO功能  这6个类的继承关系如下：  可以看到PurePath是所有类的基类,我们重点要掌握PureP">
+<meta name="keywords" content="Python,pathlib">
+<meta property="og:type" content="article">
+<meta property="og:title" content="pathlib路径库使用详解">
+<meta property="og:url" content="https://xin053.github.io/2016/07/03/pathlib路径库使用详解/index.html">
+<meta property="og:site_name" content="xin053">
+<meta property="og:description" content="pathlib简介pathlib库在python 3.4以后已经成为标准库，基本上可以代替os.path来处理路径。它采用完全面对对象的编程方式。 总共有6个类用来处理路径，大体可以分为两类：  pure paths 单纯的路径计算操作而没有IO功能 concrete paths 路经计算操作和IO功能  这6个类的继承关系如下：  可以看到PurePath是所有类的基类,我们重点要掌握PureP">
+<meta property="og:image" content="http://pathlib.readthedocs.io/en/pep428/_images/pathlib-inheritance.png">
+<meta property="og:updated_time" content="2017-05-27T13:20:48.775Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="pathlib路径库使用详解">
+<meta name="twitter:description" content="pathlib简介pathlib库在python 3.4以后已经成为标准库，基本上可以代替os.path来处理路径。它采用完全面对对象的编程方式。 总共有6个类用来处理路径，大体可以分为两类：  pure paths 单纯的路径计算操作而没有IO功能 concrete paths 路经计算操作和IO功能  这6个类的继承关系如下：  可以看到PurePath是所有类的基类,我们重点要掌握PureP">
+<meta name="twitter:image" content="http://pathlib.readthedocs.io/en/pep428/_images/pathlib-inheritance.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: undefined,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> pathlib路径库使用详解 | xin053 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-78789863-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?95bc477a974f85651897b76f543028bb";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">xin053</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">在安全圈里徘徊，停滞不前</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                pathlib路径库使用详解
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-07-03T17:41:44+08:00" content="2016-07-03">
+              2016-07-03
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Python模块学习/" itemprop="url" rel="index">
+                    <span itemprop="name">Python模块学习</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/07/03/pathlib路径库使用详解/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/07/03/pathlib路径库使用详解/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <link rel="stylesheet" type="text/css" href="/assets/css/DPlayer.min.css"><script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="pathlib简介"><a href="#pathlib简介" class="headerlink" title="pathlib简介"></a>pathlib简介</h2><p>pathlib库在python 3.4以后已经成为标准库，基本上可以代替<code>os.path</code>来处理路径。它采用完全面对对象的编程方式。</p>
+<p>总共有6个类用来处理路径，大体可以分为两类：</p>
+<ol>
+<li>pure paths 单纯的路径计算操作而没有IO功能</li>
+<li>concrete paths 路经计算操作和IO功能</li>
+</ol>
+<p>这6个类的继承关系如下：</p>
+<p><img src="http://pathlib.readthedocs.io/en/pep428/_images/pathlib-inheritance.png" alt=""></p>
+<p>可以看到<code>PurePath</code>是所有类的基类,<strong>我们重点要掌握<code>PurePath</code>和<code>Path</code>这两个类,在Windows平台下路径对象会有Windows前缀,Unix平台上路径对象会有Posix前缀</strong>。</p>
+<a id="more"></a>
+<h2 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h2><h3 id="列出所有子目录"><a href="#列出所有子目录" class="headerlink" title="列出所有子目录"></a>列出所有子目录</h3><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt; import pathlib</div><div class="line">&gt;&gt;&gt; p = pathlib.Path('.')</div><div class="line">&gt;&gt;&gt; [x for x in p.iterdir() if x.is_dir()]</div><div class="line">[WindowsPath('.git'), WindowsPath('.idea'), WindowsPath('.vscode'), </div><div class="line">WindowsPath('1_函数参数'), WindowsPath('2_生成器'), WindowsPath('3_常用函数'), </div><div class="line">WindowsPath('4_装饰器), WindowsPath('5_常用模块')]</div><div class="line"># 在linux环境下，上述的WindowsPath都会变为PosixPath</div></pre></td></tr></table></figure>
+<h3 id="列出指定类型的文件"><a href="#列出指定类型的文件" class="headerlink" title="列出指定类型的文件"></a>列出指定类型的文件</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">list(p.glob(<span class="string">'**/*.py'</span>))</div></pre></td></tr></table></figure>
+<h3 id="路径拼接"><a href="#路径拼接" class="headerlink" title="路径拼接"></a>路径拼接</h3><p>可以使用<code>/</code>符号来拼接路径</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>p = pathlib.Path(<span class="string">r'F:\cookies\python'</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>q = p / <span class="string">'learnPython'</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>print(q)</div><div class="line">F:\cookies\python\learnPython</div></pre></td></tr></table></figure>
+<h3 id="查询属性"><a href="#查询属性" class="headerlink" title="查询属性"></a>查询属性</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>q.exists()</div><div class="line"><span class="keyword">True</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>q.is_dir()</div><div class="line"><span class="keyword">True</span></div></pre></td></tr></table></figure>
+<h3 id="打开文件"><a href="#打开文件" class="headerlink" title="打开文件"></a>打开文件</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>q = q / <span class="string">"hello_world.py"</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">with</span> q.open() <span class="keyword">as</span> f:</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>print(f.readline())</div><div class="line"><span class="comment">#!/usr/bin/env python</span></div></pre></td></tr></table></figure>
+<h2 id="Pure-paths"><a href="#Pure-paths" class="headerlink" title="Pure paths"></a>Pure paths</h2><h3 id="产生Pure-paths的三种方式"><a href="#产生Pure-paths的三种方式" class="headerlink" title="产生Pure paths的三种方式"></a>产生Pure paths的三种方式</h3><blockquote>
+<p>class pathlib.PurePath(*pathsegments)</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>PurePath(<span class="string">'setup.py'</span>)</div><div class="line">PurePosixPath(<span class="string">'setup.py'</span>)     <span class="comment"># Running on a Unix machine</span></div><div class="line">PureWindowsPath(<span class="string">'setup.py'</span>)   <span class="comment"># Running on a Windows machine</span></div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>PurePath(<span class="string">'foo'</span>, <span class="string">'some/path'</span>, <span class="string">'bar'</span>)</div><div class="line">PureWindowsPath(<span class="string">'foo/some/path/bar'</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>PurePath(Path(<span class="string">'foo'</span>), Path(<span class="string">'bar'</span>))</div><div class="line">PureWindowsPath(<span class="string">'foo/bar'</span>)</div></pre></td></tr></table></figure>
+<p>如果参数为空，则默认指定当前文件夹</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>PurePath()</div><div class="line">PureWindowsPath(<span class="string">'.'</span>)</div></pre></td></tr></table></figure>
+<p>当同时指定多个绝对路径,则使用最后一个</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>PureWindowsPath(<span class="string">'c:/Windows'</span>, <span class="string">'d:bar'</span>)</div><div class="line">PureWindowsPath(<span class="string">'d:bar'</span>)</div></pre></td></tr></table></figure>
+<p>在Windows平台上，参数路径上如果有<code>\</code>或者<code>/</code>,则使用之前设置的盘符</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>PureWindowsPath(<span class="string">'F:\cookies\python\learnPython'</span>,<span class="string">'\game'</span>)</div><div class="line">PureWindowsPath(<span class="string">'F:/game'</span>)</div></pre></td></tr></table></figure>
+<blockquote>
+<p>class pathlib.PurePosixPath(*pathsegments)</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>PurePosixPath(<span class="string">'/etc'</span>)</div><div class="line">PurePosixPath(<span class="string">'/etc'</span>)</div></pre></td></tr></table></figure>
+<blockquote>
+<p>class pathlib.PureWindowsPath(*pathsegments)</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>PureWindowsPath(<span class="string">'c:/Program Files/'</span>)</div><div class="line">PureWindowsPath(<span class="string">'c:/Program Files'</span>)</div></pre></td></tr></table></figure>
+<h3 id="Path计算"><a href="#Path计算" class="headerlink" title="Path计算"></a>Path计算</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>PurePosixPath(<span class="string">'foo'</span>) == PurePosixPath(<span class="string">'FOO'</span>)</div><div class="line"><span class="keyword">False</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>PureWindowsPath(<span class="string">'foo'</span>) == PureWindowsPath(<span class="string">'FOO'</span>)</div><div class="line"><span class="keyword">True</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>PureWindowsPath(<span class="string">'FOO'</span>) <span class="keyword">in</span> &#123; PureWindowsPath(<span class="string">'foo'</span>) &#125;</div><div class="line"><span class="keyword">True</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>PureWindowsPath(<span class="string">'C:'</span>) &lt; PureWindowsPath(<span class="string">'d:'</span>)</div><div class="line"><span class="keyword">True</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>PureWindowsPath(<span class="string">'foo'</span>) == PurePosixPath(<span class="string">'foo'</span>)</div><div class="line"><span class="keyword">False</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>PureWindowsPath(<span class="string">'foo'</span>) &lt; PurePosixPath(<span class="string">'foo'</span>)</div><div class="line">Traceback (most recent call last):</div><div class="line">  File <span class="string">"&lt;stdin&gt;"</span>, line <span class="number">1</span>, <span class="keyword">in</span> &lt;module&gt;</div><div class="line">TypeError: unorderable types: PureWindowsPath() &lt; PurePosixPath()</div></pre></td></tr></table></figure>
+<h3 id="str-和-bytes"><a href="#str-和-bytes" class="headerlink" title="str() 和 bytes()"></a>str() 和 bytes()</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>p = PurePath(<span class="string">'/etc'</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>str(p)</div><div class="line"><span class="string">'/etc'</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>p = PureWindowsPath(<span class="string">'c:/Program Files'</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>str(p)</div><div class="line"><span class="string">'c:\\Program Files'</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>bytes(p)</div><div class="line"><span class="string">b'/etc'</span></div></pre></td></tr></table></figure>
+<h3 id="常用属性和方法"><a href="#常用属性和方法" class="headerlink" title="常用属性和方法"></a>常用属性和方法</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>PureWindowsPath(<span class="string">'c:/Program Files/'</span>).drive</div><div class="line"><span class="string">'c:'</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>PurePosixPath(<span class="string">'/etc'</span>).root</div><div class="line"><span class="string">'/'</span></div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>p = PureWindowsPath(<span class="string">'c:/foo/bar/setup.py'</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>p.parents[<span class="number">0</span>]</div><div class="line">PureWindowsPath(<span class="string">'c:/foo/bar'</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>p.parents[<span class="number">1</span>]</div><div class="line">PureWindowsPath(<span class="string">'c:/foo'</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>p.parents[<span class="number">2</span>]</div><div class="line">PureWindowsPath(<span class="string">'c:/'</span>)</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>PureWindowsPath(<span class="string">'//some/share/setup.py'</span>).name</div><div class="line"><span class="string">'setup.py'</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>PureWindowsPath(<span class="string">'//some/share'</span>).name</div><div class="line"><span class="string">''</span></div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>PurePosixPath(<span class="string">'my/library/setup.py'</span>).suffix</div><div class="line"><span class="string">'.py'</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>PurePosixPath(<span class="string">'my/library.tar.gz'</span>).suffix</div><div class="line"><span class="string">'.gz'</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>PurePosixPath(<span class="string">'my/library'</span>).suffix</div><div class="line"><span class="string">''</span></div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>PurePosixPath(<span class="string">'my/library.tar.gar'</span>).suffixes</div><div class="line">[<span class="string">'.tar'</span>, <span class="string">'.gar'</span>]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>PurePosixPath(<span class="string">'my/library.tar.gz'</span>).suffixes</div><div class="line">[<span class="string">'.tar'</span>, <span class="string">'.gz'</span>]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>PurePosixPath(<span class="string">'my/library'</span>).suffixes</div><div class="line">[]</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>PurePosixPath(<span class="string">'my/library.tar.gz'</span>).stem</div><div class="line"><span class="string">'library.tar'</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>PurePosixPath(<span class="string">'my/library.tar'</span>).stem</div><div class="line"><span class="string">'library'</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>PurePosixPath(<span class="string">'my/library'</span>).stem</div><div class="line"><span class="string">'library'</span></div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>p = PureWindowsPath(<span class="string">'c:\\windows'</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>str(p)</div><div class="line"><span class="string">'c:\\windows'</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>p.as_posix()</div><div class="line"><span class="string">'c:/windows'</span></div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>p = PurePosixPath(<span class="string">'/etc/passwd'</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>p.as_uri()</div><div class="line"><span class="string">'file:///etc/passwd'</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>p = PureWindowsPath(<span class="string">'c:/Windows'</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>p.as_uri()</div><div class="line"><span class="string">'file:///c:/Windows'</span></div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>PurePath(<span class="string">'a/b.py'</span>).match(<span class="string">'*.py'</span>)</div><div class="line"><span class="keyword">True</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>PurePath(<span class="string">'/a/b/c.py'</span>).match(<span class="string">'b/*.py'</span>)</div><div class="line"><span class="keyword">True</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>PurePath(<span class="string">'/a/b/c.py'</span>).match(<span class="string">'a/*.py'</span>)</div><div class="line"><span class="keyword">False</span></div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>p = PurePosixPath(<span class="string">'/etc/passwd'</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>p.relative_to(<span class="string">'/'</span>)</div><div class="line">PurePosixPath(<span class="string">'etc/passwd'</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>p.relative_to(<span class="string">'/etc'</span>)</div><div class="line">PurePosixPath(<span class="string">'passwd'</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>p.relative_to(<span class="string">'/usr'</span>)</div><div class="line">Traceback (most recent call last):</div><div class="line">  File <span class="string">"&lt;stdin&gt;"</span>, line <span class="number">1</span>, <span class="keyword">in</span> &lt;module&gt;</div><div class="line">  File <span class="string">"pathlib.py"</span>, line <span class="number">694</span>, <span class="keyword">in</span> relative_to</div><div class="line">    .format(str(self), str(formatted)))</div><div class="line">ValueError: <span class="string">'/etc/passwd'</span> does <span class="keyword">not</span> start <span class="keyword">with</span> <span class="string">'/usr'</span></div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>p = PureWindowsPath(<span class="string">'c:/Downloads/pathlib.tar.gz'</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>p.with_name(<span class="string">'setup.py'</span>)</div><div class="line">PureWindowsPath(<span class="string">'c:/Downloads/setup.py'</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>p = PureWindowsPath(<span class="string">'c:/'</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>p.with_name(<span class="string">'setup.py'</span>)</div><div class="line">Traceback (most recent call last):</div><div class="line">  File <span class="string">"&lt;stdin&gt;"</span>, line <span class="number">1</span>, <span class="keyword">in</span> &lt;module&gt;</div><div class="line">  File <span class="string">"/home/antoine/cpython/default/Lib/pathlib.py"</span>, line <span class="number">751</span>, <span class="keyword">in</span> with_name</div><div class="line">    <span class="keyword">raise</span> ValueError(<span class="string">"%r has an empty name"</span> % (self,))</div><div class="line">ValueError: PureWindowsPath(<span class="string">'c:/'</span>) has an empty name</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>p = PureWindowsPath(<span class="string">'c:/Downloads/pathlib.tar.gz'</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>p.with_suffix(<span class="string">'.bz2'</span>)</div><div class="line">PureWindowsPath(<span class="string">'c:/Downloads/pathlib.tar.bz2'</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>p = PureWindowsPath(<span class="string">'README'</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>p.with_suffix(<span class="string">'.txt'</span>)</div><div class="line">PureWindowsPath(<span class="string">'README.txt'</span>)</div></pre></td></tr></table></figure>
+<h2 id="Concrete-paths"><a href="#Concrete-paths" class="headerlink" title="Concrete paths"></a>Concrete paths</h2><h3 id="产生Concrete-paths的三种方式"><a href="#产生Concrete-paths的三种方式" class="headerlink" title="产生Concrete paths的三种方式"></a>产生Concrete paths的三种方式</h3><blockquote>
+<p>class pathlib.Path(*pathsegments)</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>Path(<span class="string">'setup.py'</span>)</div><div class="line">PosixPath(<span class="string">'setup.py'</span>)       <span class="comment"># Running on a Unix machine</span></div><div class="line">WindowsPath(<span class="string">'setup.py'</span>)     <span class="comment"># Running on a Windows machine</span></div></pre></td></tr></table></figure>
+<blockquote>
+<p>class pathlib.PosixPath(*pathsegments)</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>PosixPath(<span class="string">'/etc'</span>)</div><div class="line">PosixPath(<span class="string">'/etc'</span>)</div></pre></td></tr></table></figure>
+<blockquote>
+<p>class pathlib.WindowsPath(*pathsegments)</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>WindowsPath(<span class="string">'c:/Program Files/'</span>)</div><div class="line">WindowsPath(<span class="string">'c:/Program Files'</span>)</div></pre></td></tr></table></figure>
+<h3 id="常用方法"><a href="#常用方法" class="headerlink" title="常用方法"></a>常用方法</h3><p><code>cwd()</code>设置path对象为当前路径</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>Path.cwd()</div><div class="line">WindowsPath(<span class="string">'D:/Python 3.5'</span>)</div></pre></td></tr></table></figure>
+<p><code>stat()</code>获取文件或目录属性</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>p = Path(<span class="string">'setup.py'</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>p.stat().st_size</div><div class="line"><span class="number">956</span></div></pre></td></tr></table></figure>
+<p><code>chmod()</code>Unix系统修改文件或目录权限</p>
+<p><code>exists()</code>判断文件或目录是否存在</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">from</span> pathlib <span class="keyword">import</span> *</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>Path(<span class="string">'.'</span>).exists()</div><div class="line"><span class="keyword">True</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>Path(<span class="string">'setup.py'</span>).exists()</div><div class="line"><span class="keyword">True</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>Path(<span class="string">'/etc'</span>).exists()</div><div class="line"><span class="keyword">True</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>Path(<span class="string">'nonexistentfile'</span>).exists()</div><div class="line"><span class="keyword">False</span></div></pre></td></tr></table></figure>
+<p><code>glob()</code>列举文件</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>sorted(Path(<span class="string">'.'</span>).glob(<span class="string">'*.py'</span>))</div><div class="line">[PosixPath(<span class="string">'pathlib.py'</span>), PosixPath(<span class="string">'setup.py'</span>), PosixPath(<span class="string">'test_pathlib.py'</span>)]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>sorted(Path(<span class="string">'.'</span>).glob(<span class="string">'*/*.py'</span>))</div><div class="line">[PosixPath(<span class="string">'docs/conf.py'</span>)]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>sorted(Path(<span class="string">'.'</span>).glob(<span class="string">'**/*.py'</span>))</div><div class="line">[PosixPath(<span class="string">'build/lib/pathlib.py'</span>),</div><div class="line"> PosixPath(<span class="string">'docs/conf.py'</span>),</div><div class="line"> PosixPath(<span class="string">'pathlib.py'</span>),</div><div class="line"> PosixPath(<span class="string">'setup.py'</span>),</div><div class="line"> PosixPath(<span class="string">'test_pathlib.py'</span>)]</div><div class="line"><span class="comment"># The "**" pattern means "this directory and all subdirectories, recursively"</span></div></pre></td></tr></table></figure>
+<p><code>is_dir()</code>判断是否是目录</p>
+<p><code>is_file()</code>判断是否是文件</p>
+<p><code>is_symlink()</code>判断是否是链接文件</p>
+<p><code>iterdir()</code>如果path指向一个目录，则返回该目录下所有内容的生成器</p>
+<p><code>mkdir(mode=0o777, parents=False)</code>创建目录</p>
+<p><code>open(mode=&#39;r&#39;, buffering=-1, encoding=None, errors=None, newline=None)</code>打开文件</p>
+<p><code>owner()</code>获取文件所有者</p>
+<p><code>rename(target)</code>修改名称</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>p = Path(<span class="string">'foo'</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>p.open(<span class="string">'w'</span>).write(<span class="string">'some text'</span>)</div><div class="line"><span class="number">9</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>target = Path(<span class="string">'bar'</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>p.rename(target)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>target.open().read()</div><div class="line"><span class="string">'some text'</span></div></pre></td></tr></table></figure>
+<p><code>resolve()</code>Make the path absolute, resolving any symlinks. A new path object is returned</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>p = Path()</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>p</div><div class="line">PosixPath(<span class="string">'.'</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>p.resolve()</div><div class="line">PosixPath(<span class="string">'/home/antoine/pathlib'</span>)</div></pre></td></tr></table></figure>
+<p><code>rmdir()</code>删除目录，目录必须为空</p>
+<p><code>touch(mode=0o777, exist_ok=True)</code>创建空文件</p>
+<h2 id="其他相关文章"><a href="#其他相关文章" class="headerlink" title="其他相关文章"></a>其他相关文章</h2><ul>
+<li><a href="http://pathlib.readthedocs.io/en/pep428/#concrete-paths" target="_blank" rel="external">pathlib官方文档</a></li>
+</ul>
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechat.png" alt="xin053 WeChat Pay">
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay.png" alt="xin053 Alipay">
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Python/" rel="tag">#Python</a>
+          
+            <a href="/tags/pathlib/" rel="tag">#pathlib</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/07/02/pip包管理器使用详解/" rel="next" title="pip包管理器使用详解">
+                <i class="fa fa-chevron-left"></i> pip包管理器使用详解
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/07/04/arrow时间库使用详解/" rel="prev" title="arrow时间库使用详解">
+                arrow时间库使用详解 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/me.jpg" alt="xin053">
+          <p class="site-author-name" itemprop="name">xin053</p>
+          <p class="site-description motion-element" itemprop="description">正在用Windbg调试正在调试正在反汇编Windbg的IDA的OD...</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">55</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">50</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/xin053" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/xin053" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/xin053" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://blog.csdn.net/zhouzixin053" target="_blank" title="csdn">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  csdn
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://bbs.pediy.com/" title="看雪" target="_blank">看雪</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.geeklzh.com/" title="怪咖家园" target="_blank">怪咖家园</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.csdh.pub/" title="CS_DH" target="_blank">CS_DH</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://dendise7engithub.github.io/" title="Dendionk" target="_blank">Dendionk</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://cyang.tech/" title="cyang" target="_blank">cyang</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#pathlib简介"><span class="nav-number">1.</span> <span class="nav-text">pathlib简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本使用"><span class="nav-number">2.</span> <span class="nav-text">基本使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#列出所有子目录"><span class="nav-number">2.1.</span> <span class="nav-text">列出所有子目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#列出指定类型的文件"><span class="nav-number">2.2.</span> <span class="nav-text">列出指定类型的文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#路径拼接"><span class="nav-number">2.3.</span> <span class="nav-text">路径拼接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查询属性"><span class="nav-number">2.4.</span> <span class="nav-text">查询属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#打开文件"><span class="nav-number">2.5.</span> <span class="nav-text">打开文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pure-paths"><span class="nav-number">3.</span> <span class="nav-text">Pure paths</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#产生Pure-paths的三种方式"><span class="nav-number">3.1.</span> <span class="nav-text">产生Pure paths的三种方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Path计算"><span class="nav-number">3.2.</span> <span class="nav-text">Path计算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#str-和-bytes"><span class="nav-number">3.3.</span> <span class="nav-text">str() 和 bytes()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用属性和方法"><span class="nav-number">3.4.</span> <span class="nav-text">常用属性和方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Concrete-paths"><span class="nav-number">4.</span> <span class="nav-text">Concrete paths</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#产生Concrete-paths的三种方式"><span class="nav-number">4.1.</span> <span class="nav-text">产生Concrete paths的三种方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用方法"><span class="nav-number">4.2.</span> <span class="nav-text">常用方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他相关文章"><span class="nav-number">5.</span> <span class="nav-text">其他相关文章</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xin053</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'xin053';
+      var disqus_identifier = '2016/07/03/pathlib路径库使用详解/';
+      var disqus_title = "pathlib路径库使用详解";
+      var disqus_url = 'https://xin053.github.io/2016/07/03/pathlib路径库使用详解/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+                            
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').mousedown(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+  
+
+  
+
+  
+
+</body>
+</html>

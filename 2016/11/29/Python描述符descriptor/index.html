@@ -1,0 +1,1005 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="jFTy9MrTO4piYCnfdfFFpOLb9SCydVuSBPbqgakCzCM">
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Python,descriptor,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="xin053" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="简介Python描述符(descriptor)解密原文链接： Chris Beaumont 翻译： 极客范 - 慕容老匹夫 转载链接： http://www.geekfan.net/7862/ Python中包含了许多内建的语言特性，它们使得代码简洁且易于理解。这些特性包括列表/集合/字典推导式，属性（property）、以及装饰器（decorator）。对于大部分特性来说，这些“中级”的语言特性">
+<meta name="keywords" content="Python,descriptor">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python描述符descriptor">
+<meta property="og:url" content="https://xin053.github.io/2016/11/29/Python描述符descriptor/index.html">
+<meta property="og:site_name" content="xin053">
+<meta property="og:description" content="简介Python描述符(descriptor)解密原文链接： Chris Beaumont 翻译： 极客范 - 慕容老匹夫 转载链接： http://www.geekfan.net/7862/ Python中包含了许多内建的语言特性，它们使得代码简洁且易于理解。这些特性包括列表/集合/字典推导式，属性（property）、以及装饰器（decorator）。对于大部分特性来说，这些“中级”的语言特性">
+<meta property="og:updated_time" content="2017-05-27T13:20:48.771Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python描述符descriptor">
+<meta name="twitter:description" content="简介Python描述符(descriptor)解密原文链接： Chris Beaumont 翻译： 极客范 - 慕容老匹夫 转载链接： http://www.geekfan.net/7862/ Python中包含了许多内建的语言特性，它们使得代码简洁且易于理解。这些特性包括列表/集合/字典推导式，属性（property）、以及装饰器（decorator）。对于大部分特性来说，这些“中级”的语言特性">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: undefined,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> Python描述符descriptor | xin053 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-78789863-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?95bc477a974f85651897b76f543028bb";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">xin053</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">在安全圈里徘徊，停滞不前</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Python描述符descriptor
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-11-29T18:40:14+08:00" content="2016-11-29">
+              2016-11-29
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/11/29/Python描述符descriptor/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/11/29/Python描述符descriptor/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <link rel="stylesheet" type="text/css" href="/assets/css/DPlayer.min.css"><script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><h3 id="Python描述符-descriptor-解密"><a href="#Python描述符-descriptor-解密" class="headerlink" title="Python描述符(descriptor)解密"></a>Python描述符(descriptor)解密</h3><p>原文链接： <a href="http://nbviewer.ipython.org/urls/gist.github.com/ChrisBeaumont/5758381/raw/descriptor_writeup.ipynb" target="_blank" rel="external">Chris Beaumont</a> 翻译： <a href="http://www.geekfan.net/" target="_blank" rel="external">极客范 </a>- <a href="http://www.geekfan.net/author/murong/" target="_blank" rel="external">慕容老匹夫</a></p>
+<p>转载链接： <a href="http://www.geekfan.net/7862/" target="_blank" rel="external">http://www.geekfan.net/7862/</a></p>
+<p>Python中包含了许多内建的语言特性，它们使得代码简洁且易于理解。这些特性包括列表/集合/字典推导式，属性（property）、以及装饰器（decorator）。对于大部分特性来说，这些“中级”的语言特性有着完善的文档，并且易于学习。</p>
+<p>但是这里有个例外，那就是描述符。至少对于我来说，描述符是Python语言核心中困扰我时间最长的一个特性。这里有几点原因如下：</p>
+<ol>
+<li>有关描述符的官方文档相当难懂，而且没有包含优秀的示例告诉你为什么需要编写描述符（我得为Raymond Hettinger辩护一下，他写的其他主题的Python文章和视频对我的帮助还是非常大的）</li>
+<li>编写描述符的语法显得有些怪异</li>
+<li>自定义描述符可能是Python中用的最少的特性，因此你很难在开源项目中找到优秀的示例</li>
+</ol>
+<p>但是一旦你理解了之后，描述符的确还是有它的应用价值的。这篇文章告诉你描述符可以用来做什么，以及为什么应该引起你的注意。</p>
+<a id="more"></a>
+<h2 id="一句话概括：描述符就是可重用的属性"><a href="#一句话概括：描述符就是可重用的属性" class="headerlink" title="一句话概括：描述符就是可重用的属性"></a>一句话概括：描述符就是可重用的属性</h2><p>在这里我要告诉你：从根本上讲，描述符就是可以重复使用的属性。也就是说，描述符可以让你编写这样的代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">f = Foo()</div><div class="line">b = f.bar</div><div class="line">f.bar = c</div><div class="line"><span class="keyword">del</span> f.bar</div></pre></td></tr></table></figure>
+<p>而在解释器执行上述代码时，当发现你试图访问属性<code>b = f.bar</code>、对属性赋值<code>f.bar = c</code>或者删除一个实例变量的属性<code>del f.bar</code>时，就会去调用自定义的方法。</p>
+<p>让我们先来解释一下为什么把对函数的调用伪装成对属性的访问是大有好处的。</p>
+<h2 id="property——把函数调用伪装成对属性的访问"><a href="#property——把函数调用伪装成对属性的访问" class="headerlink" title="property——把函数调用伪装成对属性的访问"></a>property——把函数调用伪装成对属性的访问</h2><p>想象一下你正在编写管理电影信息的代码。你最后写好的Movie类可能看上去是这样的：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Movie</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, title, rating, runtime, budget, gross)</span>:</span></div><div class="line">        self.title = title</div><div class="line">        self.rating = rating</div><div class="line">        self.runtime = runtime</div><div class="line">        self.budget = budget</div><div class="line">        self.gross = gross</div><div class="line"> </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">profit</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">return</span> self.gross - self.budget</div></pre></td></tr></table></figure>
+<p>你开始在项目的其他地方使用这个类，但是之后你意识到：如果不小心给电影打了负分怎么办？你觉得这是错误的行为，希望<code>Movie</code>类可以阻止这个错误。 你首先想到的办法是将<code>Movie</code>类修改为这样：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Movie</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, title, rating, runtime, budget, gross)</span>:</span></div><div class="line">        self.title = title</div><div class="line">        self.rating = rating</div><div class="line">        self.runtime = runtime</div><div class="line">        self.gross = gross</div><div class="line">        <span class="keyword">if</span> budget &lt; <span class="number">0</span>:</div><div class="line">            <span class="keyword">raise</span> ValueError(<span class="string">"Negative value not allowed: %s"</span> % budget)</div><div class="line">        self.budget = budget</div><div class="line"> </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">profit</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">return</span> self.gross - self.budget</div></pre></td></tr></table></figure>
+<p>但这行不通。因为其他部分的代码都是直接通过<code>Movie.budget</code>来赋值的,这个新修改的类只会在<code>__init__</code>方法中捕获错误的数据，但对于已经存在的类实例就无能为力了。如果有人试着运行<code>m.budget = -100</code>，那么谁也没法阻止。作为一个Python程序员同时也是电影迷，你该怎么办？</p>
+<p>幸运的是，Python的<code>property</code>解决了这个问题。如果你从未见过<code>property</code>的用法，下面是一个示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Movie</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, title, rating, runtime, budget, gross)</span>:</span></div><div class="line">        self._budget = <span class="keyword">None</span></div><div class="line"> </div><div class="line">        self.title = title</div><div class="line">        self.rating = rating</div><div class="line">        self.runtime = runtime</div><div class="line">        self.gross = gross</div><div class="line">        self.budget = budget</div><div class="line"> </div><div class="line"><span class="meta">    @property</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">budget</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">return</span> self._budget</div><div class="line"> </div><div class="line"><span class="meta">    @budget.setter</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">budget</span><span class="params">(self, value)</span>:</span></div><div class="line">        <span class="keyword">if</span> value &lt; <span class="number">0</span>:</div><div class="line">            <span class="keyword">raise</span> ValueError(<span class="string">"Negative value not allowed: %s"</span> % value)</div><div class="line">        self._budget = value</div><div class="line"> </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">profit</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">return</span> self.gross - self.budget</div><div class="line"> </div><div class="line">m = Movie(<span class="string">'Casablanca'</span>, <span class="number">97</span>, <span class="number">102</span>, <span class="number">964000</span>, <span class="number">1300000</span>)</div><div class="line"><span class="keyword">print</span> m.budget       <span class="comment"># calls m.budget(), returns result</span></div><div class="line"><span class="keyword">try</span>:</div><div class="line">    m.budget = <span class="number">-100</span>  <span class="comment"># calls budget.setter(-100), and raises ValueError</span></div><div class="line"><span class="keyword">except</span> ValueError:</div><div class="line">    <span class="keyword">print</span> <span class="string">"Woops. Not allowed"</span></div><div class="line"> </div><div class="line"><span class="number">964000</span></div><div class="line">Woops. Not allowed</div></pre></td></tr></table></figure>
+<p>我们用<code>@property</code>装饰器指定了一个<code>getter</code>方法，用<code>@budget.setter</code>装饰器指定了一个<code>setter</code>方法。当我们这么做时，每当有人试着访问<code>budget</code>属性，Python就会自动调用相应的<code>getter/setter</code>方法。比方说，当遇到<code>m.budget = value</code>这样的代码时就会自动调用<code>budget.setter</code></p>
+<p>花点时间来欣赏一下Python这么做是多么的优雅：如果没有<code>property</code>，我们将不得不把所有的实例属性隐藏起来，提供大量显式的类似<code>get_budget</code>和<code>set_budget</code>方法。像这样编写类的话，使用起来就会不断的去调用这些<code>getter/setter</code>方法，这看起来就像臃肿的Java代码一样。更糟的是，如果我们不采用这种编码风格，直接对实例属性进行访问。那么稍后就没法以清晰的方式增加对非负数的条件检查——我们不得不重新创建<code>set_budget</code>方法，然后搜索整个工程中的源代码，将<code>m.budget = value</code>这样的代码替换为<code>m.set_budget(value)</code>。太蛋疼了！！</p>
+<p>因此，<code>property</code>让我们将自定义的代码同变量的访问/设定联系在了一起，同时为你的类保持一个简单的访问属性的接口。干得漂亮！</p>
+<h2 id="property的不足"><a href="#property的不足" class="headerlink" title="property的不足"></a>property的不足</h2><p>对<code>property</code>来说，最大的缺点就是它们不能重复使用。举个例子，假设你想为<code>rating</code>，<code>runtime</code>和<code>gross</code>这些字段也添加非负检查。下面是修改过的新类：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Movie</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, title, rating, runtime, budget, gross)</span>:</span></div><div class="line">        self._rating = <span class="keyword">None</span></div><div class="line">        self._runtime = <span class="keyword">None</span></div><div class="line">        self._budget = <span class="keyword">None</span></div><div class="line">        self._gross = <span class="keyword">None</span></div><div class="line"> </div><div class="line">        self.title = title</div><div class="line">        self.rating = rating</div><div class="line">        self.runtime = runtime</div><div class="line">        self.gross = gross</div><div class="line">        self.budget = budget</div><div class="line"> </div><div class="line">    <span class="comment">#nice</span></div><div class="line"><span class="meta">    @property</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">budget</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">return</span> self._budget</div><div class="line"> </div><div class="line"><span class="meta">    @budget.setter</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">budget</span><span class="params">(self, value)</span>:</span></div><div class="line">        <span class="keyword">if</span> value &lt; <span class="number">0</span>:</div><div class="line">            <span class="keyword">raise</span> ValueError(<span class="string">"Negative value not allowed: %s"</span> % value)</div><div class="line">        self._budget = value</div><div class="line"> </div><div class="line">    <span class="comment">#ok    </span></div><div class="line"><span class="meta">    @property</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">rating</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">return</span> self._rating</div><div class="line"> </div><div class="line"><span class="meta">    @rating.setter</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">rating</span><span class="params">(self, value)</span>:</span></div><div class="line">        <span class="keyword">if</span> value &lt; <span class="number">0</span>:</div><div class="line">            <span class="keyword">raise</span> ValueError(<span class="string">"Negative value not allowed: %s"</span> % value)</div><div class="line">        self._rating = value</div><div class="line"> </div><div class="line">    <span class="comment">#uhh...</span></div><div class="line"><span class="meta">    @property</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">runtime</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">return</span> self._runtime</div><div class="line"> </div><div class="line"><span class="meta">    @runtime.setter</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">runtime</span><span class="params">(self, value)</span>:</span></div><div class="line">        <span class="keyword">if</span> value &lt; <span class="number">0</span>:</div><div class="line">            <span class="keyword">raise</span> ValueError(<span class="string">"Negative value not allowed: %s"</span> % value)</div><div class="line">        self._runtime = value        </div><div class="line"> </div><div class="line">    <span class="comment">#is this forever?</span></div><div class="line"><span class="meta">    @property</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">gross</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">return</span> self._gross</div><div class="line"> </div><div class="line"><span class="meta">    @gross.setter</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">gross</span><span class="params">(self, value)</span>:</span></div><div class="line">        <span class="keyword">if</span> value &lt; <span class="number">0</span>:</div><div class="line">            <span class="keyword">raise</span> ValueError(<span class="string">"Negative value not allowed: %s"</span> % value)</div><div class="line">        self._gross = value        </div><div class="line"> </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">profit</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">return</span> self.gross - self.budget</div></pre></td></tr></table></figure>
+<p>可以看到代码增加了不少，但重复的逻辑也出现了不少。虽然<code>property</code>可以让类从外部看起来接口整洁漂亮，<strong>但是却做不到内部同样整洁漂亮。</strong></p>
+<h2 id="描述符登场（最终的大杀器）"><a href="#描述符登场（最终的大杀器）" class="headerlink" title="描述符登场（最终的大杀器）"></a>描述符登场（最终的大杀器）</h2><p>这就是描述符所解决的问题。描述符是<code>property</code>的升级版，允许你为重复的<code>property</code>逻辑编写单独的类来处理。下面的示例展示了描述符是如何工作的（现在还不必担心<code>NonNegative</code>类的实现）：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> weakref <span class="keyword">import</span> WeakKeyDictionary</div><div class="line"> </div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">NonNegative</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="string">"""A descriptor that forbids negative values"""</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, default)</span>:</span></div><div class="line">        self.default = default</div><div class="line">        self.data = WeakKeyDictionary()</div><div class="line"> </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__get__</span><span class="params">(self, instance, owner)</span>:</span></div><div class="line">        <span class="comment"># we get here when someone calls x.d, and d is a NonNegative instance</span></div><div class="line">        <span class="comment"># instance = x</span></div><div class="line">        <span class="comment"># owner = type(x)</span></div><div class="line">        <span class="keyword">return</span> self.data.get(instance, self.default)</div><div class="line"> </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__set__</span><span class="params">(self, instance, value)</span>:</span></div><div class="line">        <span class="comment"># we get here when someone calls x.d = val, and d is a NonNegative instance</span></div><div class="line">        <span class="comment"># instance = x</span></div><div class="line">        <span class="comment"># value = val</span></div><div class="line">        <span class="keyword">if</span> value &lt; <span class="number">0</span>:</div><div class="line">            <span class="keyword">raise</span> ValueError(<span class="string">"Negative value not allowed: %s"</span> % value)</div><div class="line">        self.data[instance] = value</div><div class="line"> </div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Movie</span><span class="params">(object)</span>:</span></div><div class="line"> </div><div class="line">    <span class="comment">#always put descriptors at the class-level</span></div><div class="line">    rating = NonNegative(<span class="number">0</span>)</div><div class="line">    runtime = NonNegative(<span class="number">0</span>)</div><div class="line">    budget = NonNegative(<span class="number">0</span>)</div><div class="line">    gross = NonNegative(<span class="number">0</span>)</div><div class="line"> </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, title, rating, runtime, budget, gross)</span>:</span></div><div class="line">        self.title = title</div><div class="line">        self.rating = rating</div><div class="line">        self.runtime = runtime</div><div class="line">        self.budget = budget</div><div class="line">        self.gross = gross</div><div class="line"> </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">profit</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">return</span> self.gross - self.budget</div><div class="line"> </div><div class="line">m = Movie(<span class="string">'Casablanca'</span>, <span class="number">97</span>, <span class="number">102</span>, <span class="number">964000</span>, <span class="number">1300000</span>)</div><div class="line"><span class="keyword">print</span> m.budget  <span class="comment"># calls Movie.budget.__get__(m, Movie)</span></div><div class="line">m.rating = <span class="number">100</span>  <span class="comment"># calls Movie.budget.__set__(m, 100)</span></div><div class="line"><span class="keyword">try</span>:</div><div class="line">    m.rating = <span class="number">-1</span>   <span class="comment"># calls Movie.budget.__set__(m, -100)</span></div><div class="line"><span class="keyword">except</span> ValueError:</div><div class="line">    <span class="keyword">print</span> <span class="string">"Woops, negative value"</span></div><div class="line"> </div><div class="line"><span class="number">964000</span></div><div class="line">Woops, negative value</div></pre></td></tr></table></figure>
+<p>这里引入了一些新的语法，我们一条条的来看：</p>
+<p><code>NonNegative</code>是一个描述符对象，因为它定义了<code>__get__</code>，<code>__set__</code>或<code>__delete__</code>方法。</p>
+<p><code>Movie</code>类现在看起来非常清晰。我们在类的层面上创建了4个描述符，把它们当做普通的实例属性。显然，描述符在这里为我们做非负检查。</p>
+<h3 id="访问描述符"><a href="#访问描述符" class="headerlink" title="访问描述符"></a>访问描述符</h3><p>当解释器遇到<code>print m.buget</code>时，它就会把<code>budget</code>当作一个带有<code>__get__</code>方法的描述符，调用<code>Movie.budget.__get__</code>方法并将方法的返回值打印出来，而不是直接传递<code>m.budget</code>来打印。这和你访问一个<code>property</code>相似，Python自动调用一个方法，同时返回结果。</p>
+<p><code>__get__</code>接收2个参数：一个是点号左边的实例对象（在这里，就是m.budget中的m），另一个是这个实例的类型<code>Movie</code>。在一些Python<a href="http://docs.python.org/2/reference/datamodel.html#implementing-descriptors" target="_blank" rel="external">文档</a>中，<code>Movie</code>被称作描述符的所有者（owner）。如果我们需要访问<code>Movie.budget</code>，Python将会调用<code>Movie.budget.__get__(None, Movie)</code>。可以看到，第一个参数要么是所有者的实例，要么是<code>None</code>。这些输入参数可能看起来很怪，但是这里它们告诉了你描述符属于哪个对象的一部分。当我们看到<code>NonNegative</code>类的实现时这一切就合情合理了。</p>
+<h3 id="对描述符赋值"><a href="#对描述符赋值" class="headerlink" title="对描述符赋值"></a>对描述符赋值</h3><p>当解释器看到<code>m.rating = 100</code>时，Python识别出<code>rating</code>是一个带有<code>__set__</code>方法的描述符，于是就调用<code>Movie.rating.__set__(m, 100)</code>。和<code>__get__</code>一样，<code>__set__</code>的第一个参数是点号左边的类实例<code>m.rating = 100</code>中的<code>m</code>。第二个参数是所赋的值（100）。</p>
+<h3 id="删除描述符"><a href="#删除描述符" class="headerlink" title="删除描述符"></a>删除描述符</h3><p>为了说明的完整，这里提一下删除。如果你调用<code>del m.budget</code>，Python就会调用<code>Movie.budget.__delete__(m)</code>。</p>
+<h2 id="NonNegative类是如何工作的？"><a href="#NonNegative类是如何工作的？" class="headerlink" title="NonNegative类是如何工作的？"></a>NonNegative类是如何工作的？</h2><p>带着前面的困惑，我们终于要揭示<code>NonNegative</code>类是如何工作的了。每个<code>NonNegative</code>的实例都维护着一个字典，其中保存着所有者实例和对应数据的映射关系。当我们调用<code>m.budget</code>时，<code>__get__</code>方法会查找与<code>m</code>相关联的数据，并返回这个结果（如果这个值不存在，则会返回一个默认值）。<code>__set__</code>采用的方式相同，但是这里会包含额外的非负检查。我们使用<code>WeakKeyDictionary</code>来取代普通的字典以防止内存泄露——我们可不想仅仅因为它在描述符的字典中就让一个无用的实例一直存活着。</p>
+<p>使用描述符会有一点别扭。因为它们作用于类的层次上，每一个类实例都共享同一个描述符。这就意味着对不同的实例对象而言，描述符不得不手动地管理不同的状态，同时需要显式的将类实例作为第一个参数准确传递给<code>__get__</code>、<code>__set__</code>以及<code>__delete__</code>方法。</p>
+<p>我希望这个例子解释清楚了描述符可以用来做什么——它们提供了一种方法将<code>property</code>的逻辑隔离到单独的类中来处理。如果你发现自己正在不同的<code>property</code>之间重复着相同的逻辑，那么本文也许会成为一个线索供你思考为何用描述符重构代码是值得一试的。</p>
+<h2 id="秘诀和陷阱"><a href="#秘诀和陷阱" class="headerlink" title="秘诀和陷阱"></a>秘诀和陷阱</h2><h3 id="把描述符放在类的层次上（class-level）"><a href="#把描述符放在类的层次上（class-level）" class="headerlink" title="把描述符放在类的层次上（class level）"></a>把描述符放在类的层次上（class level）</h3><p>为了让描述符能够正常工作，它们必须定义在类的层次上。如果你不这么做，那么Python无法自动为你调用<code>__get__</code>和<code>__set__</code>方法。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Broken</span><span class="params">(object)</span>:</span></div><div class="line">    y = NonNegative(<span class="number">5</span>)</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></div><div class="line">        self.x = NonNegative(<span class="number">0</span>)  <span class="comment"># NOT a good descriptor</span></div><div class="line"> </div><div class="line">b = Broken()</div><div class="line"><span class="keyword">print</span> <span class="string">"X is %s, Y is %s"</span> % (b.x, b.y)</div><div class="line"> </div><div class="line">X <span class="keyword">is</span> &lt;__main__.NonNegative object at <span class="number">0x10432c250</span>&gt;, Y <span class="keyword">is</span> <span class="number">5</span></div></pre></td></tr></table></figure>
+<p>可以看到，访问类层次上的描述符<code>y</code>可以自动调用<code>__get__</code>。但是访问实例层次上的描述符x只会返回描述符本身，真是魔法一般的存在啊。</p>
+<h3 id="确保实例的数据只属于实例本身"><a href="#确保实例的数据只属于实例本身" class="headerlink" title="确保实例的数据只属于实例本身"></a>确保实例的数据只属于实例本身</h3><p>你可能会像这样编写<code>NonNegative</code>描述符：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">BrokenNonNegative</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, default)</span>:</span></div><div class="line">        self.value = default</div><div class="line"> </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__get__</span><span class="params">(self, instance, owner)</span>:</span></div><div class="line">        <span class="keyword">return</span> self.value</div><div class="line"> </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__set__</span><span class="params">(self, instance, value)</span>:</span></div><div class="line">        <span class="keyword">if</span> value &lt; <span class="number">0</span>:</div><div class="line">            <span class="keyword">raise</span> ValueError(<span class="string">"Negative value not allowed: %s"</span> % value)</div><div class="line">        self.value = value</div><div class="line"> </div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span><span class="params">(object)</span>:</span></div><div class="line">    bar = BrokenNonNegative(<span class="number">5</span>) </div><div class="line"> </div><div class="line">f = Foo()</div><div class="line"><span class="keyword">try</span>:</div><div class="line">    f.bar = <span class="number">-1</span></div><div class="line"><span class="keyword">except</span> ValueError:</div><div class="line">    <span class="keyword">print</span> <span class="string">"Caught the invalid assignment"</span></div><div class="line"> </div><div class="line">Caught the invalid assignment</div></pre></td></tr></table></figure>
+<p>这么做看起来似乎能正常工作。但这里的问题就在于所有<code>Foo</code>的实例都共享相同的<code>bar</code>，这会产生一些令人痛苦的结果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span><span class="params">(object)</span>:</span></div><div class="line">    bar = BrokenNonNegative(<span class="number">5</span>) </div><div class="line"> </div><div class="line">f = Foo()</div><div class="line">g = Foo()</div><div class="line"> </div><div class="line"><span class="keyword">print</span> <span class="string">"f.bar is %s\ng.bar is %s"</span> % (f.bar, g.bar)</div><div class="line"><span class="keyword">print</span> <span class="string">"Setting f.bar to 10"</span></div><div class="line">f.bar = <span class="number">10</span></div><div class="line"><span class="keyword">print</span> <span class="string">"f.bar is %s\ng.bar is %s"</span> % (f.bar, g.bar)  <span class="comment">#ouch</span></div><div class="line">f.bar <span class="keyword">is</span> <span class="number">5</span></div><div class="line">g.bar <span class="keyword">is</span> <span class="number">5</span></div><div class="line">Setting f.bar to <span class="number">10</span></div><div class="line">f.bar <span class="keyword">is</span> <span class="number">10</span></div><div class="line">g.bar <span class="keyword">is</span> <span class="number">10</span></div></pre></td></tr></table></figure>
+<p>这就是为什么我们要在<code>NonNegative</code>中使用数据字典的原因。<code>__get__</code>和<code>__set__</code>的第一个参数告诉我们需要关心哪一个实例。<code>NonNegative</code>使用这个参数作为字典的<code>key</code>，为每一个<code>Foo</code>实例单独保存一份数据。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span><span class="params">(object)</span>:</span></div><div class="line">    bar = NonNegative(<span class="number">5</span>)</div><div class="line"> </div><div class="line">f = Foo()</div><div class="line">g = Foo()</div><div class="line"><span class="keyword">print</span> <span class="string">"f.bar is %s\ng.bar is %s"</span> % (f.bar, g.bar)</div><div class="line"><span class="keyword">print</span> <span class="string">"Setting f.bar to 10"</span></div><div class="line">f.bar = <span class="number">10</span></div><div class="line"><span class="keyword">print</span> <span class="string">"f.bar is %s\ng.bar is %s"</span> % (f.bar, g.bar)  <span class="comment">#better</span></div><div class="line">f.bar <span class="keyword">is</span> <span class="number">5</span></div><div class="line">g.bar <span class="keyword">is</span> <span class="number">5</span></div><div class="line">Setting f.bar to <span class="number">10</span></div><div class="line">f.bar <span class="keyword">is</span> <span class="number">10</span></div><div class="line">g.bar <span class="keyword">is</span> <span class="number">5</span></div></pre></td></tr></table></figure>
+<p>这就是描述符最令人感到别扭的地方（坦白的说，我不理解为什么Python不让你在实例的层次上定义描述符，并且总是需要将实际的处理分发给<code>__get__</code>和<code>__set__</code>。这么做行不通一定是有原因的）</p>
+<h3 id="注意不可哈希的描述符所有者"><a href="#注意不可哈希的描述符所有者" class="headerlink" title="注意不可哈希的描述符所有者"></a>注意不可哈希的描述符所有者</h3><p><code>NonNegative</code>类使用了一个字典来单独保存专属于实例的数据。这个一般来说是没问题的，除非你用到了不可哈希（unhashable）的对象：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">class MoProblems(list):  #you can't use lists as dictionary keys</div><div class="line">    x = NonNegative(5)</div><div class="line"> </div><div class="line">m = MoProblems()</div><div class="line">print m.x  # womp womp</div><div class="line"> </div><div class="line">TypeError</div><div class="line">Traceback (most recent call last)</div><div class="line">&lt;ipython-input-8-dd73b177bd8d&gt; in &lt;module&gt;()</div><div class="line">      3 </div><div class="line">      4 m = MoProblems()</div><div class="line">----&gt; 5 print m.x  # womp womp</div><div class="line"> </div><div class="line">&lt;ipython-input-3-6671804ce5d5&gt; in __get__(self, instance, owner)</div><div class="line">      9         # instance = x</div><div class="line">     10         # owner = type(x)</div><div class="line">---&gt; 11         return self.data.get(instance, self.default)</div><div class="line">     12 </div><div class="line">     13     def __set__(self, instance, value):</div><div class="line"> </div><div class="line">TypeError: unhashable type: 'MoProblems'</div></pre></td></tr></table></figure>
+<p>因为<code>MoProblems</code>的实例（<code>list</code>的子类）是不可哈希的，因此它们不能为<code>MoProblems</code>.<code>x</code>用做数据字典的key。有一些方法可以规避这个问题，但是都不完美。最好的方法可能就是给你的描述符加标签了。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">class Descriptor(object):</div><div class="line"> </div><div class="line">    def __init__(self, label):</div><div class="line">        self.label = label</div><div class="line"> </div><div class="line">    def __get__(self, instance, owner):</div><div class="line">        print '__get__', instance, owner</div><div class="line">        return instance.__dict__.get(self.label)</div><div class="line"> </div><div class="line">    def __set__(self, instance, value):</div><div class="line">        print '__set__'</div><div class="line">        instance.__dict__[self.label] = value</div><div class="line"> </div><div class="line">class Foo(list):</div><div class="line">    x = Descriptor('x')</div><div class="line">    y = Descriptor('y')</div><div class="line"> </div><div class="line">f = Foo()</div><div class="line">f.x = 5</div><div class="line">print f.x</div><div class="line"> </div><div class="line">__set__</div><div class="line">__get__ [] &lt;class '__main__.Foo'&gt;</div><div class="line">5</div></pre></td></tr></table></figure>
+<p>这种方法依赖于Python的方法解析顺序（即，MRO）。我们给Foo中的每个描述符加上一个标签名，名称和我们赋值给描述符的变量名相同，比如<code>x = Descriptor(‘x’)</code>。之后，描述符将特定于实例的数据保存在<code>f.__dict__[&#39;x&#39;]</code>中。这个字典条目通常是当我们请求<code>f.x</code>时Python给出的返回值。然而，由于<code>Foo.x</code>是一个描述符，Python不能正常的使用<code>f.__dict__[‘x’]</code>，但是描述符可以安全的在这里存储数据。只是要记住，不要在别的地方也给这个描述符添加标签。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">class Foo(object):</div><div class="line">    x = Descriptor('y')</div><div class="line"> </div><div class="line">f = Foo()</div><div class="line">f.x = 5</div><div class="line">print f.x</div><div class="line"> </div><div class="line">f.y = 4    #oh no!</div><div class="line">print f.x</div><div class="line">__set__</div><div class="line">__get__ &lt;__main__.Foo object at 0x10432c810&gt; &lt;class '__main__.Foo'&gt;</div><div class="line">5</div><div class="line">__get__ &lt;__main__.Foo object at 0x10432c810&gt; &lt;class '__main__.Foo'&gt;</div><div class="line">4</div></pre></td></tr></table></figure>
+<p>我不喜欢这种方式，因为这样的代码很脆弱也有很多微妙之处。但这个方法的确很普遍，可以用在不可哈希的所有者类上。David Beazley在他的<a href="http://www.amazon.com/Python-Essential-Reference-4th-Edition/dp/0672329786/" target="_blank" rel="external">书</a>中用到了这个方法。</p>
+<h3 id="在元类中使用带标签的描述符"><a href="#在元类中使用带标签的描述符" class="headerlink" title="在元类中使用带标签的描述符"></a>在元类中使用带标签的描述符</h3><p>由于描述符的标签名和赋给它的变量名相同，所以有人使用元类来自动处理这个簿记（bookkeeping）任务。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Descriptor</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="comment">#notice we aren't setting the label here</span></div><div class="line">        self.label = <span class="keyword">None</span></div><div class="line"> </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__get__</span><span class="params">(self, instance, owner)</span>:</span></div><div class="line">        <span class="keyword">print</span> <span class="string">'__get__. Label = %s'</span> % self.label</div><div class="line">        <span class="keyword">return</span> instance.__dict__.get(self.label, <span class="keyword">None</span>)</div><div class="line"> </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__set__</span><span class="params">(self, instance, value)</span>:</span></div><div class="line">        <span class="keyword">print</span> <span class="string">'__set__'</span></div><div class="line">        instance.__dict__[self.label] = value</div><div class="line"> </div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">DescriptorOwner</span><span class="params">(type)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__new__</span><span class="params">(cls, name, bases, attrs)</span>:</span></div><div class="line">        <span class="comment"># find all descriptors, auto-set their labels</span></div><div class="line">        <span class="keyword">for</span> n, v <span class="keyword">in</span> attrs.items():</div><div class="line">            <span class="keyword">if</span> isinstance(v, Descriptor):</div><div class="line">                v.label = n</div><div class="line">        <span class="keyword">return</span> super(DescriptorOwner, cls).__new__(cls, name, bases, attrs)</div><div class="line"> </div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span><span class="params">(object)</span>:</span></div><div class="line">    __metaclass__ = DescriptorOwner</div><div class="line">    x = Descriptor()</div><div class="line"> </div><div class="line">f = Foo()</div><div class="line">f.x = <span class="number">10</span></div><div class="line"><span class="keyword">print</span> f.x</div><div class="line"> </div><div class="line">__set__</div><div class="line">__get__. Label = x</div><div class="line"><span class="number">10</span></div></pre></td></tr></table></figure>
+<p>我不会去解释有关元类的细节——参考文献中David Beazley已经在他的文章中解释的很清楚了。 需要指出的是元类自动的为描述符添加标签，并且和赋给描述符的变量名字相匹配。</p>
+<p>尽管这样解决了描述符的标签和变量名不一致的问题，但是却引入了复杂的元类。虽然我很怀疑，但是你可以自行判断这么做是否值得。</p>
+<h3 id="访问描述符的方法"><a href="#访问描述符的方法" class="headerlink" title="访问描述符的方法"></a>访问描述符的方法</h3><p>描述符仅仅是类，也许你想要为它们增加一些方法。举个例子，描述符是一个用来回调<code>property</code>的很好的手段。比如我们想要一个类的某个部分的状态发生变化时就立刻通知我们。下面的大部分代码是用来做这个的：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">CallbackProperty</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="string">"""A property that will alert observers when upon updates"""</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, default=None)</span>:</span></div><div class="line">        self.data = WeakKeyDictionary()</div><div class="line">        self.default = default</div><div class="line">        self.callbacks = WeakKeyDictionary()</div><div class="line"> </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__get__</span><span class="params">(self, instance, owner)</span>:</span></div><div class="line">        <span class="keyword">return</span> self.data.get(instance, self.default)</div><div class="line"> </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__set__</span><span class="params">(self, instance, value)</span>:</span>        </div><div class="line">        <span class="keyword">for</span> callback <span class="keyword">in</span> self.callbacks.get(instance, []):</div><div class="line">            <span class="comment"># alert callback function of new value</span></div><div class="line">            callback(value)</div><div class="line">        self.data[instance] = value</div><div class="line"> </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">add_callback</span><span class="params">(self, instance, callback)</span>:</span></div><div class="line">        <span class="string">"""Add a new function to call everytime the descriptor updates"""</span></div><div class="line">        <span class="comment">#but how do we get here?!?!</span></div><div class="line">        <span class="keyword">if</span> instance <span class="keyword">not</span> <span class="keyword">in</span> self.callbacks:</div><div class="line">            self.callbacks[instance] = []</div><div class="line">        self.callbacks[instance].append(callback)</div><div class="line"> </div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">BankAccount</span><span class="params">(object)</span>:</span></div><div class="line">    balance = CallbackProperty(<span class="number">0</span>)</div><div class="line"> </div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">low_balance_warning</span><span class="params">(value)</span>:</span></div><div class="line">    <span class="keyword">if</span> value &lt; <span class="number">100</span>:</div><div class="line">        <span class="keyword">print</span> <span class="string">"You are poor"</span></div><div class="line"> </div><div class="line">ba = BankAccount()</div><div class="line"> </div><div class="line"><span class="comment"># will not work -- try it</span></div><div class="line"><span class="comment">#ba.balance.add_callback(ba, low_balance_warning)</span></div></pre></td></tr></table></figure>
+<p>这是一个很有吸引力的模式——我们可以自定义回调函数用来响应一个类中的状态变化，而且完全无需修改这个类的代码。这样做可真是替人分忧解难呀。现在，我们所要做的就是调用<code>ba.balance.add_callback(ba, low_balance_warning)</code>，以使得每次<code>balance</code>变化时<code>low_balance_warning</code>都会被调用。</p>
+<p>但是我们是如何做到的呢？当我们试图访问它们时，描述符总是会调用<code>__get__</code>。就好像<code>add_callback</code>方法是无法触及的一样！其实关键在于利用了一种特殊的情况，即，当从类的层次访问时，<code>__get__</code>方法的第一个参数是<code>None</code>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">CallbackProperty</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="string">"""A property that will alert observers when upon updates"""</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, default=None)</span>:</span></div><div class="line">        self.data = WeakKeyDictionary()</div><div class="line">        self.default = default</div><div class="line">        self.callbacks = WeakKeyDictionary()</div><div class="line"> </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__get__</span><span class="params">(self, instance, owner)</span>:</span></div><div class="line">        <span class="keyword">if</span> instance <span class="keyword">is</span> <span class="keyword">None</span>:</div><div class="line">            <span class="keyword">return</span> self        </div><div class="line">        <span class="keyword">return</span> self.data.get(instance, self.default)</div><div class="line"> </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__set__</span><span class="params">(self, instance, value)</span>:</span></div><div class="line">        <span class="keyword">for</span> callback <span class="keyword">in</span> self.callbacks.get(instance, []):</div><div class="line">            <span class="comment"># alert callback function of new value</span></div><div class="line">            callback(value)</div><div class="line">        self.data[instance] = value</div><div class="line"> </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">add_callback</span><span class="params">(self, instance, callback)</span>:</span></div><div class="line">        <span class="string">"""Add a new function to call everytime the descriptor within instance updates"""</span></div><div class="line">        <span class="keyword">if</span> instance <span class="keyword">not</span> <span class="keyword">in</span> self.callbacks:</div><div class="line">            self.callbacks[instance] = []</div><div class="line">        self.callbacks[instance].append(callback)</div><div class="line"> </div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">BankAccount</span><span class="params">(object)</span>:</span></div><div class="line">    balance = CallbackProperty(<span class="number">0</span>)</div><div class="line"> </div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">low_balance_warning</span><span class="params">(value)</span>:</span></div><div class="line">    <span class="keyword">if</span> value &lt; <span class="number">100</span>:</div><div class="line">        <span class="keyword">print</span> <span class="string">"You are now poor"</span></div><div class="line"> </div><div class="line">ba = BankAccount()</div><div class="line">BankAccount.balance.add_callback(ba, low_balance_warning)</div><div class="line"> </div><div class="line">ba.balance = <span class="number">5000</span></div><div class="line"><span class="keyword">print</span> <span class="string">"Balance is %s"</span> % ba.balance</div><div class="line">ba.balance = <span class="number">99</span></div><div class="line"><span class="keyword">print</span> <span class="string">"Balance is %s"</span> % ba.balance</div><div class="line">Balance <span class="keyword">is</span> <span class="number">5000</span></div><div class="line">You are now poor</div><div class="line">Balance <span class="keyword">is</span> <span class="number">99</span></div></pre></td></tr></table></figure>
+<h2 id="个人总结"><a href="#个人总结" class="headerlink" title="个人总结"></a>个人总结</h2><ul>
+<li>描述符伪装成类的属型，而当类的实例通过点操作符访问时，实际是就是调用描述符中三个方法之一</li>
+<li>属性查找的顺序是:”类 -&gt; 基类 -&gt; 实例”,并不是首先就在表示实例的那片内存中查找属性，而是首先在类中查找，因为python需要首先判断该’属性’是否是描述符(伪装的属性)，如果是描述符，那么则不是调用<code>__setattr__()</code>或者<code>__getattr__()</code>方法对<code>__dict__</code>字典进行处理，而是调用描述符的<code>__get__()</code>,<code>__set__()</code>和<code>__delete__()</code>方法</li>
+<li>由于描述符只能作为类的属性，所以该类的多个实例都是公用的这个描述符，所以一般在描述符中的<code>__init__()</code>函数中创建一个字典，以类实例的地址(例子中的<code>instance</code>)参数作为key，以要这个实例的数据作为value</li>
+<li>类中的普通方法第一个参数是<code>self</code>,因为实例化类时，会自动将分配给实例的内存地址传递该self，也就是所谓的绑定，该函数也就成为绑定函数了，而给实例动态添加的方法以及类之外定义的方法就不需要<code>self</code>参数了</li>
+<li>以底层的思维了看待类和对象，都是内存中分配的地址空间而已，虽然有书上说类也是对象，但是不好理解，从底层就容易理解一些，先划分区域，并写入相应数据，然后这就是类，然后以这个类实例化时，就是再划分一块内存，写于相应数据(为了节省空间，不会完全复制类中的属性和方法，只会简单的赋值一些属性表示该对象是那个类的实例)，然后这就是类。类属性就是属性的值只在代表类的那块内存中，而不在代表对象的那块内存中</li>
+</ul>
+<h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><ul>
+<li><a href="https://www.zhihu.com/question/25391709" target="_blank" rel="external">如何理解 Python 的 Descriptor？</a></li>
+<li><a href="https://segmentfault.com/a/1190000004478718" target="_blank" rel="external">Python 的 descriptor（上）</a></li>
+<li><a href="http://www.geekfan.net/7862/" target="_blank" rel="external">Python描述符（descriptor）解密</a></li>
+<li><a href="https://docs.python.org/3/howto/descriptor.html" target="_blank" rel="external">Descriptor HowTo Guide</a></li>
+</ul>
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechat.png" alt="xin053 WeChat Pay">
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay.png" alt="xin053 Alipay">
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Python/" rel="tag">#Python</a>
+          
+            <a href="/tags/descriptor/" rel="tag">#descriptor</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/11/29/os库常用方法使用介绍/" rel="next" title="os库常用方法使用介绍">
+                <i class="fa fa-chevron-left"></i> os库常用方法使用介绍
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/12/01/re正则库使用详解/" rel="prev" title="re正则库使用详解">
+                re正则库使用详解 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/me.jpg" alt="xin053">
+          <p class="site-author-name" itemprop="name">xin053</p>
+          <p class="site-description motion-element" itemprop="description">正在用Windbg调试正在调试正在反汇编Windbg的IDA的OD...</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">55</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">50</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/xin053" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/xin053" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/xin053" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://blog.csdn.net/zhouzixin053" target="_blank" title="csdn">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  csdn
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://bbs.pediy.com/" title="看雪" target="_blank">看雪</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.geeklzh.com/" title="怪咖家园" target="_blank">怪咖家园</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.csdh.pub/" title="CS_DH" target="_blank">CS_DH</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://dendise7engithub.github.io/" title="Dendionk" target="_blank">Dendionk</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://cyang.tech/" title="cyang" target="_blank">cyang</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Python描述符-descriptor-解密"><span class="nav-number">1.1.</span> <span class="nav-text">Python描述符(descriptor)解密</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一句话概括：描述符就是可重用的属性"><span class="nav-number">2.</span> <span class="nav-text">一句话概括：描述符就是可重用的属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#property——把函数调用伪装成对属性的访问"><span class="nav-number">3.</span> <span class="nav-text">property——把函数调用伪装成对属性的访问</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#property的不足"><span class="nav-number">4.</span> <span class="nav-text">property的不足</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#描述符登场（最终的大杀器）"><span class="nav-number">5.</span> <span class="nav-text">描述符登场（最终的大杀器）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#访问描述符"><span class="nav-number">5.1.</span> <span class="nav-text">访问描述符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对描述符赋值"><span class="nav-number">5.2.</span> <span class="nav-text">对描述符赋值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除描述符"><span class="nav-number">5.3.</span> <span class="nav-text">删除描述符</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NonNegative类是如何工作的？"><span class="nav-number">6.</span> <span class="nav-text">NonNegative类是如何工作的？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#秘诀和陷阱"><span class="nav-number">7.</span> <span class="nav-text">秘诀和陷阱</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#把描述符放在类的层次上（class-level）"><span class="nav-number">7.1.</span> <span class="nav-text">把描述符放在类的层次上（class level）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#确保实例的数据只属于实例本身"><span class="nav-number">7.2.</span> <span class="nav-text">确保实例的数据只属于实例本身</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#注意不可哈希的描述符所有者"><span class="nav-number">7.3.</span> <span class="nav-text">注意不可哈希的描述符所有者</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在元类中使用带标签的描述符"><span class="nav-number">7.4.</span> <span class="nav-text">在元类中使用带标签的描述符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#访问描述符的方法"><span class="nav-number">7.5.</span> <span class="nav-text">访问描述符的方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#个人总结"><span class="nav-number">8.</span> <span class="nav-text">个人总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文档"><span class="nav-number">9.</span> <span class="nav-text">参考文档</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xin053</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'xin053';
+      var disqus_identifier = '2016/11/29/Python描述符descriptor/';
+      var disqus_title = "Python描述符descriptor";
+      var disqus_url = 'https://xin053.github.io/2016/11/29/Python描述符descriptor/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+                            
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').mousedown(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+  
+
+  
+
+  
+
+</body>
+</html>

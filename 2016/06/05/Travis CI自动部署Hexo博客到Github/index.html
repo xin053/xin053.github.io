@@ -1,0 +1,1032 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="jFTy9MrTO4piYCnfdfFFpOLb9SCydVuSBPbqgakCzCM">
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Hexo,Travis,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="xin053" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="使用Travis CI自动部署你的Hexo博客到Github上问题由来一般通过Hexo命令行三部曲： - hexo clean - hexo g(enerate) - hexo d(eploy) 就可以清除项目缓存，生成静态网页，然后push静态网页到Github，然后访问https://GithubID.github.io就可以访问更新后的blog了。 通过另外三部曲： - hexo clean">
+<meta name="keywords" content="Hexo,Travis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Travis CI自动部署Hexo博客到Github">
+<meta property="og:url" content="https://xin053.github.io/2016/06/05/Travis CI自动部署Hexo博客到Github/index.html">
+<meta property="og:site_name" content="xin053">
+<meta property="og:description" content="使用Travis CI自动部署你的Hexo博客到Github上问题由来一般通过Hexo命令行三部曲： - hexo clean - hexo g(enerate) - hexo d(eploy) 就可以清除项目缓存，生成静态网页，然后push静态网页到Github，然后访问https://GithubID.github.io就可以访问更新后的blog了。 通过另外三部曲： - hexo clean">
+<meta property="og:image" content="http://i.imgur.com/HaFgkwf.png">
+<meta property="og:image" content="http://i.imgur.com/47CPLk0.png">
+<meta property="og:image" content="http://i.imgur.com/MoGZ0UC.png">
+<meta property="og:image" content="http://i.imgur.com/yEmpXuC.png">
+<meta property="og:updated_time" content="2017-05-27T13:20:48.771Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Travis CI自动部署Hexo博客到Github">
+<meta name="twitter:description" content="使用Travis CI自动部署你的Hexo博客到Github上问题由来一般通过Hexo命令行三部曲： - hexo clean - hexo g(enerate) - hexo d(eploy) 就可以清除项目缓存，生成静态网页，然后push静态网页到Github，然后访问https://GithubID.github.io就可以访问更新后的blog了。 通过另外三部曲： - hexo clean">
+<meta name="twitter:image" content="http://i.imgur.com/HaFgkwf.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: undefined,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> Travis CI自动部署Hexo博客到Github | xin053 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-78789863-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?95bc477a974f85651897b76f543028bb";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">xin053</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">在安全圈里徘徊，停滞不前</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Travis CI自动部署Hexo博客到Github
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-06-05T20:37:10+08:00" content="2016-06-05">
+              2016-06-05
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Hexo/" itemprop="url" rel="index">
+                    <span itemprop="name">Hexo</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/06/05/Travis CI自动部署Hexo博客到Github/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/06/05/Travis CI自动部署Hexo博客到Github/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <link rel="stylesheet" type="text/css" href="/assets/css/DPlayer.min.css"><script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="使用Travis-CI自动部署你的Hexo博客到Github上"><a href="#使用Travis-CI自动部署你的Hexo博客到Github上" class="headerlink" title="使用Travis CI自动部署你的Hexo博客到Github上"></a>使用Travis CI自动部署你的Hexo博客到Github上</h2><h3 id="问题由来"><a href="#问题由来" class="headerlink" title="问题由来"></a>问题由来</h3><p>一般通过<code>Hexo</code>命令行三部曲：</p>
+<pre><code>- hexo clean
+- hexo g(enerate)
+- hexo d(eploy)
+</code></pre><p>就可以清除项目缓存，生成静态网页，然后<code>push</code>静态网页到<code>Github</code>，然后访问<code>https://GithubID.github.io</code>就可以访问更新后的<code>blog</code>了。</p>
+<p>通过另外三部曲：</p>
+<pre><code>- hexo clean
+- hexo g(enerate)
+- hexo s(erver)
+</code></pre><p>即可开启本地服务器，通过浏览器访问<code>http://localhost:4000</code>便可以看到更新后的<code>blog</code>。</p>
+<a id="more"></a>
+<p><strong>但是：</strong> 由于上传到<code>github</code>上的只是静态网页文件，所以只能在具有整个网站项目源代码的电脑上进行写作，与文章同步与更新，而且每次都要执行<code>hexo</code>三部曲，不符合使用<code>git</code>的习惯。</p>
+<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><p>通过<code>Travis CI</code>自动部署，自动发布到<code>github</code>上，配置一下，便可实现在每次<code>git push</code>之后自动执行一个脚本，执行生成并发布等命令。相当于不在手动执行<code>hexo</code>三部曲，只用修改后，按照以往的<code>git</code>操作：</p>
+<pre><code>add-&gt;commit-&gt;push
+</code></pre><p>便可自动将源代码<code>push</code>到<code>github</code>,然后由<code>travis</code>自动<code>clone</code>项目，并由<code>travis</code>的虚拟机自动执行<code>hexo</code>三部曲,从而<code>deploy</code>更新后的网站到<code>github</code></p>
+<h3 id="技巧"><a href="#技巧" class="headerlink" title="技巧"></a>技巧</h3><p>在本地新建<code>dev</code>分支，并在远程新建<code>dev</code>分支，每次本地修改提交到远程<code>dev</code>分支(本地新建<code>dev</code>分支只是为了好操作，不新建<code>dev</code>分支也可以,也就是本地<code>master</code>提交到远程<code>dev</code>)，<code>travis</code>配置文件<code>.vravis.yml</code>中监视远程dev分支的改变，<code>build</code>成功后添加动作：<code>hexo deploy</code>，其中<code>_config.yml</code>中<code>deploy</code>的分支为远程<code>master</code>，这样实现的效果是：</p>
+<p><strong>当<code>git push dev</code>时，远程仓库的<code>dev</code>是整个项目源代码，而<code>travis</code>检测到<code>dev</code>分支改变，便会<code>clone dev</code>分支，并<code>build</code>，然后<code>deploy</code>到远程<code>master</code>分支，所以远程仓库<code>master</code>是整个<code>blog</code>的静态网页集合，于是实现了仓库中既有<code>blog</code>项目源代码，又有构建成功的整个项目，并且处在不同分支上。</strong></p>
+<h3 id="具体配置"><a href="#具体配置" class="headerlink" title="具体配置"></a>具体配置</h3><p>参考以下文章：</p>
+<ul>
+<li><a href="http://www.jianshu.com/p/7f05b452fd3a" title="使用Travis自动部署Hexo(1)" target="_blank" rel="external">使用Travis自动部署Hexo(1)</a></li>
+<li><a href="http://www.jianshu.com/p/fff7b3384f46" title="使用Travis自动部署Hexo(2)" target="_blank" rel="external">使用Travis自动部署Hexo(2)</a></li>
+<li><a href="http://www.tuicool.com/articles/AZf2Yzb" title="Hexo 自动部署到 Github" target="_blank" rel="external">Hexo 自动部署到 Github</a></li>
+<li><a href="http://www.2cto.com/kf/201605/505702.html" title="手把手教你使用Travis CI自动部署你的Hexo博客到Github上" target="_blank" rel="external">手把手教你使用Travis CI自动部署你的Hexo博客到Github上</a></li>
+</ul>
+<h3 id="配置过程中遇到的问题"><a href="#配置过程中遇到的问题" class="headerlink" title="配置过程中遇到的问题"></a>配置过程中遇到的问题</h3><p>按照上面的第一篇配置，由于我是<code>windows</code>环境，所以按照上面的配置出现了错误，和博主下面说明的情况一致，没有解决。</p>
+<p>于是尝试第二篇中的做法，结合第三篇文章中的配置说明，其中</p>
+<pre><code># 这里的 REPO_TOKEN 是变量名,在后面的配置文件中会用到
+# TOKEN 是上面github生成的Token
+travis encrypt &apos;REPO_TOKEN=&lt;TOKEN&gt;&apos; --add
+</code></pre><p>在<code>cmd</code>中运行上面的命令报错：</p>
+<pre><code>系统找不到指定文件
+</code></pre><p>没有解决，最终查到<code>travis</code>使用方法，用下面指令代替：</p>
+<pre><code>travis encrypt -r pwmckenna/node-travis-encrypt GH_TOKEN=0efdabf1c44122b90db5****** --add
+</code></pre><p>其实也就是将<code>GH_TOKEN=TOKEN</code>这个环境变量加密,以便在<code>.travis.yml</code>能够使用<code>GH_TOKEN</code>访问到<code>TOKEN</code></p>
+<p>附上<code>.travis.yml</code>配置：</p>
+<pre><code>language: node_js
+
+node_js: stable
+
+branches:
+  only:
+  - dev      # 监视github仓库中的dev分支，分支出现变化就执行build
+
+before_install:
+- export TZ=&apos;Asia/Shanghai&apos;
+- npm install -g hexo
+- npm install -g hexo-cli
+
+install:
+- npm install
+
+script:
+- git submodule init      # 用于更新主题,更新源为自己的主题项目，否则会clone最新NexT主题，而官方主题配置文件没有设置
+- git submodule update
+- hexo clean &amp;&amp; hexo g
+
+env:
+  global:
+    secure: ***HcNd3E02rGSZ3mzYHmNwsTKBIXa8cdOHIqmnuV8P9xAFRaDRUEdE8gqFmNCeKd5hriM64sO5BGU/szI7Q2uJNhUgDg0Rw/UZMbZCei5Pf112qzDpbb/ok1PUU9Q282sI1YVf8poBUvMHmoHLOMayR25IjIysb5aE+8kpipDbReU=
+
+after_success:
+- git config --global user.name &quot;xin053&quot;
+- git config --global user.email &quot;13207130066.cool@163.com&quot;
+- sed -i&apos;&apos; &quot;s~git@github.com:xin053/xin053.github.io.git~https://${GH_TOKEN}:x-oauth-basic@github.com/xin053/xin053.github.io.git~&quot; _config.yml
+- hexo deploy
+</code></pre><p>项目根目录下新建<code>.gitmodules</code>文件，并写入：</p>
+<pre><code>[submodule &quot;themes/next&quot;]
+    path = themes/next
+    url = git://github.com/xin053/MyHexo_NexT_Theme
+</code></pre><p>则<code>build</code>时更新主题的源是自己修改后的主题,不能用官网<code>NexT</code>主题，如果设置成官网主题会发现最终网站发布样式主题是默认的设置，而覆盖掉了原先自己的主题配置。</p>
+<p><code>_config.yml</code>的<code>deploy</code>配置如下：</p>
+<pre><code>deploy:
+  type: git
+  repository: git@github.com:xin053/xin053.github.io.git
+  branch: master      # 将build后的静态网页发布到github仓库master分支
+</code></pre><p>其中还要注意<code>TOKEN</code>的权限，<code>github</code>默认生成的<code>TOKEN</code>权限很低，如果使用默认的，<code>build</code>过程中虽然<code>travis</code>显示构建成功，但是<code>log</code>中显示<code>hexo deploy</code>失败，原因是权限问题，所以建议设置权限如下，即全部勾选。</p>
+<p><img src="http://i.imgur.com/HaFgkwf.png" alt=""></p>
+<p><code>travis</code>的<code>log</code>中最后显示如下图所示时，说明已经部署成功了：</p>
+<p><img src="http://i.imgur.com/47CPLk0.png" alt=""></p>
+<p>而最后一篇文章则是通过<code>travis</code>网站来设置环境变量，更方便，也更快捷</p>
+<p><img src="http://i.imgur.com/MoGZ0UC.png" alt=""></p>
+<p>在网站中设置了环境变量之后，就可以去掉<code>.travis.yml</code>中的<code>env</code>项了。</p>
+<p>设置好后，只用在网站项目源码根目录下执行：</p>
+<pre><code>git init
+</code></pre><p>初始化git,仅第一次需要，然后</p>
+<pre><code>git add .
+git commit -am &quot;update&quot;
+</code></pre><p>第一次提交到远程仓库要先添加远程仓库：</p>
+<pre><code>git remote add master git@github.com:xin053/xin053.github.io.git
+</code></pre><p>将本地<code>dev</code>与远程默认分支进行关联</p>
+<pre><code>git push -f --set-upstream dev dev
+</code></pre><p>如果原理<code>github</code>下是原来的静态网站，者这里用<code>-f</code>强推，覆盖掉原来的项目就行。</p>
+<p>之后每次就只用</p>
+<pre><code>git push dev
+</code></pre><p>也就是每次写完博客之后，在网站项目源代码根目录执行三部曲：</p>
+<pre><code>git add .
+git commit -am &quot;update&quot;
+git push dev
+</code></pre><p>就可以提交最新源代码到<code>github</code>的<code>dev</code>分支,同时<code>travis</code>会自动<code>build</code>，生成最新的静态网页<code>deploy</code>到<code>github</code>的<code>master</code>分支。</p>
+<p><code>build</code>记录可以参见<code>https://travis-ci.org/</code></p>
+<p><img src="http://i.imgur.com/yEmpXuC.png" alt=""></p>
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechat.png" alt="xin053 WeChat Pay">
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay.png" alt="xin053 Alipay">
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Hexo/" rel="tag">#Hexo</a>
+          
+            <a href="/tags/Travis/" rel="tag">#Travis</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/06/05/MarkDown语法/" rel="next" title="MarkDown语法">
+                <i class="fa fa-chevron-left"></i> MarkDown语法
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/06/07/DrrrClient源码解读/" rel="prev" title="DrrrClient源码解读">
+                DrrrClient源码解读 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/me.jpg" alt="xin053">
+          <p class="site-author-name" itemprop="name">xin053</p>
+          <p class="site-description motion-element" itemprop="description">正在用Windbg调试正在调试正在反汇编Windbg的IDA的OD...</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">55</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">50</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/xin053" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/xin053" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/xin053" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://blog.csdn.net/zhouzixin053" target="_blank" title="csdn">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  csdn
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://bbs.pediy.com/" title="看雪" target="_blank">看雪</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.geeklzh.com/" title="怪咖家园" target="_blank">怪咖家园</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.csdh.pub/" title="CS_DH" target="_blank">CS_DH</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://dendise7engithub.github.io/" title="Dendionk" target="_blank">Dendionk</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://cyang.tech/" title="cyang" target="_blank">cyang</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#使用Travis-CI自动部署你的Hexo博客到Github上"><span class="nav-number">1.</span> <span class="nav-text">使用Travis CI自动部署你的Hexo博客到Github上</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#问题由来"><span class="nav-number">1.1.</span> <span class="nav-text">问题由来</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解决方法"><span class="nav-number">1.2.</span> <span class="nav-text">解决方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#技巧"><span class="nav-number">1.3.</span> <span class="nav-text">技巧</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#具体配置"><span class="nav-number">1.4.</span> <span class="nav-text">具体配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置过程中遇到的问题"><span class="nav-number">1.5.</span> <span class="nav-text">配置过程中遇到的问题</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xin053</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'xin053';
+      var disqus_identifier = '2016/06/05/Travis CI自动部署Hexo博客到Github/';
+      var disqus_title = "Travis CI自动部署Hexo博客到Github";
+      var disqus_url = 'https://xin053.github.io/2016/06/05/Travis CI自动部署Hexo博客到Github/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+                            
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').mousedown(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,987 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="jFTy9MrTO4piYCnfdfFFpOLb9SCydVuSBPbqgakCzCM">
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Python,VS Code,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="xin053" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="编辑器感想贴吧总是看到  高手都是用记事本写代码的  我只想表示：那你慢慢用记事本吧，我用VS Code。 作为码农，基本每天都要敲代码，这就是命吧。一般较大的项目都会用IDE进行开发：  Win32汇编：RadASM 2.0，RadASM 3.0，WinAsm C/C++：VC++6.0，Dev-c++，CodeBlocks，VS2015 Java：Eclipse，MyEclipse，Intel">
+<meta name="keywords" content="Python,VS Code">
+<meta property="og:type" content="article">
+<meta property="og:title" content="VS Code搭建Python开发环境">
+<meta property="og:url" content="https://xin053.github.io/2016/06/11/VS Code搭建Python开发环境/index.html">
+<meta property="og:site_name" content="xin053">
+<meta property="og:description" content="编辑器感想贴吧总是看到  高手都是用记事本写代码的  我只想表示：那你慢慢用记事本吧，我用VS Code。 作为码农，基本每天都要敲代码，这就是命吧。一般较大的项目都会用IDE进行开发：  Win32汇编：RadASM 2.0，RadASM 3.0，WinAsm C/C++：VC++6.0，Dev-c++，CodeBlocks，VS2015 Java：Eclipse，MyEclipse，Intel">
+<meta property="og:image" content="http://i.imgur.com/mgejfhd.png">
+<meta property="og:image" content="http://i.imgur.com/4lpO5Wj.png">
+<meta property="og:image" content="http://i.imgur.com/qfBXugz.png">
+<meta property="og:image" content="http://i.imgur.com/L4ZKdUa.png">
+<meta property="og:image" content="http://i.imgur.com/EMelrIc.png">
+<meta property="og:updated_time" content="2017-05-27T13:20:48.771Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="VS Code搭建Python开发环境">
+<meta name="twitter:description" content="编辑器感想贴吧总是看到  高手都是用记事本写代码的  我只想表示：那你慢慢用记事本吧，我用VS Code。 作为码农，基本每天都要敲代码，这就是命吧。一般较大的项目都会用IDE进行开发：  Win32汇编：RadASM 2.0，RadASM 3.0，WinAsm C/C++：VC++6.0，Dev-c++，CodeBlocks，VS2015 Java：Eclipse，MyEclipse，Intel">
+<meta name="twitter:image" content="http://i.imgur.com/mgejfhd.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: undefined,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> VS Code搭建Python开发环境 | xin053 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-78789863-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?95bc477a974f85651897b76f543028bb";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">xin053</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">在安全圈里徘徊，停滞不前</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                VS Code搭建Python开发环境
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-06-11T10:18:39+08:00" content="2016-06-11">
+              2016-06-11
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/06/11/VS Code搭建Python开发环境/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/06/11/VS Code搭建Python开发环境/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <link rel="stylesheet" type="text/css" href="/assets/css/DPlayer.min.css"><script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="编辑器感想"><a href="#编辑器感想" class="headerlink" title="编辑器感想"></a>编辑器感想</h2><p>贴吧总是看到</p>
+<blockquote>
+<p>高手都是用记事本写代码的</p>
+</blockquote>
+<p>我只想表示：那你慢慢用记事本吧，我用<code>VS Code</code>。</p>
+<p>作为码农，基本每天都要敲代码，这就是命吧。一般较大的项目都会用<code>IDE</code>进行开发：</p>
+<ul>
+<li>Win32汇编：RadASM 2.0，RadASM 3.0，WinAsm</li>
+<li>C/C++：VC++6.0，Dev-c++，CodeBlocks，VS2015</li>
+<li>Java：Eclipse，MyEclipse，IntelliJ IDEA</li>
+<li>Android：Eclipse ADT，Android Studio</li>
+<li>Python：PyCharm</li>
+</ul>
+<p>以上基本是我用过的全部<code>IDE</code>，对于开发周期较长的项目，用<code>IDE</code>开发确实比较方便，尤其配合<code>github</code>使用，例如我最喜欢的<code>PyCharm</code>，<code>Android Studio</code>，<code>IntelliJ IDEA</code>这一系列具有方便<code>github</code>功能的<code>IDE</code>，还有号称世界上最强大的IDE：<code>VS</code></p>
+<p>但是我只想说，电脑配置不够，占用内存太高，用<code>AS</code>编译一个<code>android</code>项目都要几分钟。所以一般对于小<code>demo</code>，或者小的项目，找一个比较实用的编辑器能提供很多帮助。</p>
+<a id="more"></a>
+<p>下面说下常用的几个编辑器：</p>
+<ul>
+<li>Vim：linux环境下的神器，搭个完整功能的IDE出来妥妥的。</li>
+<li>Emacs：我是操作系统，刷微博什么的都不是事。</li>
+<li>Atom：拥有众多插件，非常多，提供很多便捷，markdown的代码块的预览都能显示代码高亮，但是占用内存太大是硬伤。用这个进行开发基本可以不使用大型IDE了。</li>
+<li>Sublime Text：现在最新版本是3系列，不过我看到很多人还用2系列进行开发，也有很多插件，不过要钱，得自己找破解版。这个也是我用过时间最长的编辑器。</li>
+<li>VS Code：在我接触VS Code之后，基本就没再使用Sublime Text了，原因就不解释。体验过才知道VS Code有多强大。毕竟出自微软。</li>
+</ul>
+<p>知乎上有个<code>Atom</code>、<code>Sublime Text</code>、<code>VSCode</code> 三者的比较：</p>
+<p><a href="https://www.zhihu.com/question/41857899" target="_blank" rel="external">2016年看，Atom、Sublime Text、VSCode 三者比较，各有哪些优势和弱势？</a></p>
+<p><code>VS Code</code>刚开源的时候还看过一篇文章，讲的是<code>VS Code</code>如何血虐<code>Sublime Text</code>，找不到链接了。</p>
+<h2 id="VS-Code简单介绍"><a href="#VS-Code简单介绍" class="headerlink" title="VS Code简单介绍"></a>VS Code简单介绍</h2><p>微软开源项目，一个极为强大的第三方编辑器，目前最新版本为1.2</p>
+<p>别的不多少，晒下界面：</p>
+<p><img src="http://i.imgur.com/mgejfhd.png" alt=""></p>
+<p><code>VS Code</code>的分屏，<code>git</code>，调试，常用插件以及基本配置和使用就不说了，附上官网链接：</p>
+<p><a href="https://code.visualstudio.com" target="_blank" rel="external">https://code.visualstudio.com</a></p>
+<h2 id="配置Python开发环境"><a href="#配置Python开发环境" class="headerlink" title="配置Python开发环境"></a>配置Python开发环境</h2><p>简介的<code>Python</code>搭配简洁的<code>VS Code</code>，真是绝配，比<code>Python</code>搭配<code>Sublime Text</code>方便多了。</p>
+<p><code>VS Code</code>是有工作空间的概念的，用<code>VS Code</code>打开一个文件夹，该文件夹就可以算是一个工作空间，<code>VS Code</code>会在该文件下新建<code>.vscode</code>文件夹，里面存放的是该工作空间的配置文件，所以以后在该工作空间下的任何代码都会使用该配置文件。</p>
+<p>首先我们需要下载<code>Python</code>，并将<code>Python</code>加到环境变量<code>Path</code>中。</p>
+<p>然后打开<code>VS Code</code>，安装<code>python</code>插件，具体怎么安装，看下面链接：</p>
+<p><a href="https://marketplace.visualstudio.com/items?itemName=donjayamanne.python" target="_blank" rel="external">VS Code Python插件</a></p>
+<p>该插件提供<code>python</code>调试，<code>Lint</code>，以及代码补全等功能，具体看上面的链接</p>
+<p>话说插件的更新不会删除老版本，希望<code>VS Code</code>后期能够改进吧：</p>
+<p><img src="http://i.imgur.com/4lpO5Wj.png" alt=""></p>
+<h3 id="配置Python运行环境"><a href="#配置Python运行环境" class="headerlink" title="配置Python运行环境"></a>配置Python运行环境</h3><p><code>VS Code</code>有<code>task</code>的概念，具体看官网，在<code>.vscode</code>文件夹下有三个文件：</p>
+<p><img src="http://i.imgur.com/qfBXugz.png" alt=""></p>
+<p>其中<code>tasks.json</code>就是配置运行环境的，<code>settings.json</code>下的配置能够覆盖<code>VS Code</code>的默认配置，<code>launch.json</code>配置调试环境。</p>
+<p>下面是<code>tasks.json</code>的配置</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">"version"</span>: <span class="string">"0.1.0"</span>,</div><div class="line">    <span class="attr">"command"</span>: <span class="string">"python"</span>,</div><div class="line">    <span class="attr">"isShellCommand"</span>: <span class="literal">true</span>,</div><div class="line">    <span class="attr">"args"</span>: [<span class="string">"$&#123;file&#125;"</span>],</div><div class="line">    <span class="attr">"showOutput"</span>: <span class="string">"always"</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>参数都很好理解，其中<code>command</code>是<code>python</code>可执行文件的路径，如果配置到了<code>path</code>中，就可以直接写<code>python</code>，<code>args</code>就是运行的参数，也就是当前打开的文件名。</p>
+<p>配置好运行环境后，按下<code>ctrl + shift + B</code>就可以执行了</p>
+<p><img src="http://i.imgur.com/L4ZKdUa.png" alt=""></p>
+<h3 id="配置Python调试环境"><a href="#配置Python调试环境" class="headerlink" title="配置Python调试环境"></a>配置Python调试环境</h3><p><code>launch.json</code>的配置如下：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">"version"</span>: <span class="string">"0.2.0"</span>,</div><div class="line">    <span class="attr">"configurations"</span>: [</div><div class="line">        &#123;</div><div class="line">            <span class="attr">"name"</span>: <span class="string">"Python"</span>,</div><div class="line">            <span class="attr">"type"</span>: <span class="string">"python"</span>,</div><div class="line">            <span class="attr">"request"</span>: <span class="string">"launch"</span>,</div><div class="line">            <span class="attr">"stopOnEntry"</span>: <span class="literal">true</span>,</div><div class="line">            <span class="attr">"program"</span>: <span class="string">"$&#123;file&#125;"</span>,</div><div class="line">            <span class="attr">"debugOptions"</span>: [</div><div class="line">                <span class="string">"WaitOnAbnormalExit"</span>,</div><div class="line">                <span class="string">"WaitOnNormalExit"</span>,</div><div class="line">                <span class="string">"RedirectOutput"</span></div><div class="line">            ]</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">            <span class="attr">"name"</span>: <span class="string">"Python Console App"</span>,</div><div class="line">            <span class="attr">"type"</span>: <span class="string">"python"</span>,</div><div class="line">            <span class="attr">"request"</span>: <span class="string">"launch"</span>,</div><div class="line">            <span class="attr">"stopOnEntry"</span>: <span class="literal">true</span>,</div><div class="line">            <span class="attr">"program"</span>: <span class="string">"$&#123;file&#125;"</span>,</div><div class="line">            <span class="attr">"externalConsole"</span>: <span class="literal">true</span>,</div><div class="line">            <span class="attr">"debugOptions"</span>: [</div><div class="line">                <span class="string">"WaitOnAbnormalExit"</span>,</div><div class="line">                <span class="string">"WaitOnNormalExit"</span></div><div class="line">            ]</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">            <span class="attr">"name"</span>: <span class="string">"Django"</span>,</div><div class="line">            <span class="attr">"type"</span>: <span class="string">"python"</span>,</div><div class="line">            <span class="attr">"request"</span>: <span class="string">"launch"</span>,</div><div class="line">            <span class="attr">"stopOnEntry"</span>: <span class="literal">true</span>,</div><div class="line">            <span class="attr">"program"</span>: <span class="string">"$&#123;workspaceRoot&#125;/manage.py"</span>,</div><div class="line">            <span class="attr">"args"</span>: [</div><div class="line">                <span class="string">"runserver"</span>,</div><div class="line">                <span class="string">"--noreload"</span></div><div class="line">            ],</div><div class="line">            <span class="attr">"debugOptions"</span>: [</div><div class="line">                <span class="string">"WaitOnAbnormalExit"</span>,</div><div class="line">                <span class="string">"WaitOnNormalExit"</span>,</div><div class="line">                <span class="string">"RedirectOutput"</span>,</div><div class="line">                <span class="string">"DjangoDebugging"</span></div><div class="line">            ]</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">            <span class="attr">"name"</span>: <span class="string">"Watson"</span>,</div><div class="line">            <span class="attr">"type"</span>: <span class="string">"python"</span>,</div><div class="line">            <span class="attr">"request"</span>: <span class="string">"launch"</span>,</div><div class="line">            <span class="attr">"stopOnEntry"</span>: <span class="literal">true</span>,</div><div class="line">            <span class="attr">"program"</span>: <span class="string">"$&#123;workspaceRoot&#125;/console.py"</span>,</div><div class="line">            <span class="attr">"args"</span>: [</div><div class="line">                <span class="string">"dev"</span>,</div><div class="line">                <span class="string">"runserver"</span>,</div><div class="line">                <span class="string">"--noreload=True"</span></div><div class="line">            ],</div><div class="line">            <span class="attr">"debugOptions"</span>: [</div><div class="line">                <span class="string">"WaitOnAbnormalExit"</span>,</div><div class="line">                <span class="string">"WaitOnNormalExit"</span>,</div><div class="line">                <span class="string">"RedirectOutput"</span></div><div class="line">            ]</div><div class="line">        &#125;</div><div class="line">    ]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果<code>python</code>可执行文件不在<code>path</code>中，就需要添加<code>pythonPath</code>属性配置，如：</p>
+<pre><code>&quot;pythonPath&quot;: &quot;D:\\Python 3.5\\python.exe&quot;
+</code></pre><p>点左边蜘蛛(调试)按钮，设置好断点，就可以开开心心调试了，附上截图：</p>
+<p><img src="http://i.imgur.com/EMelrIc.png" alt=""></p>
+<p>有没有感受到 <code>VS Code</code>加<code>Python</code>插件组合的强大呢？</p>
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechat.png" alt="xin053 WeChat Pay">
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay.png" alt="xin053 Alipay">
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Python/" rel="tag">#Python</a>
+          
+            <a href="/tags/VS-Code/" rel="tag">#VS Code</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/06/07/DrrrClient源码解读/" rel="next" title="DrrrClient源码解读">
+                <i class="fa fa-chevron-left"></i> DrrrClient源码解读
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/06/18/Git使用详解/" rel="prev" title="Git使用详解">
+                Git使用详解 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/me.jpg" alt="xin053">
+          <p class="site-author-name" itemprop="name">xin053</p>
+          <p class="site-description motion-element" itemprop="description">正在用Windbg调试正在调试正在反汇编Windbg的IDA的OD...</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">55</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">50</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/xin053" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/xin053" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/xin053" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://blog.csdn.net/zhouzixin053" target="_blank" title="csdn">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  csdn
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://bbs.pediy.com/" title="看雪" target="_blank">看雪</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.geeklzh.com/" title="怪咖家园" target="_blank">怪咖家园</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.csdh.pub/" title="CS_DH" target="_blank">CS_DH</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://dendise7engithub.github.io/" title="Dendionk" target="_blank">Dendionk</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://cyang.tech/" title="cyang" target="_blank">cyang</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#编辑器感想"><span class="nav-number">1.</span> <span class="nav-text">编辑器感想</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VS-Code简单介绍"><span class="nav-number">2.</span> <span class="nav-text">VS Code简单介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置Python开发环境"><span class="nav-number">3.</span> <span class="nav-text">配置Python开发环境</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#配置Python运行环境"><span class="nav-number">3.1.</span> <span class="nav-text">配置Python运行环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置Python调试环境"><span class="nav-number">3.2.</span> <span class="nav-text">配置Python调试环境</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xin053</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'xin053';
+      var disqus_identifier = '2016/06/11/VS Code搭建Python开发环境/';
+      var disqus_title = "VS Code搭建Python开发环境";
+      var disqus_url = 'https://xin053.github.io/2016/06/11/VS Code搭建Python开发环境/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+                            
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').mousedown(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+  
+
+  
+
+  
+
+</body>
+</html>

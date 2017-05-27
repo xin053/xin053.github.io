@@ -1,0 +1,1083 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="jFTy9MrTO4piYCnfdfFFpOLb9SCydVuSBPbqgakCzCM">
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Python,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="xin053" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="说明python官方文档无疑是每个学习python的pythoner必看的，除了The Python Tutorial新手必看之外，最重要莫过于The Python Language Reference和The Python Standard Library前者简单介绍了有关python的实现，后者则是python的标准库的详解，无疑是很好的学习资源，在此记下对于我日常而言使用比较多的库，当作索引">
+<meta name="keywords" content="Python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python官方文档摘记">
+<meta property="og:url" content="https://xin053.github.io/2016/10/06/Python官方文档摘记/index.html">
+<meta property="og:site_name" content="xin053">
+<meta property="og:description" content="说明python官方文档无疑是每个学习python的pythoner必看的，除了The Python Tutorial新手必看之外，最重要莫过于The Python Language Reference和The Python Standard Library前者简单介绍了有关python的实现，后者则是python的标准库的详解，无疑是很好的学习资源，在此记下对于我日常而言使用比较多的库，当作索引">
+<meta property="og:updated_time" content="2017-05-27T13:20:48.771Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python官方文档摘记">
+<meta name="twitter:description" content="说明python官方文档无疑是每个学习python的pythoner必看的，除了The Python Tutorial新手必看之外，最重要莫过于The Python Language Reference和The Python Standard Library前者简单介绍了有关python的实现，后者则是python的标准库的详解，无疑是很好的学习资源，在此记下对于我日常而言使用比较多的库，当作索引">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: undefined,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> Python官方文档摘记 | xin053 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-78789863-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?95bc477a974f85651897b76f543028bb";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">xin053</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">在安全圈里徘徊，停滞不前</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+    
+  
+
+  <article class="post post-type-normal post-sticky" itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Python官方文档摘记
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-10-06T17:40:00+08:00" content="2016-10-06">
+              2016-10-06
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/10/06/Python官方文档摘记/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/10/06/Python官方文档摘记/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <link rel="stylesheet" type="text/css" href="/assets/css/DPlayer.min.css"><script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><p>python官方文档无疑是每个学习python的pythoner必看的，除了<a href="https://docs.python.org/3/tutorial/index.html" target="_blank" rel="external">The Python Tutorial</a>新手必看之外，最重要莫过于<a href="https://docs.python.org/3/reference/index.html" target="_blank" rel="external">The Python Language Reference</a>和<a href="https://docs.python.org/3/library/index.html" target="_blank" rel="external">The Python Standard Library</a><br>前者简单介绍了有关python的实现，后者则是python的标准库的详解，无疑是很好的学习资源，在此记下对于我日常而言使用比较多的库，当作索引，以便将来查阅。</p>
+<p><strong>python官方文档版本：3.5.2</strong><br><strong>持续更新</strong></p>
+<a id="more"></a>
+<p>The Python Language Reference：</p>
+<ul>
+<li><a href="https://docs.python.org/3/reference/lexical_analysis.html" target="_blank" rel="external">Lexical analysis 词法分析 简单介绍了python一些功能的实现原理</a></li>
+<li><a href="https://docs.python.org/3/reference/datamodel.html" target="_blank" rel="external">Data model 介绍了很多双下划线的私有属性 值得反复看</a></li>
+<li><a href="https://docs.python.org/3/reference/import.html" target="_blank" rel="external">The import system 导入系统介绍</a></li>
+</ul>
+<p>The Python Standard Library：</p>
+<ul>
+<li><a href="https://docs.python.org/3/library/functions.html" target="_blank" rel="external">Built-in Functions 必须熟练掌握</a></li>
+<li><a href="https://docs.python.org/3/library/stdtypes.html" target="_blank" rel="external">Built-in Types 基础内容 要熟悉</a></li>
+<li><a href="https://docs.python.org/3.5/library/text.html" target="_blank" rel="external">Text Processing Services 文本处理服务</a><ul>
+<li><a href="https://docs.python.org/3.5/library/string.html" target="_blank" rel="external"><code>format</code> — 字符串格式化</a></li>
+<li><a href="https://docs.python.org/3.5/library/re.html" target="_blank" rel="external"><code>re</code> — 正则表达式操作</a> <a href="https://xin053.github.io/2016/12/01/re%E6%AD%A3%E5%88%99%E5%BA%93%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3/#more">re正则库使用详解</a></li>
+</ul>
+</li>
+<li><p><a href="https://docs.python.org/3/library/datatypes.html" target="_blank" rel="external">Data Types</a></p>
+<ul>
+<li><a href="https://docs.python.org/3/library/datetime.html" target="_blank" rel="external"><code>datetime</code> — 基础时间和日期模块</a></li>
+<li><a href="https://docs.python.org/3/library/calendar.html" target="_blank" rel="external"><code>calendar</code> — General calendar-related functions</a></li>
+<li><a href="https://docs.python.org/3/library/collections.html#module-collections" target="_blank" rel="external"><code>collections</code> — 提供代替内置列表元组字典的多种数据结构</a><ul>
+<li><a href="https://docs.python.org/3/library/collections.html#collections.ChainMap" target="_blank" rel="external"><code>ChainMap</code> — 通过链表将多个map链在一起 查找时优先查找前面的</a></li>
+<li><a href="https://docs.python.org/3/library/collections.html#collections.Counter" target="_blank" rel="external"><code>Counter</code> — Dict subclass for counting hashable items</a></li>
+<li><a href="https://docs.python.org/3/library/collections.html#collections.deque" target="_blank" rel="external"><code>deque</code> — 双端队列</a></li>
+<li><a href="https://docs.python.org/3/library/collections.html#collections.defaultdict" target="_blank" rel="external"><code>defaultdict</code> — 给字典的value添加默认数据类型</a></li>
+<li><a href="https://docs.python.org/3/library/collections.html#collections.namedtuple" target="_blank" rel="external"><code>namedtuple</code> — 命名元组</a></li>
+<li><a href="https://docs.python.org/3/library/collections.html#collections.OrderedDict" target="_blank" rel="external"><code>OrderedDict</code> — 有序字典 Dictionary that remembers insertion order</a></li>
+<li><a href="https://docs.python.org/3/library/collections.html#collections.UserDict" target="_blank" rel="external"><code>UserDict</code> — dict 的一个封装类 主要用来拷贝一个字典的数据</a></li>
+<li><a href="https://docs.python.org/3/library/collections.html#collections.UserList" target="_blank" rel="external"><code>UserList</code></a></li>
+<li><a href="https://docs.python.org/3/library/collections.html#collections.UserString" target="_blank" rel="external"><code>UserString</code></a></li>
+</ul>
+</li>
+<li><a href="https://docs.python.org/3/library/heapq.html" target="_blank" rel="external"><code>heapq</code> — 利用堆排序算法排序模块</a></li>
+<li><a href="https://docs.python.org/3/library/bisect.html" target="_blank" rel="external"><code>bisect</code> — 利用二分法将元素插入到已排序列表后依然保持已排序</a></li>
+<li><a href="https://docs.python.org/3/library/weakref.html" target="_blank" rel="external"><code>weakref</code> — 弱引用 用来避免循环引用导致对象没有被GC回收</a></li>
+<li><a href="https://docs.python.org/3/library/types.html" target="_blank" rel="external"><code>types</code> — Define names for built-in types that aren’t directly accessible as a builtin</a></li>
+<li><a href="https://docs.python.org/3/library/copy.html" target="_blank" rel="external"><code>copy</code> — 分浅拷贝(不拷贝子对象)与深拷贝(拷贝子对象)</a></li>
+<li><a href="https://docs.python.org/3/library/pprint.html" target="_blank" rel="external"><code>pprint</code> — Data pretty printer</a></li>
+<li><a href="https://docs.python.org/3/library/reprlib.html" target="_blank" rel="external"><code>reprlib</code> — 可以限制字符串长度的repr</a></li>
+<li><a href="https://docs.python.org/3/library/enum.html" target="_blank" rel="external"><code>enum</code> — 3.4出现的</a></li>
+</ul>
+</li>
+<li><a href="https://docs.python.org/3/library/numeric.html" target="_blank" rel="external">Numeric and Mathematical Modules</a><ul>
+<li><a href="https://docs.python.org/3/library/math.html" target="_blank" rel="external"><code>math</code> — 常用数学操作 例如绝对值 阶乘 sin(x) cos(x)等</a></li>
+<li><a href="https://docs.python.org/3/library/decimal.html" target="_blank" rel="external"><code>decimal</code> — 更精确的数据类型 注意对于float数据要先转成字符串</a></li>
+<li><a href="https://docs.python.org/3/library/fractions.html" target="_blank" rel="external"><code>fractions</code> — 分数  如果需要准确精度也需要导入decimal包</a></li>
+<li><a href="https://docs.python.org/3/library/random.html" target="_blank" rel="external"><code>random</code> — 产生随机数 可指定产生哪个范围的随机数也能指定返回整数 但是不能用在安全方面</a></li>
+<li><a href="https://docs.python.org/3/library/statistics.html" target="_blank" rel="external"><code>statistics</code> — 统计学函数 例如求均值 中值 众数 标准差和方差</a></li>
+</ul>
+</li>
+<li><a href="https://docs.python.org/3/library/functional.html" target="_blank" rel="external">Functional Programming Modules</a><ul>
+<li><a href="https://docs.python.org/3/library/itertools.html" target="_blank" rel="external"><code>itertools</code> — 提供多种常用便利操作 组合等等 返回值为生成器或者迭代器</a></li>
+<li><a href="https://docs.python.org/3/library/functools.html" target="_blank" rel="external"><code>functools</code> — 提供一些方法对函数进行封装 以及reduce()</a></li>
+<li><a href="https://docs.python.org/3/library/operator.html" target="_blank" rel="external"><code>operator</code> — 各种常用的操作符都封装到了该模块中 例如加减乘除 大小比较等等</a></li>
+</ul>
+</li>
+<li><a href="https://docs.python.org/3/library/filesys.html" target="_blank" rel="external">File and Directory Access</a><ul>
+<li><a href="https://docs.python.org/3/library/pathlib.html" target="_blank" rel="external"><code>pathlib</code> — 路径库</a>  <a href="https://xin053.github.io/2016/07/03/pathlib%E8%B7%AF%E5%BE%84%E5%BA%93%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3/">pathlib路径库使用详解</a></li>
+<li><a href="https://docs.python.org/3/library/os.path.html" target="_blank" rel="external"><code>os.path</code> — 同样是路径库 与pathlib不同的是后者上升到了对象级别</a></li>
+<li><a href="https://docs.python.org/3/library/stat.html" target="_blank" rel="external"><code>stat</code> — 显示文件mode等信息 也就是linux中 <code>ls -al</code> 显示的那些内容</a></li>
+<li><a href="https://docs.python.org/3/library/tempfile.html" target="_blank" rel="external"><code>tempfile</code> — 创建临时文件或临时目录 使用特定的函数可以使得创建的临时文件在关闭的时候自动删除</a></li>
+<li><a href="https://docs.python.org/3/library/glob.html" target="_blank" rel="external"><code>glob</code> — 匹配文件后缀名  可以包含路径</a></li>
+<li><a href="https://docs.python.org/3/library/fnmatch.html" target="_blank" rel="external"><code>fnmatch</code> — 匹配文件名  不能包含路径</a></li>
+<li><a href="https://docs.python.org/3/library/linecache.html" target="_blank" rel="external"><code>linecache</code> — 获取文件指定行内容并缓存</a></li>
+<li><a href="https://docs.python.org/3/library/shutil.html" target="_blank" rel="external"><code>shutil</code> — 提供高层次的文件操作 包括文件复制删除修改权限等 也有linux下<code>which</code>命令的功能 也提供简单的文件打包和解包 shell util 的简称</a></li>
+</ul>
+</li>
+<li><a href="https://docs.python.org/3/library/persistence.html" target="_blank" rel="external">Data Persistence</a><ul>
+<li><a href="https://docs.python.org/3/library/pickle.html" target="_blank" rel="external"><code>pickle</code> — 序列化 可序列化到文件 网络流或数据库 注意序列化安全漏洞</a></li>
+<li><a href="https://docs.python.org/3/library/copyreg.html" target="_blank" rel="external"><code>copyreg</code> — 设置使用<code>pickle</code>和<code>copy</code>模块序列化或拷贝对象时将执行的函数</a></li>
+<li><a href="https://docs.python.org/3/library/sqlite3.html" target="_blank" rel="external"><code>sqlite3</code> — sqlite数据库</a></li>
+</ul>
+</li>
+<li><a href="https://docs.python.org/3/library/archiving.html" target="_blank" rel="external">Data Compression and Archiving</a><ul>
+<li><a href="https://docs.python.org/3/library/zlib.html" target="_blank" rel="external"><code>zlib</code> — gzip压缩</a></li>
+<li><a href="https://docs.python.org/3/library/gzip.html" target="_blank" rel="external"><code>gzip</code> — gzip压缩</a></li>
+<li><a href="https://docs.python.org/3/library/bz2.html" target="_blank" rel="external"><code>bz2</code> — bz2压缩</a></li>
+<li><a href="https://docs.python.org/3/library/zipfile.html" target="_blank" rel="external"><code>zipfile</code> — zip压缩</a></li>
+<li><a href="https://docs.python.org/3/library/tarfile.html" target="_blank" rel="external"><code>tarfile</code> — tar打包</a></li>
+</ul>
+</li>
+<li><a href="https://docs.python.org/3/library/fileformats.html" target="_blank" rel="external">File Formats</a><ul>
+<li><a href="https://docs.python.org/3/library/csv.html" target="_blank" rel="external"><code>csv</code> — csv格式相关</a></li>
+<li><a href="https://docs.python.org/3/library/configparser.html" target="_blank" rel="external"><code>configparser</code> — ini配置文件读取</a> <a href="https://xin053.github.io/2016/07/18/configparser%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90%E5%99%A8%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3/">configparser配置文件解析器使用详解</a></li>
+</ul>
+</li>
+<li><a href="https://docs.python.org/3/library/crypto.html" target="_blank" rel="external">Cryptographic Services</a><ul>
+<li><a href="https://docs.python.org/3/library/hashlib.html" target="_blank" rel="external"><code>hashlib</code> — 各种加密算法</a></li>
+</ul>
+</li>
+<li><a href="https://docs.python.org/3/library/allos.html" target="_blank" rel="external">Generic Operating System Services</a><ul>
+<li><a href="https://docs.python.org/3/library/os.html" target="_blank" rel="external"><code>os</code> — 与系统相关的</a> <a href="https://xin053.github.io/2016/11/29/os%E5%BA%93%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95%E4%BD%BF%E7%94%A8%E4%BB%8B%E7%BB%8D/">os库常用方法使用介绍</a></li>
+<li><a href="https://docs.python.org/3/library/io.html" target="_blank" rel="external"><code>io</code> — 输入输出流</a></li>
+<li><a href="https://docs.python.org/3/library/argparse.html" target="_blank" rel="external"><code>argparse</code> — 命令行工具</a> <a href="https://xin053.github.io/2016/07/31/click%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3/">click命令行工具使用详解</a></li>
+<li><a href="https://docs.python.org/3/library/logging.html" target="_blank" rel="external"><code>logging</code> — 日志</a> <a href="http://www.jianshu.com/p/feb86c06c4f4" target="_blank" rel="external">python logging模块使用教程</a> <a href="http://blog.csdn.net/zyz511919766/article/details/25136485" target="_blank" rel="external">Python logging模块详解</a></li>
+<li><a href="https://docs.python.org/3/library/getpass.html" target="_blank" rel="external"><code>getpass</code> — 像linux中输入密码一样不显示输入的密码</a></li>
+</ul>
+</li>
+<li><a href="https://docs.python.org/3/library/concurrency.html" target="_blank" rel="external">Concurrent Execution</a><ul>
+<li>线程</li>
+</ul>
+</li>
+<li><a href="https://docs.python.org/3/library/ipc.html" target="_blank" rel="external">Interprocess Communication and Networking</a><ul>
+<li><a href="https://docs.python.org/3/library/socket.html" target="_blank" rel="external"><code>socket</code> — 底层socket</a></li>
+<li><a href="https://docs.python.org/3/library/ssl.html" target="_blank" rel="external"><code>ssl</code></a></li>
+<li>asyncio</li>
+</ul>
+</li>
+<li><a href="https://docs.python.org/3/library/netdata.html" target="_blank" rel="external">Internet Data Handling</a><ul>
+<li><a href="https://docs.python.org/3/library/json.html" target="_blank" rel="external"><code>json</code></a></li>
+<li><a href="https://docs.python.org/3/library/mimetypes.html" target="_blank" rel="external"><code>mimetypes</code> — Map filenames to MIME types</a></li>
+<li><a href="https://docs.python.org/3/library/base64.html" target="_blank" rel="external"><code>base64</code> — Base16, Base32, Base64, Base85 Data Encodings</a></li>
+</ul>
+</li>
+<li><a href="https://docs.python.org/3/library/markup.html" target="_blank" rel="external">Structured Markup Processing Tools</a><ul>
+<li>html和xml解析 掌握BeautifulSoup即可  <a href="https://xin053.github.io/categories/Python%E6%A8%A1%E5%9D%97%E5%AD%A6%E4%B9%A0/">BeautifulSoup html与xml解析库使用详解</a></li>
+</ul>
+</li>
+<li><a href="https://docs.python.org/3/library/internet.html" target="_blank" rel="external">Internet Protocols and Support 常用网络协议</a> </li>
+<li><a href="https://docs.python.org/3/library/i18n.html" target="_blank" rel="external">Internationalization 国际化</a></li>
+<li><a href="https://docs.python.org/3/library/debug.html" target="_blank" rel="external">Debugging and Profiling</a><ul>
+<li><a href="https://docs.python.org/3/library/timeit.html" target="_blank" rel="external"><code>timeit</code> — Measure execution time of small code snippets</a></li>
+</ul>
+</li>
+<li><a href="https://docs.python.org/3/library/python.html" target="_blank" rel="external">Python Runtime Services</a><ul>
+<li><a href="https://docs.python.org/3/library/sys.html" target="_blank" rel="external"><code>sys</code> — System-specific parameters and functions</a></li>
+<li><a href="https://docs.python.org/3/library/warnings.html" target="_blank" rel="external"><code>warnings</code> — Warning control</a></li>
+<li><a href="https://docs.python.org/3/library/contextlib.html" target="_blank" rel="external"><code>contextlib</code> — Utilities for <code>with</code>-statement contexts</a></li>
+<li><a href="https://docs.python.org/3/library/atexit.html" target="_blank" rel="external"><code>atexit</code> — Exit handlers</a></li>
+</ul>
+</li>
+<li><a href="https://docs.python.org/3/library/modules.html" target="_blank" rel="external">Importing Modules</a><ul>
+<li><a href="https://docs.python.org/3/library/zipimport.html" target="_blank" rel="external"><code>zipimport</code> — Import modules from Zip archives</a></li>
+<li><a href="https://docs.python.org/3/library/modulefinder.html" target="_blank" rel="external"><code>modulefinder</code> — Find modules used by a script</a></li>
+<li><a href="https://docs.python.org/3/library/importlib.html" target="_blank" rel="external"><code>importlib</code> – The implementation of import</a></li>
+</ul>
+</li>
+<li><a href="https://docs.python.org/3/library/language.html" target="_blank" rel="external">Python Language Services</a><ul>
+<li><a href="https://docs.python.org/3/library/py_compile.html" target="_blank" rel="external"><code>py_compile</code> — Compile Python source files</a></li>
+<li><a href="https://docs.python.org/3/library/compileall.html" target="_blank" rel="external"><code>compileall</code> — Byte-compile Python libraries</a></li>
+<li><a href="https://docs.python.org/3/library/dis.html" target="_blank" rel="external"><code>dis</code> — Disassembler for Python bytecode</a></li>
+</ul>
+</li>
+<li><a href="https://docs.python.org/3/library/windows.html" target="_blank" rel="external">MS Windows Specific Services</a><ul>
+<li><a href="https://docs.python.org/3/library/winreg.html" target="_blank" rel="external"><code>winreg</code> – Windows registry access</a></li>
+</ul>
+</li>
+</ul>
+<p><a href="https://docs.python.org/3.6/index.html" target="_blank" rel="external">python3.6新增</a></p>
+<ul>
+<li><a href="https://docs.python.org/3.6/library/crypto.html" target="_blank" rel="external">Cryptographic Services</a><ul>
+<li><a href="https://docs.python.org/3.6/library/secrets.html#module-secrets" target="_blank" rel="external"><code>secrets</code> — 生成安全的随机数，功能同<code>os.urandom()</code></a></li>
+</ul>
+</li>
+</ul>
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechat.png" alt="xin053 WeChat Pay">
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay.png" alt="xin053 Alipay">
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Python/" rel="tag">#Python</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/10/03/Python风格指南/" rel="next" title="Python风格指南">
+                <i class="fa fa-chevron-left"></i> Python风格指南
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/10/06/Python第三方库索引/" rel="prev" title="Python第三方库索引">
+                Python第三方库索引 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/me.jpg" alt="xin053">
+          <p class="site-author-name" itemprop="name">xin053</p>
+          <p class="site-description motion-element" itemprop="description">正在用Windbg调试正在调试正在反汇编Windbg的IDA的OD...</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">55</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">50</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/xin053" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/xin053" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/xin053" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://blog.csdn.net/zhouzixin053" target="_blank" title="csdn">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  csdn
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://bbs.pediy.com/" title="看雪" target="_blank">看雪</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.geeklzh.com/" title="怪咖家园" target="_blank">怪咖家园</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.csdh.pub/" title="CS_DH" target="_blank">CS_DH</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://dendise7engithub.github.io/" title="Dendionk" target="_blank">Dendionk</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://cyang.tech/" title="cyang" target="_blank">cyang</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#说明"><span class="nav-number">1.</span> <span class="nav-text">说明</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xin053</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'xin053';
+      var disqus_identifier = '2016/10/06/Python官方文档摘记/';
+      var disqus_title = "Python官方文档摘记";
+      var disqus_url = 'https://xin053.github.io/2016/10/06/Python官方文档摘记/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+                            
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').mousedown(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+  
+
+  
+
+  
+
+</body>
+</html>

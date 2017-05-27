@@ -1,0 +1,1138 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="jFTy9MrTO4piYCnfdfFFpOLb9SCydVuSBPbqgakCzCM">
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Python,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="xin053" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="导入 仅对包和模块使用导入  虽然也可以导入某个函数，但这样做明显使得结构不清晰，所以应该仅仅对包和模块使用导入 包 使用模块的全路径名来导入每个模块  避免模块名冲突. 查找包更容易. 异常 允许使用异常, 但必须小心  模块或包应该定义自己的特定域的异常基类, 这个基类应该从内建的Exception类继承. 模块的异常基类应该叫做Error. 12class Error(Exception):">
+<meta name="keywords" content="Python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python风格指南">
+<meta property="og:url" content="https://xin053.github.io/2016/10/03/Python风格指南/index.html">
+<meta property="og:site_name" content="xin053">
+<meta property="og:description" content="导入 仅对包和模块使用导入  虽然也可以导入某个函数，但这样做明显使得结构不清晰，所以应该仅仅对包和模块使用导入 包 使用模块的全路径名来导入每个模块  避免模块名冲突. 查找包更容易. 异常 允许使用异常, 但必须小心  模块或包应该定义自己的特定域的异常基类, 这个基类应该从内建的Exception类继承. 模块的异常基类应该叫做Error. 12class Error(Exception):">
+<meta property="og:updated_time" content="2017-05-27T13:20:48.771Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python风格指南">
+<meta name="twitter:description" content="导入 仅对包和模块使用导入  虽然也可以导入某个函数，但这样做明显使得结构不清晰，所以应该仅仅对包和模块使用导入 包 使用模块的全路径名来导入每个模块  避免模块名冲突. 查找包更容易. 异常 允许使用异常, 但必须小心  模块或包应该定义自己的特定域的异常基类, 这个基类应该从内建的Exception类继承. 模块的异常基类应该叫做Error. 12class Error(Exception):">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: undefined,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> Python风格指南 | xin053 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-78789863-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?95bc477a974f85651897b76f543028bb";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">xin053</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">在安全圈里徘徊，停滞不前</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Python风格指南
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-10-03T19:34:51+08:00" content="2016-10-03">
+              2016-10-03
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/10/03/Python风格指南/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/10/03/Python风格指南/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <link rel="stylesheet" type="text/css" href="/assets/css/DPlayer.min.css"><script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="导入"><a href="#导入" class="headerlink" title="导入"></a>导入</h2><blockquote>
+<p>仅对包和模块使用导入</p>
+</blockquote>
+<p>虽然也可以导入某个函数，但这样做明显使得结构不清晰，所以应该仅仅对包和模块使用导入</p>
+<h2 id="包"><a href="#包" class="headerlink" title="包"></a>包</h2><blockquote>
+<p>使用模块的全路径名来导入每个模块</p>
+</blockquote>
+<p>避免模块名冲突. 查找包更容易.</p>
+<h2 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h2><blockquote>
+<p>允许使用异常, 但必须小心</p>
+</blockquote>
+<p>模块或包应该定义自己的特定域的异常基类, 这个基类应该从内建的<code>Exception</code>类继承. 模块的异常基类应该叫做<code>Error</code>.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Error</span><span class="params">(Exception)</span>:</span></div><div class="line">    <span class="keyword">pass</span></div></pre></td></tr></table></figure>
+<p>永远不要使用 <code>except:</code> 语句来捕获所有异常, 也不要捕获<code>Exception</code> 或者 <code>StandardError</code>,因为这样容易隐藏真正的bug</p>
+<p>当捕获异常时, 使用 <code>as</code> 而不要用逗号. 例如:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">try</span>:</div><div class="line">    <span class="keyword">raise</span> Error</div><div class="line"><span class="keyword">except</span> Error <span class="keyword">as</span> error:</div><div class="line">    <span class="keyword">pass</span></div></pre></td></tr></table></figure>
+<a id="more"></a>
+<h2 id="全局变量"><a href="#全局变量" class="headerlink" title="全局变量"></a>全局变量</h2><blockquote>
+<p>避免全局变量</p>
+</blockquote>
+<p>避免使用全局变量, 用类变量来代替. 但也有一些例外:</p>
+<ul>
+<li>脚本的默认选项.</li>
+<li>模块级常量. 例如:　PI = 3.14159. 常量应该全大写, 用下划线连接.</li>
+<li>有时候用全局变量来缓存值或者作为函数返回值很有用.</li>
+<li>如果需要, 全局变量应该仅在模块内部可用, 并通过模块级的公共函数来访问.</li>
+</ul>
+<h2 id="嵌套-局部-内部类或函数"><a href="#嵌套-局部-内部类或函数" class="headerlink" title="嵌套/局部/内部类或函数"></a>嵌套/局部/内部类或函数</h2><blockquote>
+<p>鼓励使用嵌套/本地/内部类或函数</p>
+</blockquote>
+<h2 id="列表推导"><a href="#列表推导" class="headerlink" title="列表推导"></a>列表推导</h2><blockquote>
+<p>可以在简单情况下使用</p>
+</blockquote>
+<p>简单的列表推导可以比其它的列表创建方法更加清晰简单. 生成器表达式可以十分高效, 因为它们避免了创建整个列表.</p>
+<p>适用于简单情况. 每个部分应该单独置于一行: 映射表达式, for语句, 过滤器表达式. 禁止多重for语句或过滤器表达式. 复杂情况下还是使用循环.</p>
+<h2 id="生成器"><a href="#生成器" class="headerlink" title="生成器"></a>生成器</h2><blockquote>
+<p>按需使用生成器.</p>
+</blockquote>
+<h2 id="Lambda函数"><a href="#Lambda函数" class="headerlink" title="Lambda函数"></a>Lambda函数</h2><blockquote>
+<p>适用于单行函数</p>
+</blockquote>
+<p>适用于单行函数. 如果代码超过60-80个字符, 最好还是定义成常规(嵌套)函数.</p>
+<h2 id="条件表达式"><a href="#条件表达式" class="headerlink" title="条件表达式"></a>条件表达式</h2><blockquote>
+<p>适用于单行函数</p>
+</blockquote>
+<p>条件表达式是对于if语句的一种更为简短的句法规则. 例如:<code>x = 1 if cond else 2</code>.</p>
+<p>适用于单行函数. 在其他情况下，推荐使用完整的if语句.</p>
+<h2 id="True-False的求值"><a href="#True-False的求值" class="headerlink" title="True/False的求值"></a>True/False的求值</h2><blockquote>
+<p>尽可能使用隐式false</p>
+</blockquote>
+<p>Python在布尔上下文中会将某些值求值为false. 按简单的直觉来讲, 就是所有的”空”值都被认为是false. 因此<code>0</code>， <code>None</code>, <code>[]</code>, <code>{}</code>, <code>“”</code> 都被认为是<code>false</code>.</p>
+<p>尽可能使用隐式的false, 例如: 使用 <code>if foo:</code> 而不是<code>if foo != []:</code> 不过还是有一些注意事项需要你铭记在心:</p>
+<ul>
+<li>永远不要用<code>==</code>或者<code>!=</code>来比较单件, 比如<code>None</code>. 使用<code>is</code>或者<code>is not</code>.</li>
+<li>对于序列(字符串, 列表, 元组), 要注意空序列是false. </li>
+</ul>
+<h2 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h2><blockquote>
+<p>不要依赖内建类型的原子性.</p>
+</blockquote>
+<p>虽然Python的内建类型例如字典看上去拥有原子操作, 但是在某些情形下它们仍然不是原子的</p>
+<p>优先使用<code>Queue</code>模块的 <code>Queue</code> 数据类型作为线程间的数据通信方式. 另外, 使用<code>threading</code>模块及其锁原语(locking primitives). 了解条件变量的合适使用方式, 这样你就可以使用 <code>threading.Condition</code> 来取代低级别的锁了.</p>
+<h2 id="分号"><a href="#分号" class="headerlink" title="分号"></a>分号</h2><blockquote>
+<p>不要在行尾加分号, 也不要用分号将两条命令放在同一行.</p>
+</blockquote>
+<h2 id="行长度"><a href="#行长度" class="headerlink" title="行长度"></a>行长度</h2><blockquote>
+<p>每行不超过80个字符</p>
+</blockquote>
+<p>例外:</p>
+<ul>
+<li>长的导入模块语句</li>
+<li>注释里的URL</li>
+</ul>
+<p>不要使用反斜杠连接行.</p>
+<p>Python会将 圆括号, 中括号和花括号中的行隐式的连接起来 , 你可以利用这个特点. 如果需要, 你可以在表达式外围增加一对额外的圆括号.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Yes: foo_bar(self, width, height, color=<span class="string">'black'</span>, design=<span class="keyword">None</span>, x=<span class="string">'foo'</span>,</div><div class="line">             emphasis=<span class="keyword">None</span>, highlight=<span class="number">0</span>)</div><div class="line"></div><div class="line">     <span class="keyword">if</span> (width == <span class="number">0</span> <span class="keyword">and</span> height == <span class="number">0</span> <span class="keyword">and</span></div><div class="line">         color == <span class="string">'red'</span> <span class="keyword">and</span> emphasis == <span class="string">'strong'</span>):</div></pre></td></tr></table></figure>
+<h2 id="空行"><a href="#空行" class="headerlink" title="空行"></a>空行</h2><blockquote>
+<p>顶级定义之间空两行, 方法定义之间空一行</p>
+</blockquote>
+<h2 id="空格"><a href="#空格" class="headerlink" title="空格"></a>空格</h2><blockquote>
+<p>按照标准的排版规范来使用标点两边的空格</p>
+</blockquote>
+<p>括号内不要有空格.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Yes: spam(ham[<span class="number">1</span>], &#123;eggs: <span class="number">2</span>&#125;, [])</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">No:  spam( ham[ <span class="number">1</span> ], &#123; eggs: <span class="number">2</span> &#125;, [ ] )</div></pre></td></tr></table></figure>
+<h2 id="Shebang"><a href="#Shebang" class="headerlink" title="Shebang"></a>Shebang</h2><blockquote>
+<p>大部分.py文件不必以#!作为文件的开始. 根据 <a href="http://www.python.org/dev/peps/pep-0394/" target="_blank" rel="external">PEP-394</a> , 程序的main文件应该以 <code>#!/usr/bin/python2</code>或者 <code>#!/usr/bin/python3</code>开始.</p>
+</blockquote>
+<p>#!先用于帮助内核找到Python解释器, 但是在导入模块时, 将会被忽略. 因此只有被直接执行的文件中才有必要加入#!.</p>
+<h2 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h2><blockquote>
+<p>确保对模块, 函数, 方法和行内注释使用正确的风格</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">fetch_bigtable_rows</span><span class="params">(big_table, keys, other_silly_variable=None)</span>:</span></div><div class="line">    <span class="string">"""Fetches rows from a Bigtable.</span></div><div class="line"></div><div class="line">    Retrieves rows pertaining to the given keys from the Table instance</div><div class="line">    represented by big_table.  Silly things may happen if</div><div class="line">    other_silly_variable is not None.</div><div class="line"></div><div class="line">    Args:</div><div class="line">        big_table: An open Bigtable Table instance.</div><div class="line">        keys: A sequence of strings representing the key of each table row</div><div class="line">            to fetch.</div><div class="line">        other_silly_variable: Another optional variable, that has a much</div><div class="line">            longer name than the other args, and which does nothing.</div><div class="line"></div><div class="line">    Returns:</div><div class="line">        A dict mapping keys to the corresponding table row data</div><div class="line">        fetched. Each row is represented as a tuple of strings. For</div><div class="line">        example:</div><div class="line"></div><div class="line">        &#123;'Serak': ('Rigel VII', 'Preparer'),</div><div class="line">         'Zim': ('Irk', 'Invader'),</div><div class="line">         'Lrrr': ('Omicron Persei 8', 'Emperor')&#125;</div><div class="line"></div><div class="line">        If a key from the keys argument is missing from the dictionary,</div><div class="line">        then that row was not found in the table.</div><div class="line"></div><div class="line">    Raises:</div><div class="line">        IOError: An error occurred accessing the bigtable.Table object.</div><div class="line">    """</div><div class="line">    <span class="keyword">pass</span></div></pre></td></tr></table></figure>
+<h2 id="类"><a href="#类" class="headerlink" title="类"></a>类</h2><blockquote>
+<p>类应该在其定义下有一个用于描述该类的文档字符串. 如果你的类有公共属性(Attributes), 那么文档中应该有一个属性(Attributes)段. 并且应该遵守和函数参数相同的格式.</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">SampleClass</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="string">"""Summary of class here.</span></div><div class="line"></div><div class="line">    Longer class information....</div><div class="line">    Longer class information....</div><div class="line"></div><div class="line">    Attributes:</div><div class="line">        likes_spam: A boolean indicating if we like SPAM or not.</div><div class="line">        eggs: An integer count of the eggs we have laid.</div><div class="line">    """</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, likes_spam=False)</span>:</span></div><div class="line">        <span class="string">"""Inits SampleClass with blah."""</span></div><div class="line">        self.likes_spam = likes_spam</div><div class="line">        self.eggs = <span class="number">0</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">public_method</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="string">"""Performs operation blah."""</span></div></pre></td></tr></table></figure>
+<h2 id="类-1"><a href="#类-1" class="headerlink" title="类"></a>类</h2><blockquote>
+<p>如果一个类不继承自其它类, 就显式的从object继承. 嵌套类也一样.</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">Yes: <span class="class"><span class="keyword">class</span> <span class="title">SampleClass</span><span class="params">(object)</span>:</span></div><div class="line">         <span class="keyword">pass</span></div><div class="line"></div><div class="line"></div><div class="line">     <span class="class"><span class="keyword">class</span> <span class="title">OuterClass</span><span class="params">(object)</span>:</span></div><div class="line"></div><div class="line">         <span class="class"><span class="keyword">class</span> <span class="title">InnerClass</span><span class="params">(object)</span>:</span></div><div class="line">             <span class="keyword">pass</span></div><div class="line"></div><div class="line"></div><div class="line">     <span class="class"><span class="keyword">class</span> <span class="title">ChildClass</span><span class="params">(ParentClass)</span>:</span></div><div class="line">         <span class="string">"""Explicitly inherits from another class already."""</span></div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">No: <span class="class"><span class="keyword">class</span> <span class="title">SampleClass</span>:</span></div><div class="line">        <span class="keyword">pass</span></div><div class="line"></div><div class="line"></div><div class="line">    <span class="class"><span class="keyword">class</span> <span class="title">OuterClass</span>:</span></div><div class="line"></div><div class="line">        <span class="class"><span class="keyword">class</span> <span class="title">InnerClass</span>:</span></div><div class="line">            <span class="keyword">pass</span></div></pre></td></tr></table></figure>
+<p>继承自 <code>object</code> 是为了使属性(properties)正常工作, 并且这样可以保护你的代码, 使其不受 <a href="http://www.python.org/dev/peps/pep-3000/" target="_blank" rel="external">PEP-3000</a> 的一个特殊的潜在不兼容性影响. 这样做也定义了一些特殊的方法, 这些方法实现了对象的默认语义, 包括:</p>
+<p><code>__new__, __init__, __delattr__, __getattribute__, __setattr__, __hash__, __repr__, and __str__</code></p>
+<h2 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h2><blockquote>
+<p>即使参数都是字符串, 使用%操作符或者格式化方法格式化字符串. 不过也不能一概而论, 你需要在+和%之间好好判定.</p>
+</blockquote>
+<p>避免在循环中用<code>+</code>和<code>+=</code>操作符来累加字符串.作为替代方案, 你可以将每个子串加入列表, 然后在循环结束后用 <code>.join</code> 连接列表. </p>
+<h2 id="文件和sockets"><a href="#文件和sockets" class="headerlink" title="文件和sockets"></a>文件和sockets</h2><blockquote>
+<p>在文件和sockets结束时, 显式的关闭它.</p>
+</blockquote>
+<p>推荐使用 <code>with</code>语句 以管理文件:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">with</span> open(<span class="string">"hello.txt"</span>) <span class="keyword">as</span> hello_file:</div><div class="line">    <span class="keyword">for</span> line <span class="keyword">in</span> hello_file:</div><div class="line">        <span class="keyword">print</span> line</div></pre></td></tr></table></figure>
+<p>对于不支持使用<code>with</code>语句的类似文件的对象,使用 <code>contextlib.closing()</code>:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> contextlib</div><div class="line"></div><div class="line"><span class="keyword">with</span> contextlib.closing(urllib.urlopen(<span class="string">"http://www.python.org/"</span>)) <span class="keyword">as</span> front_page:</div><div class="line">    <span class="keyword">for</span> line <span class="keyword">in</span> front_page:</div><div class="line">        <span class="keyword">print</span> line</div></pre></td></tr></table></figure>
+<h2 id="TODO注释"><a href="#TODO注释" class="headerlink" title="TODO注释"></a>TODO注释</h2><blockquote>
+<p>为临时代码使用TODO注释, 它是一种短期解决方案. 不算完美, 但够好了.</p>
+</blockquote>
+<p>当你写了一个TODO, 请注上你的名字.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># TODO(kl@gmail.com): Use a "*" here for string repetition.</span></div><div class="line"><span class="comment"># TODO(Zeke) Change this to use relations.</span></div></pre></td></tr></table></figure>
+<h2 id="导入格式"><a href="#导入格式" class="headerlink" title="导入格式"></a>导入格式</h2><blockquote>
+<p>每个导入应该独占一行</p>
+</blockquote>
+<p>导入应该按照从最通用到最不通用的顺序分组:</p>
+<ul>
+<li>标准库导入</li>
+<li>第三方库导入</li>
+<li>应用程序指定导入</li>
+</ul>
+<h2 id="命名"><a href="#命名" class="headerlink" title="命名"></a>命名</h2><blockquote>
+<p>module_name, package_name, ClassName, method_name, ExceptionName, function_name, GLOBAL_VAR_NAME, instance_var_name, function_parameter_name, local_var_name.</p>
+</blockquote>
+<p>命名约定:</p>
+<ul>
+<li>所谓”内部(Internal)”表示仅模块内可用, 或者, 在类内是保护或私有的.</li>
+<li>用单下划线(_)开头表示模块变量或函数是protected的(使用import * from时不会包含).</li>
+<li>用双下划线(__)开头的实例变量或方法表示类内私有.</li>
+<li>将相关的类和顶级函数放在同一个模块里. 不像Java, 没必要限制一个类一个模块.</li>
+<li>对类名使用大写字母开头的单词(如CapWords, 即Pascal风格), 但是模块名应该用小写加下划线的方式(如lower_with_under.py). 尽管已经有很多现存的模块使用类似于CapWords.py这样的命名, 但现在已经不鼓励这样做, 因为如果模块名碰巧和类名一致, 这会让人困扰.</li>
+</ul>
+<p>Python之父Guido推荐的规范:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Type</th>
+<th style="text-align:center">Public</th>
+<th style="text-align:center">Internal</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Modules</td>
+<td style="text-align:center">lower_with_under</td>
+<td style="text-align:center">_lower_with_under</td>
+</tr>
+<tr>
+<td style="text-align:center">Packages</td>
+<td style="text-align:center">lower_with_under</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">Classes</td>
+<td style="text-align:center">CapWords</td>
+<td style="text-align:center">_CapWords</td>
+</tr>
+<tr>
+<td style="text-align:center">Exceptions</td>
+<td style="text-align:center">CapWords</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">Functions</td>
+<td style="text-align:center">lower_with_under()</td>
+<td style="text-align:center">_lower_with_under()</td>
+</tr>
+<tr>
+<td style="text-align:center">Global/Class Constants</td>
+<td style="text-align:center">CAPS_WITH_UNDER</td>
+<td style="text-align:center">_CAPS_WITH_UNDER</td>
+</tr>
+<tr>
+<td style="text-align:center">Global/Class Variables</td>
+<td style="text-align:center">lower_with_under</td>
+<td style="text-align:center">_lower_with_under</td>
+</tr>
+<tr>
+<td style="text-align:center">Instance Variables</td>
+<td style="text-align:center">lower_with_under</td>
+<td style="text-align:center">_lower_with_under (protected) or __lower_with_under (private)</td>
+</tr>
+<tr>
+<td style="text-align:center">Method Names</td>
+<td style="text-align:center">lower_with_under()</td>
+<td style="text-align:center">_lower_with_under() (protected) or __lower_with_under() (private)</td>
+</tr>
+<tr>
+<td style="text-align:center">Function/Method Parameters</td>
+<td style="text-align:center">lower_with_under</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">Local Variables</td>
+<td style="text-align:center">lower_with_under</td>
+</tr>
+</tbody>
+</table>
+<h2 id="Main"><a href="#Main" class="headerlink" title="Main"></a>Main</h2><blockquote>
+<p>即使是一个打算被用作脚本的文件, 也应该是可导入的. 并且简单的导入不应该导致这个脚本的主功能(main functionality)被执行, 这是一种副作用. 主功能应该放在一个main()函数中.</p>
+</blockquote>
+<p>在Python中, pydoc以及单元测试要求模块必须是可导入的. 你的代码应该在执行主程序前总是检查 <code>if __name__ == &#39;__main__&#39;</code> , 这样当模块被导入时主程序就不会被执行.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></div><div class="line">      ...</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    main()</div></pre></td></tr></table></figure>
+<p><strong>所有的顶级代码在模块导入时都会被执行. 要小心不要去调用函数, 创建对象, 或者执行那些不应该在使用pydoc时执行的操作.</strong></p>
+<h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><ul>
+<li><a href="https://zh-google-styleguide.readthedocs.io/en/latest/google-python-styleguide/contents/" target="_blank" rel="external">Python风格指南</a></li>
+</ul>
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechat.png" alt="xin053 WeChat Pay">
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay.png" alt="xin053 Alipay">
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Python/" rel="tag">#Python</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/20/Docker学习笔记(二)/" rel="next" title="Docker学习笔记(二)">
+                <i class="fa fa-chevron-left"></i> Docker学习笔记(二)
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/10/06/Python官方文档摘记/" rel="prev" title="Python官方文档摘记">
+                Python官方文档摘记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/me.jpg" alt="xin053">
+          <p class="site-author-name" itemprop="name">xin053</p>
+          <p class="site-description motion-element" itemprop="description">正在用Windbg调试正在调试正在反汇编Windbg的IDA的OD...</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">55</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">50</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/xin053" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/xin053" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/xin053" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://blog.csdn.net/zhouzixin053" target="_blank" title="csdn">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  csdn
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://bbs.pediy.com/" title="看雪" target="_blank">看雪</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.geeklzh.com/" title="怪咖家园" target="_blank">怪咖家园</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.csdh.pub/" title="CS_DH" target="_blank">CS_DH</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://dendise7engithub.github.io/" title="Dendionk" target="_blank">Dendionk</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://cyang.tech/" title="cyang" target="_blank">cyang</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#导入"><span class="nav-number">1.</span> <span class="nav-text">导入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#包"><span class="nav-number">2.</span> <span class="nav-text">包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#异常"><span class="nav-number">3.</span> <span class="nav-text">异常</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#全局变量"><span class="nav-number">4.</span> <span class="nav-text">全局变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#嵌套-局部-内部类或函数"><span class="nav-number">5.</span> <span class="nav-text">嵌套/局部/内部类或函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#列表推导"><span class="nav-number">6.</span> <span class="nav-text">列表推导</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#生成器"><span class="nav-number">7.</span> <span class="nav-text">生成器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lambda函数"><span class="nav-number">8.</span> <span class="nav-text">Lambda函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#条件表达式"><span class="nav-number">9.</span> <span class="nav-text">条件表达式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#True-False的求值"><span class="nav-number">10.</span> <span class="nav-text">True/False的求值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线程"><span class="nav-number">11.</span> <span class="nav-text">线程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分号"><span class="nav-number">12.</span> <span class="nav-text">分号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#行长度"><span class="nav-number">13.</span> <span class="nav-text">行长度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#空行"><span class="nav-number">14.</span> <span class="nav-text">空行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#空格"><span class="nav-number">15.</span> <span class="nav-text">空格</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Shebang"><span class="nav-number">16.</span> <span class="nav-text">Shebang</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注释"><span class="nav-number">17.</span> <span class="nav-text">注释</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#类"><span class="nav-number">18.</span> <span class="nav-text">类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#类-1"><span class="nav-number">19.</span> <span class="nav-text">类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字符串"><span class="nav-number">20.</span> <span class="nav-text">字符串</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件和sockets"><span class="nav-number">21.</span> <span class="nav-text">文件和sockets</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TODO注释"><span class="nav-number">22.</span> <span class="nav-text">TODO注释</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#导入格式"><span class="nav-number">23.</span> <span class="nav-text">导入格式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#命名"><span class="nav-number">24.</span> <span class="nav-text">命名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Main"><span class="nav-number">25.</span> <span class="nav-text">Main</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文档"><span class="nav-number">26.</span> <span class="nav-text">参考文档</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xin053</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'xin053';
+      var disqus_identifier = '2016/10/03/Python风格指南/';
+      var disqus_title = "Python风格指南";
+      var disqus_url = 'https://xin053.github.io/2016/10/03/Python风格指南/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+                            
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').mousedown(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+  
+
+  
+
+  
+
+</body>
+</html>

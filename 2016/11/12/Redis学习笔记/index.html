@@ -1,0 +1,1102 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="jFTy9MrTO4piYCnfdfFFpOLb9SCydVuSBPbqgakCzCM">
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Redis,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="xin053" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="Redis简介Redis 是完全开源免费的，遵守BSD协议，是一个高性能的key-value数据库。 特点:  Redis是完全在内存中保存数据的数据库，使用磁盘只是为了持久性目的 Redis不仅仅支持简单的key-value类型的数据，同时还提供list，set，zset，hash等数据结构的存储。 Redis支持数据的备份，即master-slave模式的数据备份。  优点:  异常快速: R">
+<meta name="keywords" content="Redis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Redis学习笔记">
+<meta property="og:url" content="https://xin053.github.io/2016/11/12/Redis学习笔记/index.html">
+<meta property="og:site_name" content="xin053">
+<meta property="og:description" content="Redis简介Redis 是完全开源免费的，遵守BSD协议，是一个高性能的key-value数据库。 特点:  Redis是完全在内存中保存数据的数据库，使用磁盘只是为了持久性目的 Redis不仅仅支持简单的key-value类型的数据，同时还提供list，set，zset，hash等数据结构的存储。 Redis支持数据的备份，即master-slave模式的数据备份。  优点:  异常快速: R">
+<meta property="og:updated_time" content="2017-05-27T13:20:48.771Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Redis学习笔记">
+<meta name="twitter:description" content="Redis简介Redis 是完全开源免费的，遵守BSD协议，是一个高性能的key-value数据库。 特点:  Redis是完全在内存中保存数据的数据库，使用磁盘只是为了持久性目的 Redis不仅仅支持简单的key-value类型的数据，同时还提供list，set，zset，hash等数据结构的存储。 Redis支持数据的备份，即master-slave模式的数据备份。  优点:  异常快速: R">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: undefined,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> Redis学习笔记 | xin053 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-78789863-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?95bc477a974f85651897b76f543028bb";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">xin053</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">在安全圈里徘徊，停滞不前</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Redis学习笔记
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-11-12T11:20:36+08:00" content="2016-11-12">
+              2016-11-12
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Redis/" itemprop="url" rel="index">
+                    <span itemprop="name">Redis</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/11/12/Redis学习笔记/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/11/12/Redis学习笔记/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <link rel="stylesheet" type="text/css" href="/assets/css/DPlayer.min.css"><script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="Redis简介"><a href="#Redis简介" class="headerlink" title="Redis简介"></a>Redis简介</h2><p>Redis 是完全开源免费的，遵守BSD协议，是一个高性能的key-value数据库。</p>
+<p>特点:</p>
+<ul>
+<li>Redis是完全在内存中保存数据的数据库，使用磁盘只是为了持久性目的</li>
+<li>Redis不仅仅支持简单的key-value类型的数据，同时还提供list，set，zset，hash等数据结构的存储。</li>
+<li>Redis支持数据的备份，即master-slave模式的数据备份。</li>
+</ul>
+<p>优点:</p>
+<ul>
+<li><strong>异常快速: </strong>Redis是非常快的，每秒可以执行大约110000设置操作，81000个/每秒的读取操作。</li>
+<li><strong>支持丰富的数据类型: </strong>Redis支持最大多数开发人员已经知道如列表，集合，可排序集合，哈希等数据类型。<br>这使得在应用中很容易解决的各种问题，因为我们知道哪些问题处理使用哪种数据类型更好解决。</li>
+<li><strong>操作都是原子的 : </strong>所有 Redis 的操作都是原子，从而确保当两个客户同时访问 Redis 服务器得到的是更新后的值（最新值）。</li>
+<li><strong>MultiUtility工具:</strong> Redis是一个多功能实用工具，可以在很多如：缓存，消息传递队列中使用（Redis原生支持发布/订阅），在应用程序中，如：Web应用程序会话，网站页面点击数等任何短暂的数据</li>
+</ul>
+<a id="more"></a>
+<p>因为redis原生支持linux，所以出现了<a href="https://github.com/MSOpenTech/redis，支持windows平台，下载安装包安装即可，并且可以设置最高使用的内存大小，更多配置参考安装目录下的配置文件" target="_blank" rel="external">https://github.com/MSOpenTech/redis，支持windows平台，下载安装包安装即可，并且可以设置最高使用的内存大小，更多配置参考安装目录下的配置文件</a></p>
+<h2 id="Redis使用"><a href="#Redis使用" class="headerlink" title="Redis使用"></a>Redis使用</h2><h3 id="连接redis服务器"><a href="#连接redis服务器" class="headerlink" title="连接redis服务器"></a>连接redis服务器</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">C:\WINDOWS\system32&gt;redis-cli -h <span class="number">127.0</span>.<span class="number">0.1</span> -p <span class="number">6379</span> -a <span class="string">"123"</span> -n <span class="number">0</span></div><div class="line"><span class="number">127.0</span>.<span class="number">0.1</span>:<span class="number">6379</span>&gt;</div></pre></td></tr></table></figure>
+<p><code>-a</code>后面是密码,<code>-n</code>表示连接第几个数据库，默认连接编号为0的数据库</p>
+<p>如果默认是本机6397端口,没有密码，可以直接使用以下连接:</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">C:\Users\zzx&gt;redis-cli</div><div class="line"><span class="number">127.0</span>.<span class="number">0.1</span>:<span class="number">6379</span>&gt;</div></pre></td></tr></table></figure>
+<p>输入<code>quit</code>退出</p>
+<h3 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h3><h4 id="String"><a href="#String" class="headerlink" title="String"></a>String</h4><p>string类型是二进制安全的。意思是redis的string可以包含任何数据。比如jpg图片或者序列化的对象</p>
+<p>string类型是Redis最基本的数据类型，一个键最大能存储512MB。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="number">127.0</span>.<span class="number">0.1</span>:<span class="number">6379</span>&gt; SET name <span class="string">'zzx'</span></div><div class="line">OK</div><div class="line"><span class="number">127.0</span>.<span class="number">0.1</span>:<span class="number">6379</span>&gt; GET name</div><div class="line"><span class="string">"zzx"</span></div></pre></td></tr></table></figure>
+<p><code>SET</code>与<code>GET</code>都可以使用小写，但是一般都是用大写，好区分是不是redix命令</p>
+<p>其他命令:<a href="http://www.runoob.com/redis/redis-strings.html" target="_blank" rel="external">http://www.runoob.com/redis/redis-strings.html</a></p>
+<p>更多命令见参考文档</p>
+<h4 id="Hash"><a href="#Hash" class="headerlink" title="Hash"></a>Hash</h4><p>Redis hash是一个string类型的field和value的映射表，hash特别适合用于存储对象。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="number">127.0</span>.<span class="number">0.1</span>:<span class="number">6379</span>&gt; HMSET user:<span class="number">1</span> username zzx password <span class="number">123</span> age <span class="number">22</span></div><div class="line">OK</div><div class="line"><span class="number">127.0</span>.<span class="number">0.1</span>:<span class="number">6379</span>&gt; HGETALL user:<span class="number">1</span></div><div class="line"><span class="number">1</span>) <span class="string">"username"</span></div><div class="line"><span class="number">2</span>) <span class="string">"zzx"</span></div><div class="line"><span class="number">3</span>) <span class="string">"password"</span></div><div class="line"><span class="number">4</span>) <span class="string">"123"</span></div><div class="line"><span class="number">5</span>) <span class="string">"age"</span></div><div class="line"><span class="number">6</span>) <span class="string">"22"</span></div></pre></td></tr></table></figure>
+<p><code>user:1</code>是key</p>
+<p>每个 hash 可以存储2^32-1键值对（40多亿）</p>
+<p>其他命令:<a href="http://www.runoob.com/redis/redis-hashes.html" target="_blank" rel="external">http://www.runoob.com/redis/redis-hashes.html</a></p>
+<p>更多命令见参考文档</p>
+<h4 id="List"><a href="#List" class="headerlink" title="List"></a>List</h4><figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="number">127.0</span>.<span class="number">0.1</span>:<span class="number">6379</span>&gt; LPUSH test_list this is</div><div class="line">(integer) <span class="number">2</span></div><div class="line"><span class="number">127.0</span>.<span class="number">0.1</span>:<span class="number">6379</span>&gt; LPUSH test_list a</div><div class="line">(integer) <span class="number">3</span></div><div class="line"><span class="number">127.0</span>.<span class="number">0.1</span>:<span class="number">6379</span>&gt; LPUSH test_list test <span class="keyword">for</span> list</div><div class="line">(integer) <span class="number">6</span></div><div class="line"><span class="number">127.0</span>.<span class="number">0.1</span>:<span class="number">6379</span>&gt; LRANGE test_list <span class="number">0</span> <span class="number">6</span></div><div class="line"><span class="number">1</span>) <span class="string">"list"</span></div><div class="line"><span class="number">2</span>) <span class="string">"for"</span></div><div class="line"><span class="number">3</span>) <span class="string">"test"</span></div><div class="line"><span class="number">4</span>) <span class="string">"a"</span></div><div class="line"><span class="number">5</span>) <span class="string">"is"</span></div><div class="line"><span class="number">6</span>) <span class="string">"this"</span></div></pre></td></tr></table></figure>
+<p>列表最多可存储2^32-1 元素</p>
+<p>其他命令:<a href="http://www.runoob.com/redis/redis-lists.html" target="_blank" rel="external">http://www.runoob.com/redis/redis-lists.html</a></p>
+<p>更多命令见参考文档</p>
+<h4 id="Set"><a href="#Set" class="headerlink" title="Set"></a>Set</h4><p>通过hash实现的，不能保证顺序，元素唯一性</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="number">127.0</span>.<span class="number">0.1</span>:<span class="number">6379</span>&gt; SADD test_set this is a</div><div class="line">(integer) <span class="number">3</span></div><div class="line"><span class="number">127.0</span>.<span class="number">0.1</span>:<span class="number">6379</span>&gt; SADD test_set test <span class="keyword">for</span> set</div><div class="line">(integer) <span class="number">3</span></div><div class="line"><span class="number">127.0</span>.<span class="number">0.1</span>:<span class="number">6379</span>&gt; SADD test_set this</div><div class="line">(integer) <span class="number">0</span></div><div class="line"><span class="number">127.0</span>.<span class="number">0.1</span>:<span class="number">6379</span>&gt; SMEMBERS test_set</div><div class="line"><span class="number">1</span>) <span class="string">"test"</span></div><div class="line"><span class="number">2</span>) <span class="string">"this"</span></div><div class="line"><span class="number">3</span>) <span class="string">"set"</span></div><div class="line"><span class="number">4</span>) <span class="string">"for"</span></div><div class="line"><span class="number">5</span>) <span class="string">"is"</span></div><div class="line"><span class="number">6</span>) <span class="string">"a"</span></div></pre></td></tr></table></figure>
+<p>对于已经存在与set中的元素会返回0</p>
+<p>其他命令:<a href="http://www.runoob.com/redis/redis-sets.html" target="_blank" rel="external">http://www.runoob.com/redis/redis-sets.html</a></p>
+<p>更多命令见参考文档</p>
+<h4 id="zset-有序集合"><a href="#zset-有序集合" class="headerlink" title="zset(有序集合)"></a>zset(有序集合)</h4><p>元素不重复并且保持插入元素的顺序,与Set不同的是，zset中的每个元素有都个<code>score</code>属性，可以理解为权重，内部是按照权重的大小进行排序的</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="number">127.0</span>.<span class="number">0.1</span>:<span class="number">6379</span>&gt; ZADD test_zset <span class="number">1</span> this <span class="number">2</span> is <span class="number">3</span> a <span class="number">4</span> test <span class="number">0</span> <span class="keyword">for</span> <span class="number">7</span> zset</div><div class="line">(integer) <span class="number">6</span></div><div class="line"><span class="number">127.0</span>.<span class="number">0.1</span>:<span class="number">6379</span>&gt; ZRANGE test_zset <span class="number">0</span> <span class="number">7</span></div><div class="line"><span class="number">1</span>) <span class="string">"for"</span></div><div class="line"><span class="number">2</span>) <span class="string">"this"</span></div><div class="line"><span class="number">3</span>) <span class="string">"is"</span></div><div class="line"><span class="number">4</span>) <span class="string">"a"</span></div><div class="line"><span class="number">5</span>) <span class="string">"test"</span></div><div class="line"><span class="number">6</span>) <span class="string">"zset"</span></div></pre></td></tr></table></figure>
+<p>其他命令:<a href="http://www.runoob.com/redis/redis-sorted-sets.html" target="_blank" rel="external">http://www.runoob.com/redis/redis-sorted-sets.html</a></p>
+<p>更多命令见参考文档</p>
+<h3 id="redis-key"><a href="#redis-key" class="headerlink" title="redis key"></a>redis key</h3><p>以上的<code>name</code>,<code>test_list</code>,<code>test_set</code>,<code>test_zset</code>和<code>uesr:1</code>都是key</p>
+<p>可以通过<code>DEL</code>命令来删除key</p>
+<table>
+<thead>
+<tr>
+<th>序号</th>
+<th>命令及描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><a href="http://www.runoob.com/redis/keys-del.html" target="_blank" rel="external">DEL key</a>该命令用于在 key 存在时删除 key。</td>
+</tr>
+<tr>
+<td>2</td>
+<td><a href="http://www.runoob.com/redis/keys-dump.html" target="_blank" rel="external">DUMP key</a> 序列化给定 key ，并返回被序列化的值。</td>
+</tr>
+<tr>
+<td>3</td>
+<td><a href="http://www.runoob.com/redis/keys-exists.html" target="_blank" rel="external">EXISTS key</a> 检查给定 key 是否存在。</td>
+</tr>
+<tr>
+<td>4</td>
+<td><a href="http://www.runoob.com/redis/keys-expire.html" target="_blank" rel="external">EXPIRE key</a> seconds为给定 key 设置过期时间。</td>
+</tr>
+<tr>
+<td>5</td>
+<td><a href="http://www.runoob.com/redis/keys-expireat.html" target="_blank" rel="external">EXPIREAT key timestamp</a> EXPIREAT 的作用和 EXPIRE 类似，都用于为 key 设置过期时间。 不同在于 EXPIREAT 命令接受的时间参数是 UNIX 时间戳(unix timestamp)。</td>
+</tr>
+<tr>
+<td>6</td>
+<td><a href="http://www.runoob.com/redis/keys-pexpire.html" target="_blank" rel="external">PEXPIRE key milliseconds</a> 设置 key 的过期时间以毫秒计。</td>
+</tr>
+<tr>
+<td>7</td>
+<td><a href="http://www.runoob.com/redis/keys-pexpireat.html" target="_blank" rel="external">PEXPIREAT key milliseconds-timestamp</a> 设置 key 过期时间的时间戳(unix timestamp) 以毫秒计</td>
+</tr>
+<tr>
+<td>8</td>
+<td><a href="http://www.runoob.com/redis/keys-keys.html" target="_blank" rel="external">KEYS pattern</a> 查找所有符合给定模式( pattern)的 key 。</td>
+</tr>
+<tr>
+<td>9</td>
+<td><a href="http://www.runoob.com/redis/keys-move.html" target="_blank" rel="external">MOVE key db</a> 将当前数据库的 key 移动到给定的数据库 db 当中。</td>
+</tr>
+<tr>
+<td>10</td>
+<td><a href="http://www.runoob.com/redis/keys-persist.html" target="_blank" rel="external">PERSIST key</a> 移除 key 的过期时间，key 将持久保持。</td>
+</tr>
+<tr>
+<td>11</td>
+<td><a href="http://www.runoob.com/redis/keys-pttl.html" target="_blank" rel="external">PTTL key</a> 以毫秒为单位返回 key 的剩余的过期时间。</td>
+</tr>
+<tr>
+<td>12</td>
+<td><a href="http://www.runoob.com/redis/keys-ttl.html" target="_blank" rel="external">TTL key</a> 以秒为单位，返回给定 key 的剩余生存时间(TTL, time to live)。</td>
+</tr>
+<tr>
+<td>13</td>
+<td><a href="http://www.runoob.com/redis/keys-randomkey.html" target="_blank" rel="external">RANDOMKEY</a> 从当前数据库中随机返回一个 key 。</td>
+</tr>
+<tr>
+<td>14</td>
+<td><a href="http://www.runoob.com/redis/keys-rename.html" target="_blank" rel="external">RENAME key newkey</a> 修改 key 的名称</td>
+</tr>
+<tr>
+<td>15</td>
+<td><a href="http://www.runoob.com/redis/keys-renamenx.html" target="_blank" rel="external">RENAMENX key newkey</a> 仅当 newkey 不存在时，将 key 改名为 newkey 。</td>
+</tr>
+<tr>
+<td>16</td>
+<td><a href="http://www.runoob.com/redis/keys-type.html" target="_blank" rel="external">TYPE key</a> 返回 key 所储存的值的类型。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h3><table>
+<thead>
+<tr>
+<th>序号</th>
+<th>命令及描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><a href="http://www.runoob.com/redis/transactions-discard.html" target="_blank" rel="external">DISCARD</a> 取消事务，放弃执行事务块内的所有命令。</td>
+</tr>
+<tr>
+<td>2</td>
+<td><a href="http://www.runoob.com/redis/transactions-exec.html" target="_blank" rel="external">EXEC</a> 执行所有事务块内的命令。</td>
+</tr>
+<tr>
+<td>3</td>
+<td><a href="http://www.runoob.com/redis/transactions-multi.html" target="_blank" rel="external">MULTI</a> 标记一个事务块的开始。</td>
+</tr>
+<tr>
+<td>4</td>
+<td><a href="http://www.runoob.com/redis/transactions-unwatch.html" target="_blank" rel="external">UNWATCH</a> 取消 WATCH 命令对所有 key 的监视。</td>
+</tr>
+<tr>
+<td>5</td>
+<td><a href="http://www.runoob.com/redis/transactions-watch.html" target="_blank" rel="external">WATCH key [key …]</a> 监视一个(或多个) key ，如果在事务执行之前这个(或这些) key 被其他命令所改动，那么事务将被打断。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="Redis服务器"><a href="#Redis服务器" class="headerlink" title="Redis服务器"></a>Redis服务器</h3><p>输入<code>INFO</code>可以获取 Redis 服务器的各种信息和统计数值</p>
+<h3 id="Redis数据备份与恢复"><a href="#Redis数据备份与恢复" class="headerlink" title="Redis数据备份与恢复"></a>Redis数据备份与恢复</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="number">127.0</span>.<span class="number">0.1</span>:<span class="number">6379</span>&gt; save</div><div class="line">OK</div></pre></td></tr></table></figure>
+<p>该命令将在 redis 安装目录中创建<code>dump.rdb</code>文件。</p>
+<p>如果需要恢复数据，只需将备份文件 <code>dump.rdb</code> 移动到 redis 安装目录并启动服务即可。获取 redis 目录可以使用 <code>CONFIG</code> 命令</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="number">127.0</span>.<span class="number">0.1</span>:<span class="number">6379</span>&gt; CONFIG GET dir</div><div class="line"><span class="number">1</span>) <span class="string">"dir"</span></div><div class="line"><span class="number">2</span>) <span class="string">"D:\\Redis"</span></div></pre></td></tr></table></figure>
+<p>创建 redis 备份文件也可以使用命令 <code>BGSAVE</code>，该命令在后台执行。</p>
+<h3 id="删除数据库"><a href="#删除数据库" class="headerlink" title="删除数据库"></a>删除数据库</h3><p><code>FLUSHDB</code> 清除一个数据库，<code>FLUSHALL</code>清除整个redis数据</p>
+<h3 id="Redis管道"><a href="#Redis管道" class="headerlink" title="Redis管道"></a>Redis管道</h3><p>Redis是一种基于客户端-服务端模型以及请求/响应协议的TCP服务。这意味着通常情况下一个请求会遵循以下步骤：</p>
+<ul>
+<li>客户端向服务端发送一个查询请求，并监听Socket返回，通常是以阻塞模式，等待服务端响应。</li>
+<li>服务端处理命令，并将结果返回给客户端。</li>
+</ul>
+<p>Redis 管道技术可以在服务端未响应时，客户端可以继续向服务端发送请求，并最终一次性读取所有服务端的响应。</p>
+<h2 id="redis-py"><a href="#redis-py" class="headerlink" title="redis-py"></a>redis-py</h2><p><code>redis-py</code>是python实现的redis客户端，关于<code>redis-py</code>的使用参考:</p>
+<ul>
+<li><a href="https://github.com/andymccurdy/redis-py#scan-iterators" target="_blank" rel="external">https://github.com/andymccurdy/redis-py#scan-iterators</a></li>
+<li><a href="https://redis-py.readthedocs.io/en/latest/" target="_blank" rel="external">https://redis-py.readthedocs.io/en/latest/</a></li>
+</ul>
+<h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><ul>
+<li><a href="https://github.com/MSOpenTech/redisredis-py[Memory" target="_blank" rel="external">https://github.com/MSOpenTech/redisredis-py[Memory</a> Configuration For Redis 3.0](<a href="https://github.com/MSOpenTech/redis/wiki/Memory-Configuration-For-Redis-3.0" target="_blank" rel="external">https://github.com/MSOpenTech/redis/wiki/Memory-Configuration-For-Redis-3.0</a>)</li>
+<li><a href="http://www.jb51.net/article/84071.htm" target="_blank" rel="external">Windows下Redis的安装使用教程</a></li>
+<li><a href="http://www.runoob.com/redis/redis-tutorial.html" target="_blank" rel="external">Redis 教程</a></li>
+<li><a href="http://www.yiibai.com/redis/redis_quick_guide.html" target="_blank" rel="external">Redis快速入门</a></li>
+<li><a href="http://redisdoc.com/" target="_blank" rel="external">Redis 命令参考</a></li>
+<li><a href="http://redis.io/commands" target="_blank" rel="external">Command reference -Redis</a></li>
+</ul>
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechat.png" alt="xin053 WeChat Pay">
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay.png" alt="xin053 Alipay">
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Redis/" rel="tag">#Redis</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/11/09/PyMongo芒果库使用详解/" rel="next" title="PyMongo芒果库使用详解">
+                <i class="fa fa-chevron-left"></i> PyMongo芒果库使用详解
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/11/13/furl链接解析库使用详解/" rel="prev" title="furl链接解析库使用详解">
+                furl链接解析库使用详解 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/me.jpg" alt="xin053">
+          <p class="site-author-name" itemprop="name">xin053</p>
+          <p class="site-description motion-element" itemprop="description">正在用Windbg调试正在调试正在反汇编Windbg的IDA的OD...</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">55</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">50</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/xin053" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/xin053" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/xin053" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://blog.csdn.net/zhouzixin053" target="_blank" title="csdn">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  csdn
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://bbs.pediy.com/" title="看雪" target="_blank">看雪</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.geeklzh.com/" title="怪咖家园" target="_blank">怪咖家园</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.csdh.pub/" title="CS_DH" target="_blank">CS_DH</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://dendise7engithub.github.io/" title="Dendionk" target="_blank">Dendionk</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://cyang.tech/" title="cyang" target="_blank">cyang</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis简介"><span class="nav-number">1.</span> <span class="nav-text">Redis简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis使用"><span class="nav-number">2.</span> <span class="nav-text">Redis使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#连接redis服务器"><span class="nav-number">2.1.</span> <span class="nav-text">连接redis服务器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据类型"><span class="nav-number">2.2.</span> <span class="nav-text">数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#String"><span class="nav-number">2.2.1.</span> <span class="nav-text">String</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Hash"><span class="nav-number">2.2.2.</span> <span class="nav-text">Hash</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#List"><span class="nav-number">2.2.3.</span> <span class="nav-text">List</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Set"><span class="nav-number">2.2.4.</span> <span class="nav-text">Set</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#zset-有序集合"><span class="nav-number">2.2.5.</span> <span class="nav-text">zset(有序集合)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#redis-key"><span class="nav-number">2.3.</span> <span class="nav-text">redis key</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#事务"><span class="nav-number">2.4.</span> <span class="nav-text">事务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Redis服务器"><span class="nav-number">2.5.</span> <span class="nav-text">Redis服务器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Redis数据备份与恢复"><span class="nav-number">2.6.</span> <span class="nav-text">Redis数据备份与恢复</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除数据库"><span class="nav-number">2.7.</span> <span class="nav-text">删除数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Redis管道"><span class="nav-number">2.8.</span> <span class="nav-text">Redis管道</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#redis-py"><span class="nav-number">3.</span> <span class="nav-text">redis-py</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文档"><span class="nav-number">4.</span> <span class="nav-text">参考文档</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xin053</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'xin053';
+      var disqus_identifier = '2016/11/12/Redis学习笔记/';
+      var disqus_title = "Redis学习笔记";
+      var disqus_url = 'https://xin053.github.io/2016/11/12/Redis学习笔记/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+                            
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').mousedown(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+  
+
+  
+
+  
+
+</body>
+</html>

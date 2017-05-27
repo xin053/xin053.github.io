@@ -1,0 +1,990 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="jFTy9MrTO4piYCnfdfFFpOLb9SCydVuSBPbqgakCzCM">
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Go,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="xin053" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="复合数据类型主要有四种复合数据类型：数组、slice、map和结构体。数组和结构体是具有固定大小的数据结构，slice和map是动态的数据结构，它们将根据需要动态增长。 数组数组默认会生成0~数组长度-1的索引，于是便可以通过下标索引到数组对应元素值，也可以指定一个索引和对应值列表的方式初始化: 123456789101112type Currency intconst (	USD Currenc">
+<meta name="keywords" content="Go">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Go学习笔记(二)">
+<meta property="og:url" content="https://xin053.github.io/2016/09/08/Go学习笔记(二)/index.html">
+<meta property="og:site_name" content="xin053">
+<meta property="og:description" content="复合数据类型主要有四种复合数据类型：数组、slice、map和结构体。数组和结构体是具有固定大小的数据结构，slice和map是动态的数据结构，它们将根据需要动态增长。 数组数组默认会生成0~数组长度-1的索引，于是便可以通过下标索引到数组对应元素值，也可以指定一个索引和对应值列表的方式初始化: 123456789101112type Currency intconst (	USD Currenc">
+<meta property="og:image" content="http://i.imgur.com/IQKcgEU.png">
+<meta property="og:updated_time" content="2017-05-27T13:20:48.767Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Go学习笔记(二)">
+<meta name="twitter:description" content="复合数据类型主要有四种复合数据类型：数组、slice、map和结构体。数组和结构体是具有固定大小的数据结构，slice和map是动态的数据结构，它们将根据需要动态增长。 数组数组默认会生成0~数组长度-1的索引，于是便可以通过下标索引到数组对应元素值，也可以指定一个索引和对应值列表的方式初始化: 123456789101112type Currency intconst (	USD Currenc">
+<meta name="twitter:image" content="http://i.imgur.com/IQKcgEU.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: undefined,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> Go学习笔记(二) | xin053 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-78789863-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?95bc477a974f85651897b76f543028bb";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">xin053</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">在安全圈里徘徊，停滞不前</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Go学习笔记(二)
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-08T19:41:42+08:00" content="2016-09-08">
+              2016-09-08
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Go/" itemprop="url" rel="index">
+                    <span itemprop="name">Go</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/09/08/Go学习笔记(二)/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/09/08/Go学习笔记(二)/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <link rel="stylesheet" type="text/css" href="/assets/css/DPlayer.min.css"><script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="复合数据类型"><a href="#复合数据类型" class="headerlink" title="复合数据类型"></a>复合数据类型</h2><p>主要有四种复合数据类型：数组、slice、map和结构体。数组和结构体是具有固定大小的数据结构，slice和map是动态的数据结构，它们将根据需要动态增长。</p>
+<h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><p>数组默认会生成<code>0~数组长度-1</code>的索引，于是便可以通过下标索引到数组对应元素值，也可以指定一个索引和对应值列表的方式初始化:</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">type</span> Currency <span class="keyword">int</span></div><div class="line"></div><div class="line"><span class="keyword">const</span> (</div><div class="line">	USD Currency = <span class="literal">iota</span> 	<span class="comment">// 美元</span></div><div class="line">	EUR 			<span class="comment">// 欧元</span></div><div class="line">	GBP 			<span class="comment">// 英镑</span></div><div class="line">	RMB 			<span class="comment">// 人民币</span></div><div class="line">)</div><div class="line"></div><div class="line">symbol := [...]<span class="keyword">string</span>&#123;USD: <span class="string">"$"</span>, EUR: <span class="string">"€"</span>, GBP: <span class="string">"£"</span>, RMB: <span class="string">"¥"</span>&#125;</div><div class="line"></div><div class="line">fmt.Println(RMB, symbol[RMB]) <span class="comment">// "3 ¥"</span></div></pre></td></tr></table></figure>
+<p>在这种形式的数组字面值形式中， 初始化索引的顺序是无关紧要的， 而且没用到的索引可以省略， 和前面提到的规则一样， 未指定初始值的元素将用零值初始化。</p>
+<p><strong>数组在实际编程中其实用的很少.</strong></p>
+<a id="more"></a>
+<h3 id="Slice"><a href="#Slice" class="headerlink" title="Slice"></a>Slice</h3><p>Slice代表变成的序列,序列中每个元素具有相同的类型。slice的语法与数组很像，只是没有固定长度。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">letters := []<span class="keyword">string</span>&#123;<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span>, <span class="string">"d"</span>&#125;</div></pre></td></tr></table></figure>
+<p>如果是数组的话：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">letters := [...]<span class="keyword">string</span>&#123;<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span>, <span class="string">"d"</span>&#125;</div></pre></td></tr></table></figure>
+<p><strong>Slice底层是靠数组实现的。</strong>一个slice是一个轻量级的数据结构，包括三个部分：指针、长度、容量。</p>
+<p>指针指向第一个slice元素对应的底层数组元素的地址， 要注意的是slice的第一个元素并不一定就是数组的第一个元素。 长度对应slice中元素的数目；长度不能超过容量， 容量一般是从slice的开始位置到底层数据的结尾位置。 内置的<code>len</code>和<code>cap</code>函数分别返回slice的长度和容量。</p>
+<p>多个slice之间可以共享底层的数据， 并且引用的数组部分区间可能重叠。</p>
+<p>我们首先定义一个数组：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">months := [...]<span class="keyword">string</span>&#123;<span class="number">1</span>: <span class="string">"January"</span>, <span class="comment">/* ... */</span>, <span class="number">12</span>: <span class="string">"December"</span>&#125;</div></pre></td></tr></table></figure>
+<p>我们声明数组时直接跳过第0个元素， 第0个元素会被自动初始化为空字符串。</p>
+<p><img src="http://i.imgur.com/IQKcgEU.png" alt=""></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Q2 := months[<span class="number">4</span>:<span class="number">7</span>]</div><div class="line">summer := months[<span class="number">6</span>:<span class="number">9</span>]</div><div class="line">fmt.Println(Q2) 	<span class="comment">// ["April" "May" "June"]</span></div><div class="line">fmt.Println(summer) 	<span class="comment">// ["June" "July" "August"]</span></div></pre></td></tr></table></figure>
+<p>如果切片操作超出<code>cap(s)</code>的上限将导致一个<code>panic</code>异常， 但是超出<code>len(s)</code>则是意味着扩展slice， 因为新slice的长度会变大：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">fmt.Println(summer[:<span class="number">20</span>]) 	<span class="comment">// panic: out of range</span></div><div class="line"></div><div class="line">endlessSummer := summer[:<span class="number">5</span>] 	<span class="comment">// extend a slice (within capacity)</span></div><div class="line">fmt.Println(endlessSummer) 	<span class="comment">// "[June July August September October]"</span></div></pre></td></tr></table></figure>
+<p>内置的<code>make</code>函数创建一个指定元素类型、 长度和容量的slice。 容量部分可以省略， 在这种情况下， 容量将等于长度。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">make</span>([]T, <span class="built_in">len</span>)</div><div class="line"><span class="built_in">make</span>([]T, <span class="built_in">len</span>, <span class="built_in">cap</span>) <span class="comment">// same as make([]T, cap)[:len]</span></div></pre></td></tr></table></figure>
+<p>内置的<code>append</code>函数用于向slice追加元素：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> runes []<span class="keyword">rune</span></div><div class="line"><span class="keyword">for</span> _, r := <span class="keyword">range</span> <span class="string">"Hello, 世界"</span> &#123;</div><div class="line">	runes = <span class="built_in">append</span>(runes, r)</div><div class="line">&#125; </div><div class="line">fmt.Printf(<span class="string">"%q\n"</span>, runes) <span class="comment">// "['H' 'e' 'l' 'l' 'o' ',' ' ' '世' '界']"</span></div></pre></td></tr></table></figure>
+<h3 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h3><p>map类型可以写为<code>map[K]V</code>， 其中<code>K</code>和<code>V</code>分别对应key和value。 map中所有的key都有相同的类型， 所有的value也有着相同的类型， 但是key和value之间可以是不同的数据类型。 <strong>其中<code>K</code>对应的key必须是支持<code>==</code>比较运算符的数据类型，</strong> 所以map可以通过测试key是否相等来判断是否已经存在。 </p>
+<p>内置的<code>make</code>函数可以创建一个map：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ages := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">int</span>) <span class="comment">// mapping from strings to ints</span></div></pre></td></tr></table></figure>
+<p>我们也可以用<code>map</code>字面值的语法创建map， 同时还可以指定一些最初的key/value：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">ages := <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">int</span>&#123;</div><div class="line">	<span class="string">"alice"</span>:   <span class="number">31</span>,</div><div class="line">	<span class="string">"charlie"</span>: <span class="number">34</span>,</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这相当于；</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">ages := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">int</span>)</div><div class="line">ages[<span class="string">"alice"</span>] = <span class="number">31</span></div><div class="line">ages[<span class="string">"charlie"</span>] = <span class="number">34</span></div></pre></td></tr></table></figure>
+<p>因此， 另一种创建空的map的表达式是 <code>map[string]int{}</code> 。</p>
+<p>要想遍历map中全部的key/value对的话， 可以使用<code>range</code>风格的for循环实现:</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> name, age := <span class="keyword">range</span> ages &#123;</div><div class="line">	fmt.Printf(<span class="string">"%s\t%d\n"</span>, name, age)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>map下标语法也可以返回两个值:</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> age, ok := ages[<span class="string">"bob"</span>]; !ok &#123; <span class="comment">/* ... */</span> &#125;</div></pre></td></tr></table></figure>
+<p>在这种场景下， map的下标语法将产生两个值；第二个是一个布尔值， 用于报告元素是否真的存在。 布尔变量一般命名为ok， 特别适合马上用于if条件判断部分。</p>
+<h3 id="结构体"><a href="#结构体" class="headerlink" title="结构体"></a>结构体</h3><p>例子:</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">type</span> Employee <span class="keyword">struct</span> &#123;</div><div class="line">	ID 		<span class="keyword">int</span></div><div class="line">	Name 		<span class="keyword">string</span></div><div class="line">	Address 	<span class="keyword">string</span></div><div class="line">	DoB 		time.Time</div><div class="line">	Position 	<span class="keyword">string</span></div><div class="line">	Salary 		<span class="keyword">int</span></div><div class="line">	ManagerID 	<span class="keyword">int</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> dilbert Employee</div></pre></td></tr></table></figure>
+<p>通常一行对应一个结构体成员， 成员的名字在前类型在后， 不过如果相邻的成员类型如果相同的话可以被合并到一行， 就像下面的<code>Name</code>和<code>Address</code>成员那样：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">type</span> Employee <span class="keyword">struct</span> &#123;</div><div class="line">	ID 		<span class="keyword">int</span></div><div class="line">	Name, Address 	<span class="keyword">string</span></div><div class="line">	DoB 		time.Time</div><div class="line">	Position 	<span class="keyword">string</span></div><div class="line">	Salary 		<span class="keyword">int</span></div><div class="line">	ManagerID 	<span class="keyword">int</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>结构体值也可以用结构体面值表示， 结构体面值可以指定每个成员的值。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">type</span> Point <span class="keyword">struct</span>&#123; X, Y <span class="keyword">int</span> &#125;</div><div class="line"></div><div class="line">p := Point&#123;<span class="number">1</span>, <span class="number">2</span>&#125;</div></pre></td></tr></table></figure>
+<p>上面是初始化结构体的一种方式，但是这要求按顺序初始化结构体中的全部字段，另外一种方法是，<strong>以成员名字和相应的值来初始化， 这样可以包含部分或全部的成员,这也是常用的方式.</strong></p>
+<p>Go语言的结构体支持匿名成员，匿名成员的数据类型必须是命名的类型或指向一个命名的类型的指针。 </p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">type</span> Circle <span class="keyword">struct</span> &#123;</div><div class="line">	Radius <span class="keyword">int</span></div><div class="line">&#125;</div><div class="line"> </div><div class="line"><span class="keyword">type</span> Wheel <span class="keyword">struct</span> &#123;</div><div class="line">	Circle</div><div class="line">	Spokes <span class="keyword">int</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>得意于匿名嵌入的特性， 我们可以直接访问叶子属性而不需要给出完整的路径：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> w Wheel</div><div class="line">w.Radius = <span class="number">5</span> <span class="comment">// equivalent to w.Circle.Radius = 5</span></div></pre></td></tr></table></figure>
+<h2 id="编组"><a href="#编组" class="headerlink" title="编组"></a>编组</h2><p>将结构体slice转为JSON的过程叫编组(marshaling)</p>
+<p>我们首先定义一个<code>Movie</code>结构体，然后创建数组：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">type</span> Movie <span class="keyword">struct</span> &#123;</div><div class="line">	Title 	<span class="keyword">string</span></div><div class="line">	Year 	<span class="keyword">int</span> <span class="string">`json:"released"`</span></div><div class="line">	Color 	<span class="keyword">bool</span> <span class="string">`json:"color,omitempty"`</span></div><div class="line">	Actors 	[]<span class="keyword">string</span></div><div class="line">&#125; </div><div class="line"></div><div class="line"><span class="keyword">var</span> movies = []Movie&#123;</div><div class="line">	&#123;Title: <span class="string">"Casablanca"</span>, Year: <span class="number">1942</span>, Color: <span class="literal">false</span>,</div><div class="line">		Actors: []<span class="keyword">string</span>&#123;<span class="string">"Humphrey Bogart"</span>, <span class="string">"Ingrid Bergman"</span>&#125;&#125;,</div><div class="line">	&#123;Title: <span class="string">"Cool Hand Luke"</span>, Year: <span class="number">1967</span>, Color: <span class="literal">true</span>,</div><div class="line">		Actors: []<span class="keyword">string</span>&#123;<span class="string">"Paul Newman"</span>&#125;&#125;,</div><div class="line">	&#123;Title: <span class="string">"Bullitt"</span>, Year: <span class="number">1968</span>, Color: <span class="literal">true</span>,</div><div class="line">		Actors: []<span class="keyword">string</span>&#123;<span class="string">"Steve McQueen"</span>, <span class="string">"Jacqueline Bisset"</span>&#125;&#125;,</div><div class="line">	<span class="comment">// ...</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">data, err := json.MarshalIndent(movies, <span class="string">""</span>, <span class="string">" "</span>)</div><div class="line"><span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</div><div class="line">	log.Fatalf(<span class="string">"JSON marshaling failed: %s"</span>, err)</div><div class="line">&#125; </div><div class="line">fmt.Printf(<span class="string">"%s\n"</span>, data)</div></pre></td></tr></table></figure>
+<p>将会产生以下输出:</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">[</div><div class="line">	&#123;</div><div class="line">		<span class="string">"Title"</span>: <span class="string">"Casablanca"</span>,</div><div class="line">		<span class="string">"released"</span>: <span class="number">1942</span>,</div><div class="line">		<span class="string">"Actors"</span>: [</div><div class="line">			<span class="string">"Humphrey Bogart"</span>,</div><div class="line">			<span class="string">"Ingrid Bergman"</span></div><div class="line">		]</div><div class="line">	&#125;,</div><div class="line">	&#123;</div><div class="line">		<span class="string">"Title"</span>: <span class="string">"Cool Hand Luke"</span>,</div><div class="line">		<span class="string">"released"</span>: <span class="number">1967</span>,</div><div class="line">		<span class="string">"color"</span>: <span class="literal">true</span>,</div><div class="line">		<span class="string">"Actors"</span>: [</div><div class="line">			<span class="string">"Paul Newman"</span></div><div class="line">		]</div><div class="line">	&#125;,</div><div class="line">	&#123;</div><div class="line">		<span class="string">"Title"</span>: <span class="string">"Bullitt"</span>,</div><div class="line">		<span class="string">"released"</span>: <span class="number">1968</span>,</div><div class="line">		<span class="string">"color"</span>: <span class="literal">true</span>,</div><div class="line">		<span class="string">"Actors"</span>: [</div><div class="line">			<span class="string">"Steve McQueen"</span>,</div><div class="line">			<span class="string">"Jacqueline Bisset"</span></div><div class="line">		]</div><div class="line">	&#125;</div><div class="line">]</div></pre></td></tr></table></figure>
+<p><strong>只有导出的结构体成员才会被编码， 这也就是我们为什么选择用大写字母开头的成员名称。</strong></p>
+<p>可以看到， 其中<code>Year</code>名字的成员在编码后变成了<code>released</code>， 还有<code>Color</code>成员编码后变成了小写字母开头的<code>color</code>。 这是因为构体成员Tag所导致的。 一个构体成员Tag是和在编译阶段关联到该成员的元信息字符串：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Year 	<span class="keyword">int</span> 	<span class="string">`json:"released"`</span></div><div class="line">Color 	<span class="keyword">bool</span> 	<span class="string">`json:"color,omitempty"`</span></div></pre></td></tr></table></figure>
+<p>成员Tag中json对应值的第一部分用于指定JSON对象的名字.<code>Color</code>成员的Tag还带了一个额外的<code>omitempty</code>选项， 表示当Go语言结构体成员为空或零值时不生成JSON对象(这里false为零值)。</p>
+<h2 id="解组"><a href="#解组" class="headerlink" title="解组"></a>解组</h2><p>编组的逆操作，需要先定义合适的结构体，然后使用<code>json.Unmarshal()</code>函数对json数据进行解组，具体就不介绍了。</p>
+<h2 id="重点"><a href="#重点" class="headerlink" title="重点"></a>重点</h2><ul>
+<li><code>x[m:n]</code>切片操作对于字符串则生成一个新字符串</li>
+<li>一个零值的slice等于<code>nil</code>。 一个<code>nil</code>值的slice并没有底层数组。 一个<code>nil</code>值的slice的长度和容量都是0， 但是也有非<code>nil</code>值的slice的长度和容量也是0的， 例如<code>[]int{}</code>或<code>make([]int, 3)[3:]</code>。</li>
+<li>如果你需要测试一个slice是否是空的， 使用<code>len(s) == 0</code>来判断， 而不应该用<code>s == nil</code>来判断。</li>
+</ul>
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechat.png" alt="xin053 WeChat Pay">
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay.png" alt="xin053 Alipay">
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Go/" rel="tag">#Go</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/07/UTF-8编码/" rel="next" title="UTF-8编码">
+                <i class="fa fa-chevron-left"></i> UTF-8编码
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/09/20/Go学习笔记(三)/" rel="prev" title="Go学习笔记(三)">
+                Go学习笔记(三) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/me.jpg" alt="xin053">
+          <p class="site-author-name" itemprop="name">xin053</p>
+          <p class="site-description motion-element" itemprop="description">正在用Windbg调试正在调试正在反汇编Windbg的IDA的OD...</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">55</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">50</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/xin053" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/xin053" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/xin053" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://blog.csdn.net/zhouzixin053" target="_blank" title="csdn">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  csdn
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://bbs.pediy.com/" title="看雪" target="_blank">看雪</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.geeklzh.com/" title="怪咖家园" target="_blank">怪咖家园</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.csdh.pub/" title="CS_DH" target="_blank">CS_DH</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://dendise7engithub.github.io/" title="Dendionk" target="_blank">Dendionk</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://cyang.tech/" title="cyang" target="_blank">cyang</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#复合数据类型"><span class="nav-number">1.</span> <span class="nav-text">复合数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数组"><span class="nav-number">1.1.</span> <span class="nav-text">数组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Slice"><span class="nav-number">1.2.</span> <span class="nav-text">Slice</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Map"><span class="nav-number">1.3.</span> <span class="nav-text">Map</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结构体"><span class="nav-number">1.4.</span> <span class="nav-text">结构体</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编组"><span class="nav-number">2.</span> <span class="nav-text">编组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解组"><span class="nav-number">3.</span> <span class="nav-text">解组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重点"><span class="nav-number">4.</span> <span class="nav-text">重点</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xin053</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'xin053';
+      var disqus_identifier = '2016/09/08/Go学习笔记(二)/';
+      var disqus_title = "Go学习笔记(二)";
+      var disqus_url = 'https://xin053.github.io/2016/09/08/Go学习笔记(二)/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+                            
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').mousedown(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+  
+
+  
+
+  
+
+</body>
+</html>

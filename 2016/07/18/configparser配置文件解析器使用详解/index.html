@@ -1,0 +1,982 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="jFTy9MrTO4piYCnfdfFFpOLb9SCydVuSBPbqgakCzCM">
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Python,configparser,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="xin053" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="configparser简介python2下该模块名为ConfigParser，到3才改为configparser,可以看官方ConfigParser模块的说明 https://docs.python.org/2/library/configparser.html 本文介绍python3中configparser模块的使用，configparser模块是用来解析ini配置文件的解析器，关于ini配">
+<meta name="keywords" content="Python,configparser">
+<meta property="og:type" content="article">
+<meta property="og:title" content="configparser配置文件解析器使用详解">
+<meta property="og:url" content="https://xin053.github.io/2016/07/18/configparser配置文件解析器使用详解/index.html">
+<meta property="og:site_name" content="xin053">
+<meta property="og:description" content="configparser简介python2下该模块名为ConfigParser，到3才改为configparser,可以看官方ConfigParser模块的说明 https://docs.python.org/2/library/configparser.html 本文介绍python3中configparser模块的使用，configparser模块是用来解析ini配置文件的解析器，关于ini配">
+<meta property="og:updated_time" content="2017-05-27T13:20:48.771Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="configparser配置文件解析器使用详解">
+<meta name="twitter:description" content="configparser简介python2下该模块名为ConfigParser，到3才改为configparser,可以看官方ConfigParser模块的说明 https://docs.python.org/2/library/configparser.html 本文介绍python3中configparser模块的使用，configparser模块是用来解析ini配置文件的解析器，关于ini配">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: undefined,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> configparser配置文件解析器使用详解 | xin053 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-78789863-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?95bc477a974f85651897b76f543028bb";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">xin053</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">在安全圈里徘徊，停滞不前</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                configparser配置文件解析器使用详解
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-07-18T14:30:59+08:00" content="2016-07-18">
+              2016-07-18
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Python模块学习/" itemprop="url" rel="index">
+                    <span itemprop="name">Python模块学习</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/07/18/configparser配置文件解析器使用详解/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/07/18/configparser配置文件解析器使用详解/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <link rel="stylesheet" type="text/css" href="/assets/css/DPlayer.min.css"><script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="configparser简介"><a href="#configparser简介" class="headerlink" title="configparser简介"></a>configparser简介</h2><p>python2下该模块名为ConfigParser，到3才改为configparser,可以看官方ConfigParser模块的说明</p>
+<p><a href="https://docs.python.org/2/library/configparser.html" target="_blank" rel="external">https://docs.python.org/2/library/configparser.html</a></p>
+<p>本文介绍python3中configparser模块的使用，configparser模块是用来解析ini配置文件的解析器，关于ini配置文件的结构可以看python官方文档中的介绍：</p>
+<p><a href="https://docs.python.org/3.5/library/configparser.html#supported-ini-file-structure" target="_blank" rel="external">ini文件结构</a></p>
+<p>ini文件结构需要注意一下几点：</p>
+<ul>
+<li>键值对可用<code>=</code>或者<code>:</code>进行分隔</li>
+<li><code>section</code>的名字是区分大小写的,而<code>key</code>的名字是不区分大小写的</li>
+<li>键值对中头部和尾部的空白符会被去掉</li>
+<li>值可以为多行</li>
+<li>配置文件可以包含注释，注释以<code>#</code>或者<code>;</code>为前缀</li>
+</ul>
+<p><strong><em>注意：configparser有default_section的概念,默认为<code>[DEFAULT]</code>节,也就是之后的所有的section都有该默认section中的键值对,详情参见<a href="https://hg.python.org/cpython/file/3.5/Lib/configparser.py" target="_blank" rel="external">configparser源码的<code>__init__()</code>方法</a></em></strong></p>
+<a id="more"></a>
+<h2 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h2><p>为了创建如下ini文件：<br>configparser模块主要使用ConfigParser类来解析ini文件</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="section">[DEFAULT]</span></div><div class="line"><span class="attr">ServerAliveInterval</span> = <span class="number">45</span></div><div class="line"><span class="attr">Compression</span> = <span class="literal">yes</span></div><div class="line"><span class="attr">CompressionLevel</span> = <span class="number">9</span></div><div class="line"><span class="attr">ForwardX11</span> = <span class="literal">yes</span></div><div class="line"><span class="section"></span></div><div class="line">[bitbucket.org]</div><div class="line"><span class="attr">User</span> = hg</div><div class="line"><span class="section"></span></div><div class="line">[topsecret.server.com]</div><div class="line"><span class="attr">Port</span> = <span class="number">50022</span></div><div class="line"><span class="attr">ForwardX11</span> = <span class="literal">no</span></div></pre></td></tr></table></figure>
+<p>我们可以使用如下代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> configparser</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>config = configparser.ConfigParser()</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>config[<span class="string">'DEFAULT'</span>] = &#123;<span class="string">'ServerAliveInterval'</span>: <span class="string">'45'</span>,</div><div class="line"><span class="meta">... </span>                     <span class="string">'Compression'</span>: <span class="string">'yes'</span>,</div><div class="line"><span class="meta">... </span>                     <span class="string">'CompressionLevel'</span>: <span class="string">'9'</span>&#125;</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>config[<span class="string">'bitbucket.org'</span>] = &#123;&#125;</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>config[<span class="string">'bitbucket.org'</span>][<span class="string">'User'</span>] = <span class="string">'hg'</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>config[<span class="string">'topsecret.server.com'</span>] = &#123;&#125;</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>topsecret = config[<span class="string">'topsecret.server.com'</span>]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>topsecret[<span class="string">'Port'</span>] = <span class="string">'50022'</span>     <span class="comment"># mutates the parser</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>topsecret[<span class="string">'ForwardX11'</span>] = <span class="string">'no'</span>  <span class="comment"># same here</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>config[<span class="string">'DEFAULT'</span>][<span class="string">'ForwardX11'</span>] = <span class="string">'yes'</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">with</span> open(<span class="string">'example.ini'</span>, <span class="string">'w'</span>) <span class="keyword">as</span> configfile:</div><div class="line"><span class="meta">... </span>  config.write(configfile)</div></pre></td></tr></table></figure>
+<p>然后我们再读取该ini文件：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> configparser</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>config = configparser.ConfigParser()</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>config.sections()</div><div class="line">[]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>config.read(<span class="string">'example.ini'</span>)</div><div class="line">[<span class="string">'example.ini'</span>]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>config.sections()</div><div class="line">[<span class="string">'bitbucket.org'</span>, <span class="string">'topsecret.server.com'</span>]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">'bitbucket.org'</span> <span class="keyword">in</span> config</div><div class="line"><span class="keyword">True</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">'bytebong.com'</span> <span class="keyword">in</span> config</div><div class="line"><span class="keyword">False</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>config[<span class="string">'bitbucket.org'</span>][<span class="string">'User'</span>]</div><div class="line"><span class="string">'hg'</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>config[<span class="string">'DEFAULT'</span>][<span class="string">'Compression'</span>]</div><div class="line"><span class="string">'yes'</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>topsecret = config[<span class="string">'topsecret.server.com'</span>]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>topsecret[<span class="string">'ForwardX11'</span>]</div><div class="line"><span class="string">'no'</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>topsecret[<span class="string">'Port'</span>]</div><div class="line"><span class="string">'50022'</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">for</span> key <span class="keyword">in</span> config[<span class="string">'bitbucket.org'</span>]: print(key)</div><div class="line">...</div><div class="line">user</div><div class="line">compressionlevel</div><div class="line">serveraliveinterval</div><div class="line">compression</div><div class="line">forwardx11</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>config[<span class="string">'bitbucket.org'</span>][<span class="string">'ForwardX11'</span>]</div><div class="line"><span class="string">'yes'</span></div></pre></td></tr></table></figure>
+<p><strong>The only bit of magic involves the DEFAULT section which provides default values for all other sections. Note also that keys in sections are case-insensitive and stored in lowercase</strong></p>
+<p>除了可以使用列表的方式获取值，也可以通过<code>section</code>级别的<code>get()</code>方法获取，同时该函数可以指定默认值</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>topsecret.get(<span class="string">'Port'</span>)</div><div class="line"><span class="string">'50022'</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>topsecret.get(<span class="string">'CompressionLevel'</span>)</div><div class="line"><span class="string">'9'</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>topsecret.get(<span class="string">'Cipher'</span>, <span class="string">'3des-cbc'</span>)</div><div class="line"><span class="string">'3des-cbc'</span></div></pre></td></tr></table></figure>
+<p>而解析器级别的<code>get()</code>函数的默认值是通过<code>fallback</code>参数指定的：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>config.get(<span class="string">'bitbucket.org'</span>, <span class="string">'monster'</span>,</div><div class="line"><span class="meta">... </span>           fallback=<span class="string">'No such things as monsters'</span>)</div><div class="line"><span class="string">'No such things as monsters'</span></div></pre></td></tr></table></figure>
+<p>需要注意的是，无论是通过列表方式获取值，还是通过<code>get()</code>方法获取值，获取到的数据都字符串类型，如果想要获取指定类型的数据，可以使用如下的几个方法:</p>
+<ul>
+<li>getint()</li>
+<li>getfloat()</li>
+<li>getboolean()</li>
+</ul>
+<p>同时需要注意<code>getboolean()</code>方法能判断True/False的值有： ‘yes’/‘no’, ‘on’/‘off’, ‘true’/‘false’ 和 ‘1’/‘0’ </p>
+<h2 id="Interpolation"><a href="#Interpolation" class="headerlink" title="Interpolation"></a>Interpolation</h2><p>创建ConfigParser()类的时候可以指定interpolation参数，如果将interpolation设置为<code>BasicInterpolation()</code>，则配置文件中的<code>%(key)s</code>结构会被解析，如，比如<code>example.ini</code>文件内容如下：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[Paths]</div><div class="line">home_dir: /Users</div><div class="line">my_dir: %(home_dir)s/lumberjack</div><div class="line">my_pictures: %(my_dir)s/Pictures</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> configparser</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>config = configparser.ConfigParser(interpolation=configparser.BasicInterpolation())</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>config.read(<span class="string">r'F:\coding\python\example.ini'</span>)</div><div class="line">[<span class="string">'F:\\coding\\python\\example.ini'</span>]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>config[<span class="string">'Paths'</span>][<span class="string">'my_dir'</span>]</div><div class="line"><span class="string">'/Users/lumberjack'</span></div></pre></td></tr></table></figure>
+<p>可以看到<code>%(home_dir)s</code>被解析成了<code>/Users</code>，说白了，相当于配置文件中的变量</p>
+<p>创建ConfigParser()类的时候如果没有指定interpolation参数，则不会解析<code>%(key)s</code>，只会返回字符串而已</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>config[<span class="string">'Paths'</span>][<span class="string">'my_dir'</span>]</div><div class="line"><span class="string">'%(home_dir)s/lumberjack'</span></div></pre></td></tr></table></figure>
+<p>当然Interpolation还有更高级的使用方法，创建ConfigParser()类的时候指定interpolation参数为<code>ExtendedInterpolation()</code>，那么解析器会解析<code>${section:key}</code>结构，那么上面的ini文件应该写成如下的格式:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[Paths]</div><div class="line">home_dir: /Users</div><div class="line">my_dir: $&#123;home_dir&#125;/lumberjack</div><div class="line">my_pictures: $&#123;my_dir&#125;/Pictures</div></pre></td></tr></table></figure>
+<p>并且<code>ExtendedInterpolation()</code>也能解析更复杂的，像下面这样的ini文件:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">[Common]</div><div class="line">home_dir: /Users</div><div class="line">library_dir: /Library</div><div class="line">system_dir: /System</div><div class="line">macports_dir: /opt/local</div><div class="line"></div><div class="line">[Frameworks]</div><div class="line">Python: 3.2</div><div class="line">path: $&#123;Common:system_dir&#125;/Library/Frameworks/</div><div class="line"></div><div class="line">[Arthur]</div><div class="line">nickname: Two Sheds</div><div class="line">last_name: Jackson</div><div class="line">my_dir: $&#123;Common:home_dir&#125;/twosheds</div><div class="line">my_pictures: $&#123;my_dir&#125;/Pictures</div><div class="line">python_dir: $&#123;Frameworks:path&#125;/Python/Versions/$&#123;Frameworks:Python&#125;</div></pre></td></tr></table></figure>
+<h2 id="ConfigParser"><a href="#ConfigParser" class="headerlink" title="ConfigParser"></a>ConfigParser</h2><p>ConfigParser对象的其他方法，如：</p>
+<ul>
+<li>add_section(section)</li>
+<li>has_section(section)</li>
+<li>options(section)</li>
+<li>has_option(section, option)</li>
+<li>remove_option(section, option)</li>
+<li>remove_section(section)</li>
+</ul>
+<p>都很常用，具体就不介绍了，看名字就知道是干什么的了</p>
+<h2 id="相关文档"><a href="#相关文档" class="headerlink" title="相关文档"></a>相关文档</h2><ul>
+<li><a href="https://docs.python.org/3.5/library/configparser.html" target="_blank" rel="external">configparser官方文档</a></li>
+<li><a href="https://hg.python.org/cpython/file/3.5/Lib/configparser.py" target="_blank" rel="external">configparser源代码</a></li>
+</ul>
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechat.png" alt="xin053 WeChat Pay">
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay.png" alt="xin053 Alipay">
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Python/" rel="tag">#Python</a>
+          
+            <a href="/tags/configparser/" rel="tag">#configparser</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/07/13/Docker学习笔记(一)/" rel="next" title="Docker学习笔记(一)">
+                <i class="fa fa-chevron-left"></i> Docker学习笔记(一)
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/07/19/asciimatics库使用详解/" rel="prev" title="asciimatics库简介">
+                asciimatics库简介 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/me.jpg" alt="xin053">
+          <p class="site-author-name" itemprop="name">xin053</p>
+          <p class="site-description motion-element" itemprop="description">正在用Windbg调试正在调试正在反汇编Windbg的IDA的OD...</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">55</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">50</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/xin053" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/xin053" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/xin053" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://blog.csdn.net/zhouzixin053" target="_blank" title="csdn">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  csdn
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://bbs.pediy.com/" title="看雪" target="_blank">看雪</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.geeklzh.com/" title="怪咖家园" target="_blank">怪咖家园</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.csdh.pub/" title="CS_DH" target="_blank">CS_DH</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://dendise7engithub.github.io/" title="Dendionk" target="_blank">Dendionk</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://cyang.tech/" title="cyang" target="_blank">cyang</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#configparser简介"><span class="nav-number">1.</span> <span class="nav-text">configparser简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本使用"><span class="nav-number">2.</span> <span class="nav-text">基本使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Interpolation"><span class="nav-number">3.</span> <span class="nav-text">Interpolation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ConfigParser"><span class="nav-number">4.</span> <span class="nav-text">ConfigParser</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相关文档"><span class="nav-number">5.</span> <span class="nav-text">相关文档</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xin053</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'xin053';
+      var disqus_identifier = '2016/07/18/configparser配置文件解析器使用详解/';
+      var disqus_title = "configparser配置文件解析器使用详解";
+      var disqus_url = 'https://xin053.github.io/2016/07/18/configparser配置文件解析器使用详解/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+                            
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').mousedown(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+  
+
+  
+
+  
+
+</body>
+</html>
