@@ -67,15 +67,15 @@ theme: next
 ## 图像
 avatar: /images/me.jpg
 ## 多说短名
-duoshuo_shortname: xin053
+# duoshuo_shortname: xin053
 ## 百度流量统计
 baidu_analytics: 95bc477a974f85651897b76f543028bb
 # 百度分享服务
 baidushare: true
 # 多说分享服务
-duoshuo_share: true
+# duoshuo_share: true
 # 多说热评文章
-duoshuo_hotartical: true
+# duoshuo_hotartical: true
 
 ## 配置搜索
 search:
